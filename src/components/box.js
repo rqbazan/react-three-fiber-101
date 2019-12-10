@@ -5,19 +5,21 @@ import usePegatineTextures from '../hooks/use-pegatine-textures'
  * material sides: [RIGHT, LEFT, UP, DOWN, FRONT, BACK]
  */
 
-export default function Box({
-  position,
-  rightColor,
-  leftColor,
-  upColor,
-  downColor,
-  frontColor,
-  backColor
-}) {
+export default React.forwardRef((props, ref) => {
+  const {
+    position,
+    rightColor,
+    leftColor,
+    upColor,
+    downColor,
+    frontColor,
+    backColor
+  } = props
+
   const textures = usePegatineTextures()
 
   return (
-    <mesh position={position}>
+    <mesh ref={ref} position={position}>
       <boxGeometry attach="geometry" args={[1, 1, 1]} />
       <meshBasicMaterial
         attachArray="material"
@@ -51,4 +53,4 @@ export default function Box({
       />
     </mesh>
   )
-}
+})
