@@ -11,14 +11,20 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
+    "lint": "eslint --ignore-path .gitignore .",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
     "gatsby": "^2.18.4",
     "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react-dom": "^16.12.0",
+    "react-spring": "^8.0.27",
+    "react-three-fiber": "^3.0.16",
+    "three": "^0.111.0"
   },
   "devDependencies": {
+    "eslint": "^6.7.2",
+    "eslint-config-rqbazan-js": "^0.3.0",
     "prettier": "^1.19.1"
   },
   "repository": {
