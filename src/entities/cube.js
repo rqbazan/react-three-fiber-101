@@ -20,15 +20,35 @@ class Cube {
 
     // prettier-ignore
     this.faces = {
+      FRONT: [
+        this.pieces.ULF, this.pieces.UF, this.pieces.URF,
+        this.pieces.FL, this.pieces.F, this.pieces.FR,
+        this.pieces.DLF, this.pieces.DF, this.pieces.DRF
+      ],
+      BACK: [
+        this.pieces.URB, this.pieces.UB, this.pieces.ULB,
+        this.pieces.BR, this.pieces.B, this.pieces.BL,
+        this.pieces.DRB, this.pieces.DB, this.pieces.DLB
+      ],
       RIGHT: [
         this.pieces.URF, this.pieces.UR, this.pieces.URB,
         this.pieces.FR, this.pieces.R, this.pieces.BR,
         this.pieces.DRF, this.pieces.DR, this.pieces.DRB
       ],
-      FRONT: [
-        this.pieces.ULF, this.pieces.UF, this.pieces.URF,
-        this.pieces.FL, this.pieces.F, this.pieces.FR,
-        this.pieces.DLF, this.pieces.DF, this.pieces.DRF
+      LEFT: [
+        this.pieces.ULB, this.pieces.UL, this.pieces.ULF,
+        this.pieces.BL, this.pieces.L, this.pieces.FL,
+        this.pieces.DLB, this.pieces.DL, this.pieces.DLF
+      ],
+      UP: [
+        this.pieces.ULB, this.pieces.UB, this.pieces.URB,
+        this.pieces.UL, this.pieces.U, this.pieces.UR,
+        this.pieces.ULF, this.pieces.UF, this.pieces.URF
+      ],
+      DOWN: [
+        this.pieces.DLF, this.pieces.DF, this.pieces.DRF,
+        this.pieces.DL, this.pieces.D, this.pieces.DR,
+        this.pieces.DLB, this.pieces.DB, this.pieces.DRB,
       ]
     }
   }

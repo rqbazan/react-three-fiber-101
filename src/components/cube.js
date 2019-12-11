@@ -40,20 +40,36 @@ export default function Cube() {
   }
 
   useHotKeys({
-    KeyU: () => {},
-    KeyD: () => {},
+    KeyU: shiftKeyPressed => {
+      const angle = getAngle(shiftKeyPressed)
+      rotate(cube.faces.UP, CubeEntity.axisVectors.Y, -angle)
+      cube.rotate('UP', angle)
+    },
+    KeyD: shiftKeyPressed => {
+      const angle = getAngle(shiftKeyPressed)
+      rotate(cube.faces.DOWN, CubeEntity.axisVectors.Y, angle)
+      cube.rotate('DOWN', angle)
+    },
     KeyR: shiftKeyPressed => {
       const angle = getAngle(shiftKeyPressed)
       rotate(cube.faces.RIGHT, CubeEntity.axisVectors.X, -angle)
       cube.rotate('RIGHT', angle)
     },
-    KeyL: () => {},
+    KeyL: shiftKeyPressed => {
+      const angle = getAngle(shiftKeyPressed)
+      rotate(cube.faces.LEFT, CubeEntity.axisVectors.X, angle)
+      cube.rotate('LEFT', angle)
+    },
     KeyF: shiftKeyPressed => {
       const angle = getAngle(shiftKeyPressed)
       rotate(cube.faces.FRONT, CubeEntity.axisVectors.Z, -angle)
       cube.rotate('FRONT', angle)
     },
-    KeyB: () => {}
+    KeyB: shiftKeyPressed => {
+      const angle = getAngle(shiftKeyPressed)
+      rotate(cube.faces.BACK, CubeEntity.axisVectors.Z, angle)
+      cube.rotate('BACK', angle)
+    }
   })
 
   return (
