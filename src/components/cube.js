@@ -18,6 +18,12 @@ function rotateAroundWorldAxis(mesh, point, axis, angle) {
   mesh.position.add(point)
 }
 
+function getAngle(shiftKeyPressed) {
+  return shiftKeyPressed
+    ? CubeEntity.angles.ANTICLOCKWISE
+    : CubeEntity.angles.CLOCKWISE
+}
+
 export default function Cube() {
   const boxRefs = useRefs(26)
 
@@ -37,13 +43,15 @@ export default function Cube() {
     KeyU: () => {},
     KeyD: () => {},
     KeyR: shiftKey => {
-      rotate(cube.faces.RIGHT, [1, 0, 0], shiftKey ? 90 : -90)
-      cube.rotate('RIGHT', shiftKey ? -90 : 90)
+      const angle = getAngle(shiftKey)
+      rotate(cube.faces.RIGHT, CubeEntity.axisVectors.X, -angle)
+      cube.rotate('RIGHT', angle)
     },
     KeyL: () => {},
     KeyF: shiftKey => {
-      rotate(cube.faces.FRONT, [0, 0, 1], shiftKey ? 90 : -90)
-      cube.rotate('FRONT', shiftKey ? -90 : 90)
+      const angle = getAngle(shiftKey)
+      rotate(cube.faces.FRONT, CubeEntity.axisVectors.Z, -angle)
+      cube.rotate('FRONT', angle)
     },
     KeyB: () => {}
   })
