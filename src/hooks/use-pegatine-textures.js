@@ -1,17 +1,22 @@
-import React from 'react'
 import * as THREE from 'three'
+import { useLoader } from 'react-three-fiber'
 
 export default function usePegatineTextures() {
-  return React.useMemo(() => {
-    const loader = new THREE.TextureLoader()
+  const [
+    red,
+    orange,
+    blue,
+    green,
+    white,
+    yellow
+  ] = useLoader(THREE.TextureLoader, [
+    'textures/red-pegatine.png',
+    'textures/orange-pegatine.png',
+    'textures/blue-pegatine.png',
+    'textures/green-pegatine.png',
+    'textures/white-pegatine.png',
+    'textures/yellow-pegatine.png'
+  ])
 
-    return {
-      red: loader.load('textures/red-pegatine.png'),
-      orange: loader.load('textures/orange-pegatine.png'),
-      blue: loader.load('textures/blue-pegatine.png'),
-      green: loader.load('textures/green-pegatine.png'),
-      white: loader.load('textures/white-pegatine.png'),
-      yellow: loader.load('textures/yellow-pegatine.png')
-    }
-  }, [])
+  return { red, orange, blue, green, white, yellow }
 }

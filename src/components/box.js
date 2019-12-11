@@ -1,11 +1,11 @@
 import React from 'react'
+import { animated } from 'react-spring/three'
 import usePegatineTextures from '../hooks/use-pegatine-textures'
 
 /**
- * material sides: [RIGHT, LEFT, UP, DOWN, FRONT, BACK]
+ * material faces: [RIGHT, LEFT, UP, DOWN, FRONT, BACK]
  */
-
-export default React.forwardRef((props, ref) => {
+const Box = React.forwardRef((props, ref) => {
   const {
     position,
     rightColor,
@@ -18,39 +18,45 @@ export default React.forwardRef((props, ref) => {
 
   const textures = usePegatineTextures()
 
+  function getMaterialProps(faceColor) {
+    if (!faceColor) {
+      return { color: 'black' }
+    }
+
+    return { map: textures[faceColor] }
+  }
+
   return (
-    <mesh ref={ref} position={position}>
+    <animated.mesh ref={ref} position={position}>
       <boxGeometry attach="geometry" args={[1, 1, 1]} />
       <meshBasicMaterial
         attachArray="material"
-        color={!rightColor ? 'black' : undefined}
-        map={textures[rightColor]}
+        {...getMaterialProps(rightColor)}
       />
       <meshBasicMaterial
         attachArray="material"
-        color={!leftColor ? 'black' : undefined}
-        map={textures[leftColor]}
+        {...getMaterialProps(leftColor)}
       />
       <meshBasicMaterial
         attachArray="material"
-        color={!upColor ? 'black' : undefined}
-        map={textures[upColor]}
+        {...getMaterialProps(upColor)}
       />
       <meshBasicMaterial
         attachArray="material"
-        color={!downColor ? 'black' : undefined}
-        map={textures[downColor]}
+        {...getMaterialProps(downColor)}
       />
       <meshBasicMaterial
         attachArray="material"
-        color={!frontColor ? 'black' : undefined}
-        map={textures[frontColor]}
+        {...getMaterialProps(frontColor)}
       />
       <meshBasicMaterial
         attachArray="material"
-        color={!backColor ? 'black' : undefined}
-        map={textures[backColor]}
+        {...getMaterialProps(backColor)}
       />
-    </mesh>
+    </animated.mesh>
   )
 })
+
+Box.displayName = 'Box'
+
+export default Box

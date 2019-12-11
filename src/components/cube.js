@@ -1,75 +1,55 @@
-import React from 'react'
 import * as THREE from 'three'
+import React from 'react'
+import useHotKeys from '../hooks/use-hot-keys'
+import useRefs from '../hooks/use-refs'
+import CubeEntity from '../entities/cube'
 import Box from './box'
 
-// Rotate an object around an axis in world space (the axis passes through the object's position)
-function rotateAroundWorldAxis(object, point, axis, angle) {
-  const q1 = new THREE.Quaternion()
+const cube = new CubeEntity()
 
-  q1.setFromAxisAngle(axis, angle)
+function rotateAroundWorldAxis(mesh, point, axis, angle) {
+  const quaternion = new THREE.Quaternion()
+  quaternion.setFromAxisAngle(axis, angle)
 
-  object.quaternion.multiplyQuaternions(q1, object.quaternion)
+  mesh.quaternion.multiplyQuaternions(quaternion, mesh.quaternion)
 
-  object.position.sub(point)
-  object.position.applyQuaternion(q1)
-  object.position.add(point)
-
-  return this
-}
-
-function useKeyboard(keyHandlers) {
-  React.useEffect(() => {
-    const listener = e => {
-      const handler = keyHandlers[e.code]
-      if (handler) {
-        handler()
-      }
-    }
-
-    document.addEventListener('keydown', listener)
-
-    return () => {
-      document.removeEventListener('keydown', listener)
-    }
-  }, [])
-}
-
-const facesIndexs = {
-  RIGHT: [2, 11, 19, 5, 13, 22, 8, 16, 25]
+  mesh.position.sub(point)
+  mesh.position.applyQuaternion(quaternion)
+  mesh.position.add(point)
 }
 
 export default function Cube() {
-  const boxRefs = Array.from({ length: 26 }).map(() => React.useRef())
+  const boxRefs = useRefs(26)
 
-  useKeyboard({
-    KeyU: () => {},
-    KeyD: () => {
-      console.log('D pressed')
-    },
-    KeyR: () => {
-      for (let i = 0; i < 9; i += 1) {
-        const index = facesIndexs.RIGHT[i]
-        rotateAroundWorldAxis(
-          boxRefs[index].current,
-          new THREE.Vector3(1, 0, 0),
-          new THREE.Vector3(1, 0, 0),
-          THREE.Math.degToRad(90)
-        )
-      }
-    },
-    KeyL: () => {
-      console.log('L pressed')
-    },
-    KeyF: () => {
-      console.log('F pressed')
-    },
-    KeyB: () => {
-      console.log('B pressed')
+  function rotate(facePieces, vector, angle) {
+    for (let i = 0; i < 9; i += 1) {
+      const piece = facePieces[i]
+      rotateAroundWorldAxis(
+        boxRefs[piece.key].current,
+        new THREE.Vector3(...vector),
+        new THREE.Vector3(...vector),
+        THREE.Math.degToRad(angle)
+      )
     }
+  }
+
+  useHotKeys({
+    KeyU: () => {},
+    KeyD: () => {},
+    KeyR: () => {
+      rotate(cube.faces.RIGHT, [1, 0, 0], -90)
+      cube.rotate('RIGHT')
+    },
+    KeyL: () => {},
+    KeyF: () => {
+      rotate(cube.faces.FRONT, [0, 0, 1], -90)
+      cube.rotate('FRONT')
+    },
+    KeyB: () => {}
   })
 
   return (
-    <>
+    <React.Suspense fallback={null}>
       <Box
         ref={boxRefs[0]}
         position={[-1, 1, 1]}
@@ -212,6 +192,6 @@ export default function Cube() {
         backColor="blue"
         downColor="white"
       />
-    </>
+    </React.Suspense>
   )
 }

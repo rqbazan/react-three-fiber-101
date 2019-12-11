@@ -1,0 +1,93 @@
+import Piece from './piece'
+
+export default class Cube {
+  constructor() {
+    this.pieces = {
+      ULF: new Piece(0),
+      UF: new Piece(1),
+      URF: new Piece(2),
+      FL: new Piece(3),
+      F: new Piece(4),
+      FR: new Piece(5),
+      DLF: new Piece(6),
+      DF: new Piece(7),
+      DRF: new Piece(8),
+      UL: new Piece(9),
+      U: new Piece(10),
+      UR: new Piece(11),
+      L: new Piece(12),
+      R: new Piece(13),
+      DL: new Piece(14),
+      D: new Piece(15),
+      DR: new Piece(16),
+      ULB: new Piece(17),
+      UB: new Piece(18),
+      URB: new Piece(19),
+      BL: new Piece(20),
+      B: new Piece(21),
+      BR: new Piece(22),
+      DLB: new Piece(23),
+      DB: new Piece(24),
+      DRB: new Piece(25)
+    }
+
+    this.faces = {
+      RIGHT: [
+        this.pieces.URF,
+        this.pieces.UR,
+        this.pieces.URB,
+        this.pieces.FR,
+        this.pieces.R,
+        this.pieces.BR,
+        this.pieces.DRF,
+        this.pieces.DR,
+        this.pieces.DRB
+      ],
+      FRONT: [
+        this.pieces.ULF,
+        this.pieces.UF,
+        this.pieces.URF,
+        this.pieces.FL,
+        this.pieces.F,
+        this.pieces.FR,
+        this.pieces.DLF,
+        this.pieces.DF,
+        this.pieces.DRF
+      ]
+    }
+  }
+
+  rotate(faceName) {
+    const facePieces = this.faces[faceName]
+    const rowLength = Math.sqrt(facePieces.length)
+
+    const newPositions = facePieces.map((_, index) => {
+      const x = index % rowLength
+      const y = Math.trunc(index / rowLength)
+
+      const newX = rowLength - y - 1
+      const newY = x
+
+      return newY * rowLength + newX
+    })
+
+    function moveKeysBetweenPieces(initialPosition) {
+      function recursiveMove(position) {
+        const newPosition = newPositions[position]
+        if (newPosition === newPositions[initialPosition]) {
+          return
+        }
+        recursiveMove(newPosition)
+        facePieces[newPosition].key = facePieces[position].key
+      }
+
+      const initialKeyTemp = facePieces[initialPosition].key
+      const newPosition = newPositions[initialPosition]
+      recursiveMove(newPosition)
+      facePieces[newPosition].key = initialKeyTemp
+    }
+
+    moveKeysBetweenPieces(0) // move corners start with the first one at face[0]
+    moveKeysBetweenPieces(1) // move edges start with the first one at face[1]
+  }
+}
