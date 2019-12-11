@@ -13,7 +13,7 @@
     "format": "yarn prettier --write",
     "check-format": "yarn prettier --list-different",
     "validate": "npm-run-all --parallel check-format lint build",
-    "test": "ava"
+    "test": "NODE_PATH=src ava"
   },
   "husky": {
     "hooks": {

@@ -1,7 +1,7 @@
 import test from 'ava'
 import Cube from '../cube'
 
-test('rotate cube: R', t => {
+test('rotate cube R', t => {
   const cube = new Cube()
 
   cube.rotate('RIGHT')
@@ -17,7 +17,7 @@ test('rotate cube: R', t => {
   )
 })
 
-test("rotate cube: R'", t => {
+test("rotate cube R'", t => {
   const cube = new Cube()
 
   cube.rotate('RIGHT', -90)

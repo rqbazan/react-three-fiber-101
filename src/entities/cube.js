@@ -1,36 +1,7 @@
+import getNewPositions from 'utils/get-new-positions'
 import Piece from './piece'
 
-function getNewPositions(rowLength, degrees) {
-  const newPositions = []
-
-  for (let index = 0; index < rowLength * rowLength; index += 1) {
-    const x = index % rowLength
-    const y = Math.trunc(index / rowLength)
-
-    const newX = degrees === 90 ? rowLength - y - 1 : y
-    const newY = degrees === 90 ? x : rowLength - x - 1
-
-    newPositions[index] = newY * rowLength + newX
-  }
-
-  return newPositions
-}
-
-const clockwiseNewPositions = getNewPositions(3, 90)
-const anticlockwiseNewPositions = getNewPositions(3, -90)
-
-export default class Cube {
-  static angles = {
-    CLOCKWISE: 90,
-    ANTICLOCKWISE: -90
-  }
-
-  static axisVectors = {
-    X: [1, 0, 0],
-    Y: [0, 1, 0],
-    Z: [0, 0, 1]
-  }
-
+class Cube {
   constructor() {
     // prettier-ignore
     this.pieces = {
@@ -66,7 +37,9 @@ export default class Cube {
     const facePieces = this.faces[faceName]
 
     const newPositions =
-      degrees === 90 ? clockwiseNewPositions : anticlockwiseNewPositions
+      degrees === 90
+        ? Cube.clockwiseNewPositions
+        : Cube.anticlockwiseNewPositions
 
     function moveKeysBetweenPieces(initialPosition) {
       function recursiveMove(position) {
@@ -90,3 +63,31 @@ export default class Cube {
     moveKeysBetweenPieces(1)
   }
 }
+
+/**
+ * these fields should be static fields, but there is a issue with esm
+ * and avajs depends on it.
+ *
+ * https://github.com/standard-things/esm/issues/858
+ */
+Cube.size = 3
+
+Cube.angles = {
+  CLOCKWISE: 90,
+  ANTICLOCKWISE: -90
+}
+
+Cube.axisVectors = {
+  X: [1, 0, 0],
+  Y: [0, 1, 0],
+  Z: [0, 0, 1]
+}
+
+Cube.clockwiseNewPositions = getNewPositions(Cube.size, Cube.angles.CLOCKWISE)
+
+Cube.anticlockwiseNewPositions = getNewPositions(
+  Cube.size,
+  Cube.angles.ANTICLOCKWISE
+)
+
+export default Cube
