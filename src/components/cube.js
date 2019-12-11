@@ -1,5 +1,5 @@
-import * as THREE from 'three'
 import React from 'react'
+import * as THREE from 'three'
 import useHotKeys from '../hooks/use-hot-keys'
 import useRefs from '../hooks/use-refs'
 import CubeEntity from '../entities/cube'
@@ -70,7 +70,6 @@ export default function Cube() {
         rightColor="orange"
         frontColor="green"
       />
-
       <Box
         ref={boxRefs[3]}
         position={[-1, 0, 1]}
@@ -84,7 +83,6 @@ export default function Cube() {
         frontColor="green"
         rightColor="orange"
       />
-
       <Box
         ref={boxRefs[6]}
         position={[-1, -1, 1]}
@@ -105,7 +103,6 @@ export default function Cube() {
         frontColor="green"
         downColor="white"
       />
-
       <Box
         ref={boxRefs[9]}
         position={[-1, 1, 0]}
@@ -119,10 +116,8 @@ export default function Cube() {
         upColor="yellow"
         rightColor="orange"
       />
-
       <Box ref={boxRefs[12]} position={[-1, 0, 0]} leftColor="red" />
       <Box ref={boxRefs[13]} position={[1, 0, 0]} rightColor="orange" />
-
       <Box
         ref={boxRefs[14]}
         position={[-1, -1, 0]}
@@ -136,7 +131,6 @@ export default function Cube() {
         rightColor="orange"
         downColor="white"
       />
-
       <Box
         ref={boxRefs[17]}
         position={[-1, 1, -1]}
@@ -157,7 +151,6 @@ export default function Cube() {
         upColor="yellow"
         rightColor="orange"
       />
-
       <Box
         ref={boxRefs[20]}
         position={[-1, 0, -1]}
@@ -171,7 +164,6 @@ export default function Cube() {
         backColor="blue"
         rightColor="orange"
       />
-
       <Box
         ref={boxRefs[23]}
         position={[-1, -1, -1]}
