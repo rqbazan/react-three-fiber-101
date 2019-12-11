@@ -5,13 +5,14 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,json,md}\"",
+    "build": "gatsby build",
     "start": "npm run develop",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
     "lint": "eslint --ignore-path .gitignore .",
+    "prettier": "prettier --ignore-path .gitignore \"**/*.{js,json,md}\"",
+    "format": "yarn prettier --write",
+    "check-format": "yarn prettier --list-different",
+    "validate": "npm-run-all --parallel check-format lint build",
     "test": "ava"
   },
   "husky": {
@@ -22,7 +23,7 @@
   },
   "lint-staged": {
     "*.{js,json,md}": [
-      "prettier --write",
+      "prettier --ignore-path .gitignore --write",
       "git add"
     ],
     "*.js": [
@@ -56,6 +57,7 @@
     "esm": "^3.2.25",
     "husky": "^3.1.0",
     "lint-staged": "^9.5.0",
+    "npm-run-all": "^4.1.5",
     "prettier": "^1.19.1"
   }
 }
