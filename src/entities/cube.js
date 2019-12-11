@@ -50,28 +50,17 @@ export default class Cube {
       DRB: new Piece(25)
     }
 
+    // prettier-ignore
     this.faces = {
       RIGHT: [
-        this.pieces.URF,
-        this.pieces.UR,
-        this.pieces.URB,
-        this.pieces.FR,
-        this.pieces.R,
-        this.pieces.BR,
-        this.pieces.DRF,
-        this.pieces.DR,
-        this.pieces.DRB
+        this.pieces.URF, this.pieces.UR, this.pieces.URB,
+        this.pieces.FR, this.pieces.R, this.pieces.BR,
+        this.pieces.DRF, this.pieces.DR, this.pieces.DRB
       ],
       FRONT: [
-        this.pieces.ULF,
-        this.pieces.UF,
-        this.pieces.URF,
-        this.pieces.FL,
-        this.pieces.F,
-        this.pieces.FR,
-        this.pieces.DLF,
-        this.pieces.DF,
-        this.pieces.DRF
+        this.pieces.ULF, this.pieces.UF, this.pieces.URF,
+        this.pieces.FL, this.pieces.F, this.pieces.FR,
+        this.pieces.DLF, this.pieces.DF, this.pieces.DRF
       ]
     }
   }
