@@ -1,8 +1,8 @@
 import React from 'react'
 import * as THREE from 'three'
-import useHotKeys from '../hooks/use-hot-keys'
-import useRefs from '../hooks/use-refs'
-import CubeEntity from '../entities/cube'
+import useHotKeys from 'hooks/use-hot-keys'
+import useRefs from 'hooks/use-refs'
+import CubeEntity from 'entities/cube'
 import Box from './box'
 
 const cube = new CubeEntity()
@@ -16,6 +16,12 @@ function rotateAroundWorldAxis(mesh, point, axis, angle) {
   mesh.position.sub(point)
   mesh.position.applyQuaternion(quaternion)
   mesh.position.add(point)
+}
+
+function getAngle(shiftKeyPressed) {
+  return shiftKeyPressed
+    ? CubeEntity.angles.ANTICLOCKWISE
+    : CubeEntity.angles.CLOCKWISE
 }
 
 export default function Cube() {
@@ -34,18 +40,36 @@ export default function Cube() {
   }
 
   useHotKeys({
-    KeyU: () => {},
-    KeyD: () => {},
-    KeyR: shiftKey => {
-      rotate(cube.faces.RIGHT, [1, 0, 0], shiftKey ? 90 : -90)
-      cube.rotate('RIGHT', shiftKey ? -90 : 90)
+    KeyU: shiftKeyPressed => {
+      const angle = getAngle(shiftKeyPressed)
+      rotate(cube.faces.UP, CubeEntity.axisVectors.Y, -angle)
+      cube.rotate('UP', angle)
     },
-    KeyL: () => {},
-    KeyF: shiftKey => {
-      rotate(cube.faces.FRONT, [0, 0, 1], shiftKey ? 90 : -90)
-      cube.rotate('FRONT', shiftKey ? -90 : 90)
+    KeyD: shiftKeyPressed => {
+      const angle = getAngle(shiftKeyPressed)
+      rotate(cube.faces.DOWN, CubeEntity.axisVectors.Y, angle)
+      cube.rotate('DOWN', angle)
     },
-    KeyB: () => {}
+    KeyR: shiftKeyPressed => {
+      const angle = getAngle(shiftKeyPressed)
+      rotate(cube.faces.RIGHT, CubeEntity.axisVectors.X, -angle)
+      cube.rotate('RIGHT', angle)
+    },
+    KeyL: shiftKeyPressed => {
+      const angle = getAngle(shiftKeyPressed)
+      rotate(cube.faces.LEFT, CubeEntity.axisVectors.X, angle)
+      cube.rotate('LEFT', angle)
+    },
+    KeyF: shiftKeyPressed => {
+      const angle = getAngle(shiftKeyPressed)
+      rotate(cube.faces.FRONT, CubeEntity.axisVectors.Z, -angle)
+      cube.rotate('FRONT', angle)
+    },
+    KeyB: shiftKeyPressed => {
+      const angle = getAngle(shiftKeyPressed)
+      rotate(cube.faces.BACK, CubeEntity.axisVectors.Z, angle)
+      cube.rotate('BACK', angle)
+    }
   })
 
   return (
