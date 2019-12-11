@@ -36,14 +36,14 @@ export default function Cube() {
   useHotKeys({
     KeyU: () => {},
     KeyD: () => {},
-    KeyR: () => {
-      rotate(cube.faces.RIGHT, [1, 0, 0], -90)
-      cube.rotate('RIGHT')
+    KeyR: shiftKey => {
+      rotate(cube.faces.RIGHT, [1, 0, 0], shiftKey ? 90 : -90)
+      cube.rotate('RIGHT', shiftKey ? -90 : 90)
     },
     KeyL: () => {},
-    KeyF: () => {
-      rotate(cube.faces.FRONT, [0, 0, 1], -90)
-      cube.rotate('FRONT')
+    KeyF: shiftKey => {
+      rotate(cube.faces.FRONT, [0, 0, 1], shiftKey ? 90 : -90)
+      cube.rotate('FRONT', shiftKey ? -90 : 90)
     },
     KeyB: () => {}
   })

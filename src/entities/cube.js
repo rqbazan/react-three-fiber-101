@@ -57,7 +57,7 @@ export default class Cube {
     }
   }
 
-  rotate(faceName) {
+  rotate(faceName, degrees = 90) {
     const facePieces = this.faces[faceName]
     const rowLength = Math.sqrt(facePieces.length)
 
@@ -65,8 +65,8 @@ export default class Cube {
       const x = index % rowLength
       const y = Math.trunc(index / rowLength)
 
-      const newX = rowLength - y - 1
-      const newY = x
+      const newX = degrees === 90 ? rowLength - y - 1 : y
+      const newY = degrees === 90 ? x : rowLength - x - 1
 
       return newY * rowLength + newX
     })
@@ -87,7 +87,9 @@ export default class Cube {
       facePieces[newPosition].key = initialKeyTemp
     }
 
-    moveKeysBetweenPieces(0) // move corners start with the first one at face[0]
-    moveKeysBetweenPieces(1) // move edges start with the first one at face[1]
+    // move corners starting with the first one at face[0]
+    moveKeysBetweenPieces(0)
+    // move edges starting with the first one at face[1]
+    moveKeysBetweenPieces(1)
   }
 }
