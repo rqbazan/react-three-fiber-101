@@ -5,9 +5,9 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "develop": "gatsby develop",
+    "dev": "gatsby develop --port 3000",
     "build": "gatsby build",
-    "start": "npm run develop",
+    "start": "gatsby develop",
     "lint": "eslint --ignore-path .gitignore .",
     "prettier": "prettier --ignore-path .gitignore \"**/*.{js,json,md}\"",
     "format": "yarn prettier --write",
