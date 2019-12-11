@@ -42,14 +42,14 @@ export default function Cube() {
   useHotKeys({
     KeyU: () => {},
     KeyD: () => {},
-    KeyR: shiftKey => {
-      const angle = getAngle(shiftKey)
+    KeyR: shiftKeyPressed => {
+      const angle = getAngle(shiftKeyPressed)
       rotate(cube.faces.RIGHT, CubeEntity.axisVectors.X, -angle)
       cube.rotate('RIGHT', angle)
     },
     KeyL: () => {},
-    KeyF: shiftKey => {
-      const angle = getAngle(shiftKey)
+    KeyF: shiftKeyPressed => {
+      const angle = getAngle(shiftKeyPressed)
       rotate(cube.faces.FRONT, CubeEntity.axisVectors.Z, -angle)
       cube.rotate('FRONT', angle)
     },
