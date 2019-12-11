@@ -1,5 +1,24 @@
 import Piece from './piece'
 
+function getNewPositions(rowLength, degrees) {
+  const newPositions = []
+
+  for (let index = 0; index < rowLength * rowLength; index += 1) {
+    const x = index % rowLength
+    const y = Math.trunc(index / rowLength)
+
+    const newX = degrees === 90 ? rowLength - y - 1 : y
+    const newY = degrees === 90 ? x : rowLength - x - 1
+
+    newPositions[index] = newY * rowLength + newX
+  }
+
+  return newPositions
+}
+
+const clockwiseNewPositions = getNewPositions(3, 90)
+const anticlockwiseNewPositions = getNewPositions(3, -90)
+
 export default class Cube {
   constructor() {
     this.pieces = {
@@ -59,17 +78,9 @@ export default class Cube {
 
   rotate(faceName, degrees = 90) {
     const facePieces = this.faces[faceName]
-    const rowLength = Math.sqrt(facePieces.length)
 
-    const newPositions = facePieces.map((_, index) => {
-      const x = index % rowLength
-      const y = Math.trunc(index / rowLength)
-
-      const newX = degrees === 90 ? rowLength - y - 1 : y
-      const newY = degrees === 90 ? x : rowLength - x - 1
-
-      return newY * rowLength + newX
-    })
+    const newPositions =
+      degrees === 90 ? clockwiseNewPositions : anticlockwiseNewPositions
 
     function moveKeysBetweenPieces(initialPosition) {
       function recursiveMove(position) {
