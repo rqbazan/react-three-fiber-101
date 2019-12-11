@@ -14,7 +14,7 @@ function Controls() {
 
 export default () => {
   return (
-    <Canvas style={{ background: '#efefde' }} camera={{ position: [0, 0, 10] }}>
+    <Canvas style={{ background: '#efefde' }} camera={{ position: [6, 6, 6] }}>
       <Controls />
       <Cube />
     </Canvas>
