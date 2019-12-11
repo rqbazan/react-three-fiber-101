@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-starter-hello-world",
+  "name": "react-three-fiber-101",
   "private": true,
-  "description": "A simplified bare-bones starter for Gatsby",
+  "description": "A Rubik's cube made with react-three-fiber",
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
