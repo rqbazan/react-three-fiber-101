@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "dev": "gatsby develop --port 3000",
+    "dev": "gatsby develop -H 0.0.0.0 -p 3000",
     "build": "gatsby build",
     "start": "gatsby develop",
     "lint": "eslint --ignore-path .gitignore .",
