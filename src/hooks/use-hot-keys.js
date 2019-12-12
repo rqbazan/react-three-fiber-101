@@ -6,7 +6,7 @@ export default function useHotKeys(actions) {
 
     if (!e.ctrlKey && !e.metaKey && action) {
       const letter = e.code[e.code.length - 1]
-      action(e.shiftKey, letter)
+      action(letter, e.shiftKey)
     }
   })
 }

@@ -1,9 +1,5 @@
 .btns-container {
   @apply w-full flex fixed justify-between px-3;
-
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .btns-group {
@@ -14,27 +10,33 @@
   @apply mb-3;
 }
 
+.center {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 @media (min-width: theme('screens.md')) {
   .btns-container {
-    @apply w-full justify-center px-0 items-center;
-    --mb: theme('height.6');
-
-    bottom: 0;
-    height: calc(var(--rounded-button-size) + var(--mb) * 2);
-    left: 50%;
-    top: unset;
-    transform: translate(-50%, 0);
+    @apply w-full justify-center px-0 items-center flex-col py-4;
   }
 
   .btns-group {
     @apply flex-row;
   }
 
+  .btns-group:first-child {
+    @apply mb-3;
+  }
+
   .btns-group > button:not(:last-child) {
     @apply mb-0 mr-3;
   }
 
-  .btns-group:first-child {
-    @apply mr-3;
+  .center {
+    bottom: 0;
+    left: 50%;
+    top: unset;
+    transform: translate(-50%, 0);
   }
 }

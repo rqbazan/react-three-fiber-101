@@ -72,7 +72,7 @@ const Cube = React.forwardRef((_, ref) => {
     }
   }
 
-  function onKeyPress(shiftKeyPressed, faceName) {
+  function onKeyPress(faceName, shiftKeyPressed) {
     if (moveRef.current) {
       return
     }
@@ -121,8 +121,8 @@ const Cube = React.forwardRef((_, ref) => {
   })
 
   React.useImperativeHandle(ref, () => ({
-    rotate90(faceName) {
-      onKeyPress(false, faceName)
+    rotate(faceName, inversed) {
+      onKeyPress(faceName, inversed)
     }
   }))
 

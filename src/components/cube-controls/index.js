@@ -4,12 +4,14 @@ import './style.css'
 
 export default function CubeControls({ onControlClick }) {
   function onClick(e) {
-    onControlClick(e.target.dataset.face)
+    const faceName = e.target.dataset.face[0]
+    const inversed = e.target.dataset.face.endsWith("'")
+    onControlClick(faceName, inversed)
   }
 
   return (
-    <div className="btns-container">
-      <div className="flex flex-col md:flex-row btns-group">
+    <div className="btns-container center">
+      <div className="btns-group">
         <RoundedButton
           data-face="F"
           className="bg-pegatine-green"
@@ -31,8 +33,6 @@ export default function CubeControls({ onControlClick }) {
         >
           R
         </RoundedButton>
-      </div>
-      <div className="flex flex-col md:flex-row btns-group">
         <RoundedButton
           data-face="B"
           className="bg-pegatine-blue"
@@ -53,6 +53,50 @@ export default function CubeControls({ onControlClick }) {
           onClick={onClick}
         >
           L
+        </RoundedButton>
+      </div>
+      <div className="btns-group">
+        <RoundedButton
+          data-face="F'"
+          className="bg-pegatine-green"
+          onClick={onClick}
+        >
+          F&apos;
+        </RoundedButton>
+        <RoundedButton
+          data-face="D'"
+          className="bg-pegatine-white"
+          onClick={onClick}
+        >
+          D&apos;
+        </RoundedButton>
+        <RoundedButton
+          data-face="R'"
+          className="bg-pegatine-orange"
+          onClick={onClick}
+        >
+          R&apos;
+        </RoundedButton>
+        <RoundedButton
+          data-face="B'"
+          className="bg-pegatine-blue"
+          onClick={onClick}
+        >
+          B&apos;
+        </RoundedButton>
+        <RoundedButton
+          data-face="U'"
+          className="bg-pegatine-yellow"
+          onClick={onClick}
+        >
+          U&apos;
+        </RoundedButton>
+        <RoundedButton
+          data-face="L'"
+          className="bg-pegatine-red"
+          onClick={onClick}
+        >
+          L&apos;
         </RoundedButton>
       </div>
     </div>

@@ -8,9 +8,9 @@ import './style.css'
 export default function IndexPage() {
   const cubeRef = React.useRef()
 
-  function onControlClick(faceName) {
+  function onControlClick(faceName, inversed) {
     if (cubeRef.current) {
-      cubeRef.current.rotate90(faceName)
+      cubeRef.current.rotate(faceName, inversed)
     }
   }
 
