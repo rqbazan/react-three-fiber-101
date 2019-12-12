@@ -1,5 +1,4 @@
 import React from 'react'
-import { animated } from 'react-spring/three'
 import usePegatineTextures from '../hooks/use-pegatine-textures'
 
 /**
@@ -27,7 +26,7 @@ const Box = React.forwardRef((props, ref) => {
   }
 
   return (
-    <animated.mesh ref={ref} position={position}>
+    <mesh ref={ref} position={position}>
       <boxGeometry attach="geometry" args={[1, 1, 1]} />
       <meshBasicMaterial
         attachArray="material"
@@ -53,7 +52,7 @@ const Box = React.forwardRef((props, ref) => {
         attachArray="material"
         {...getMaterialProps(backColor)}
       />
-    </animated.mesh>
+    </mesh>
   )
 })
 
