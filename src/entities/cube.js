@@ -77,9 +77,9 @@ class Cube {
       facePieces[newPosition].key = initialKeyTemp
     }
 
-    // move corners starting with the first one at face[0]
+    // move vertices starting with the first one at facePieces[0]
     moveKeysBetweenPieces(0)
-    // move edges starting with the first one at face[1]
+    // move edges starting with the first one at facePieces[1]
     moveKeysBetweenPieces(1)
   }
 }

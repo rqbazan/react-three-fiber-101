@@ -1,5 +1,6 @@
 import React from 'react'
 import * as THREE from 'three'
+import { useRender } from 'react-three-fiber'
 import useHotKeys from 'hooks/use-hot-keys'
 import useRefs from 'hooks/use-refs'
 import CubeEntity from 'entities/cube'
@@ -7,18 +8,19 @@ import Box from './box'
 
 const cube = new CubeEntity()
 
-function rotateAroundWorldAxis(mesh, point, axis, angle) {
+function rotateAroundWorldAxis(mesh, axis, radians) {
+  const axisVector = new THREE.Vector3(...axis)
   const quaternion = new THREE.Quaternion()
-  quaternion.setFromAxisAngle(axis, angle)
+
+  quaternion.setFromAxisAngle(axisVector, radians)
 
   mesh.quaternion.multiplyQuaternions(quaternion, mesh.quaternion)
-
-  mesh.position.sub(point)
+  mesh.position.sub(axisVector)
   mesh.position.applyQuaternion(quaternion)
-  mesh.position.add(point)
+  mesh.position.add(axisVector)
 }
 
-function getAngle(shiftKeyPressed) {
+function getTargetAngle(shiftKeyPressed) {
   return shiftKeyPressed
     ? CubeEntity.angles.ANTICLOCKWISE
     : CubeEntity.angles.CLOCKWISE
@@ -26,14 +28,22 @@ function getAngle(shiftKeyPressed) {
 
 export default function Cube() {
   const boxRefs = useRefs(26)
+  const moveRef = React.useRef(null)
 
-  function rotate(facePieces, vector, angle) {
+  function rotate(facePieces, axis, angle) {
+    // workaround for not available refs, for now
+    for (let i = 0; i < 9; i += 1) {
+      const piece = facePieces[i]
+      if (!boxRefs[piece.key].current) {
+        return
+      }
+    }
+
     for (let i = 0; i < 9; i += 1) {
       const piece = facePieces[i]
       rotateAroundWorldAxis(
         boxRefs[piece.key].current,
-        new THREE.Vector3(...vector),
-        new THREE.Vector3(...vector),
+        axis,
         THREE.Math.degToRad(angle)
       )
     }
@@ -41,34 +51,117 @@ export default function Cube() {
 
   useHotKeys({
     KeyU: shiftKeyPressed => {
-      const angle = getAngle(shiftKeyPressed)
-      rotate(cube.faces.UP, CubeEntity.axisVectors.Y, -angle)
-      cube.rotate('UP', angle)
+      if (moveRef.current) {
+        return
+      }
+
+      const targetAngle = getTargetAngle(shiftKeyPressed)
+
+      moveRef.current = {
+        targetAngle,
+        currentAngle: 0,
+        axisRotationFactor: -1,
+        faceName: 'UP',
+        axisName: 'Y'
+      }
     },
     KeyD: shiftKeyPressed => {
-      const angle = getAngle(shiftKeyPressed)
-      rotate(cube.faces.DOWN, CubeEntity.axisVectors.Y, angle)
-      cube.rotate('DOWN', angle)
+      if (moveRef.current) {
+        return
+      }
+
+      const targetAngle = getTargetAngle(shiftKeyPressed)
+
+      moveRef.current = {
+        targetAngle,
+        currentAngle: 0,
+        axisRotationFactor: 1,
+        faceName: 'DOWN',
+        axisName: 'Y'
+      }
     },
     KeyR: shiftKeyPressed => {
-      const angle = getAngle(shiftKeyPressed)
-      rotate(cube.faces.RIGHT, CubeEntity.axisVectors.X, -angle)
-      cube.rotate('RIGHT', angle)
+      if (moveRef.current) {
+        return
+      }
+
+      const targetAngle = getTargetAngle(shiftKeyPressed)
+
+      moveRef.current = {
+        targetAngle,
+        currentAngle: 0,
+        axisRotationFactor: -1,
+        faceName: 'RIGHT',
+        axisName: 'X'
+      }
     },
     KeyL: shiftKeyPressed => {
-      const angle = getAngle(shiftKeyPressed)
-      rotate(cube.faces.LEFT, CubeEntity.axisVectors.X, angle)
-      cube.rotate('LEFT', angle)
+      if (moveRef.current) {
+        return
+      }
+
+      const targetAngle = getTargetAngle(shiftKeyPressed)
+
+      moveRef.current = {
+        targetAngle,
+        currentAngle: 0,
+        axisRotationFactor: 1,
+        faceName: 'LEFT',
+        axisName: 'X'
+      }
     },
     KeyF: shiftKeyPressed => {
-      const angle = getAngle(shiftKeyPressed)
-      rotate(cube.faces.FRONT, CubeEntity.axisVectors.Z, -angle)
-      cube.rotate('FRONT', angle)
+      if (moveRef.current) {
+        return
+      }
+
+      const targetAngle = getTargetAngle(shiftKeyPressed)
+
+      moveRef.current = {
+        targetAngle,
+        currentAngle: 0,
+        axisRotationFactor: -1,
+        faceName: 'FRONT',
+        axisName: 'Z'
+      }
     },
     KeyB: shiftKeyPressed => {
-      const angle = getAngle(shiftKeyPressed)
-      rotate(cube.faces.BACK, CubeEntity.axisVectors.Z, angle)
-      cube.rotate('BACK', angle)
+      if (moveRef.current) {
+        return
+      }
+
+      const targetAngle = getTargetAngle(shiftKeyPressed)
+
+      moveRef.current = {
+        targetAngle,
+        currentAngle: 0,
+        axisRotationFactor: 1,
+        faceName: 'BACK',
+        axisName: 'Z'
+      }
+    }
+  })
+
+  useRender(() => {
+    const velocity = 6
+    const move = moveRef.current
+
+    if (move) {
+      const { faceName, axisName, axisRotationFactor, targetAngle } = move
+
+      if (move.currentAngle !== move.targetAngle) {
+        rotate(
+          cube.faces[faceName],
+          CubeEntity.axisVectors[axisName],
+          velocity * axisRotationFactor
+        )
+
+        const incFactor = targetAngle > 0 ? 1 : -1
+        moveRef.current.currentAngle += velocity * incFactor
+      } else {
+        cube.rotate(faceName, targetAngle)
+        moveRef.current = null
+      }
     }
   })
 
