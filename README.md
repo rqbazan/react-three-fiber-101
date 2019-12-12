@@ -5,8 +5,8 @@ A Rubik's cube made with
 
 ### How to run the project? 💻
 
-1. Execute `yarn develop`
-2. Go to http://localhost:8000
+1. Execute `yarn dev`
+2. Go to http://localhost:3000
 
 ### Motivation 💪
 

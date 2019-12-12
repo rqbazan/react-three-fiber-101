@@ -1,10 +1,22 @@
+@tailwind components;
+@tailwind utilities;
+
+/* purgecss start ignore */
+@tailwind base;
+
 html,
 body,
 #___gatsby,
 canvas {
-  box-sizing: border-box;
-  height: 100vh;
-  margin: 0;
-  padding: 0;
-  width: 100%;
+  @apply w-full h-screen m-0 p-0;
+  overflow: hidden;
 }
+
+body {
+  background: radial-gradient(
+    circle,
+    theme('colors.gray.100') 0%,
+    theme('colors.gray.400') 100%
+  );
+}
+/* purgecss end ignore */
