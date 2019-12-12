@@ -1,5 +1,5 @@
 import React from 'react'
-import Button from '../button'
+import RoundedButton from '../rounded-button'
 import './style.css'
 
 export default function CubeControls({ onControlClick }) {
@@ -10,26 +10,50 @@ export default function CubeControls({ onControlClick }) {
   return (
     <div className="btns-container">
       <div className="flex flex-col md:flex-row btns-group">
-        <Button data-face="F" className="bg-pegatine-green" onClick={onClick}>
+        <RoundedButton
+          data-face="F"
+          className="bg-pegatine-green"
+          onClick={onClick}
+        >
           F
-        </Button>
-        <Button data-face="D" className="bg-pegatine-white" onClick={onClick}>
+        </RoundedButton>
+        <RoundedButton
+          data-face="D"
+          className="bg-pegatine-white"
+          onClick={onClick}
+        >
           D
-        </Button>
-        <Button data-face="R" className="bg-pegatine-orange" onClick={onClick}>
+        </RoundedButton>
+        <RoundedButton
+          data-face="R"
+          className="bg-pegatine-orange"
+          onClick={onClick}
+        >
           R
-        </Button>
+        </RoundedButton>
       </div>
       <div className="flex flex-col md:flex-row btns-group">
-        <Button data-face="B" className="bg-pegatine-blue" onClick={onClick}>
+        <RoundedButton
+          data-face="B"
+          className="bg-pegatine-blue"
+          onClick={onClick}
+        >
           B
-        </Button>
-        <Button data-face="U" className="bg-pegatine-yellow" onClick={onClick}>
+        </RoundedButton>
+        <RoundedButton
+          data-face="U"
+          className="bg-pegatine-yellow"
+          onClick={onClick}
+        >
           U
-        </Button>
-        <Button data-face="L" className="bg-pegatine-red" onClick={onClick}>
+        </RoundedButton>
+        <RoundedButton
+          data-face="L"
+          className="bg-pegatine-red"
+          onClick={onClick}
+        >
           L
-        </Button>
+        </RoundedButton>
       </div>
     </div>
   )

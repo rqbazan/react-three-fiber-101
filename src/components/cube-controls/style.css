@@ -16,11 +16,13 @@
 
 @media (min-width: theme('screens.md')) {
   .btns-container {
-    @apply w-full justify-center px-0 mb-10;
+    @apply w-full justify-center px-0 items-center;
+    --mb: theme('height.6');
 
+    bottom: 0;
+    height: calc(var(--rounded-button-size) + var(--mb) * 2);
     left: 50%;
     top: unset;
-    bottom: 0;
     transform: translate(-50%, 0);
   }
 

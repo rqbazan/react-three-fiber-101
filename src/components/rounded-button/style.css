@@ -1,0 +1,22 @@
+:root {
+  --rounded-button-size: theme('height.12');
+}
+
+.button {
+  @apply font-bold text-lg;
+  @apply rounded-full;
+  @apply border-solid border-4 border-black;
+  @apply select-none;
+
+  height: var(--rounded-button-size);
+  width: var(--rounded-button-size);
+  transition: transform 350ms cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.button:focus {
+  @apply outline-none;
+}
+
+.button:hover {
+  transform: scale(1.13);
+}
