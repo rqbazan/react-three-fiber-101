@@ -47,7 +47,7 @@ function rotateAroundWorldAxis(mesh, axis, radians) {
   mesh.position.add(axisVector)
 }
 
-export default function Cube() {
+const Cube = React.forwardRef((props, ref) => {
   const boxRefs = useRefs(26)
   const moveRef = React.useRef(null)
 
@@ -121,6 +121,12 @@ export default function Cube() {
       moveRef.current.currentAngle += velocity * targetSign
     }
   })
+
+  React.useImperativeHandle(ref, () => ({
+    rotate(faceName) {
+      onKeyPress(false, faceName)
+    }
+  }))
 
   return (
     <React.Suspense fallback={null}>
@@ -260,4 +266,6 @@ export default function Cube() {
       />
     </React.Suspense>
   )
-}
+})
+
+export default Cube
