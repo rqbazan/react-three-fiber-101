@@ -10,27 +10,27 @@ const cube = new CubeEntity()
 
 const facesMeta = {
   U: {
-    axis: 'Y',
+    axis: CubeEntity.axis.Y,
     inverse: true
   },
   D: {
-    axis: 'Y',
+    axis: CubeEntity.axis.Y,
     inverse: false
   },
   R: {
-    axis: 'X',
+    axis: CubeEntity.axis.X,
     inverse: true
   },
   L: {
-    axis: 'X',
+    axis: CubeEntity.axis.X,
     inverse: false
   },
   F: {
-    axis: 'Z',
+    axis: CubeEntity.axis.Z,
     inverse: true
   },
   B: {
-    axis: 'Z',
+    axis: CubeEntity.axis.Z,
     inverse: false
   }
 }
@@ -47,11 +47,13 @@ function rotateAroundWorldAxis(mesh, axis, radians) {
   mesh.position.add(axisVector)
 }
 
-const Cube = React.forwardRef((props, ref) => {
+const Cube = React.forwardRef((_, ref) => {
   const boxRefs = useRefs(26)
   const moveRef = React.useRef(null)
 
-  function rotateMeshs(facePieces, axis, angle) {
+  function rotateMeshs(faceName, angle) {
+    const facePieces = cube.faces[faceName]
+
     // workaround for not available refs, for now
     for (let i = 0; i < 9; i += 1) {
       const piece = facePieces[i]
@@ -64,7 +66,7 @@ const Cube = React.forwardRef((props, ref) => {
       const piece = facePieces[i]
       rotateAroundWorldAxis(
         boxRefs[piece.key].current,
-        axis,
+        facesMeta[faceName].axis,
         THREE.Math.degToRad(angle)
       )
     }
@@ -112,18 +114,14 @@ const Cube = React.forwardRef((props, ref) => {
       const targetSign = Math.sign(targetAngle)
       const rotationFactor = faceMeta.inverse ? -targetSign : targetSign
 
-      rotateMeshs(
-        cube.faces[faceName],
-        CubeEntity.axisVectors[faceMeta.axis],
-        velocity * rotationFactor
-      )
+      rotateMeshs(faceName, velocity * rotationFactor)
 
       moveRef.current.currentAngle += velocity * targetSign
     }
   })
 
   React.useImperativeHandle(ref, () => ({
-    rotate(faceName) {
+    rotate90(faceName) {
       onKeyPress(false, faceName)
     }
   }))

@@ -2,12 +2,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        red: '#FF0000',
-        blue: '#3D81F6',
-        green: '#009D54',
-        orange: '#FF6C00',
-        yellow: '#FDCC09',
-        white: '#FFFFFF'
+        'pegatine-red': '#FF0000',
+        'pegatine-blue': '#3D81F6',
+        'pegatine-green': '#009D54',
+        'pegatine-orange': '#FF6C00',
+        'pegatine-yellow': '#FDCC09',
+        'pegatine-white': '#FFFFFF'
       }
     }
   },

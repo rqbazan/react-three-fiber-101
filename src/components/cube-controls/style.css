@@ -1,0 +1,38 @@
+.btns-container {
+  @apply w-full flex fixed justify-between px-3;
+
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.btns-group {
+  @apply flex flex-col;
+}
+
+.btns-group > button:not(:last-child) {
+  @apply mb-3;
+}
+
+@media (min-width: theme('screens.md')) {
+  .btns-container {
+    @apply w-full justify-center px-0 mb-10;
+
+    left: 50%;
+    top: unset;
+    bottom: 0;
+    transform: translate(-50%, 0);
+  }
+
+  .btns-group {
+    @apply flex-row;
+  }
+
+  .btns-group > button:not(:last-child) {
+    @apply mb-0 mr-3;
+  }
+
+  .btns-group:first-child {
+    @apply mr-3;
+  }
+}
