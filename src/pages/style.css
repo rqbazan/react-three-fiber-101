@@ -1,5 +1,7 @@
 @tailwind components;
 @tailwind utilities;
+
+/* purgecss start ignore */
 @tailwind base;
 
 html,
@@ -47,3 +49,4 @@ canvas {
     @apply mr-3;
   }
 }
+/* purgecss end ignore */
