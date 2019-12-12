@@ -149,19 +149,16 @@ export default function Cube() {
     if (move) {
       const { faceName, axisName, axisRotationFactor, targetAngle } = move
 
-      if (move.currentAngle !== move.targetAngle) {
-        rotate(
-          cube.faces[faceName],
-          CubeEntity.axisVectors[axisName],
-          velocity * axisRotationFactor
-        )
-
-        const incFactor = targetAngle > 0 ? 1 : -1
-        moveRef.current.currentAngle += velocity * incFactor
-      } else {
+      if (move.currentAngle === move.targetAngle) {
         cube.rotate(faceName, targetAngle)
         moveRef.current = null
+        return
       }
+
+      const newAngle = velocity * (axisRotationFactor * Math.sign(targetAngle))
+      rotate(cube.faces[faceName], CubeEntity.axisVectors[axisName], newAngle)
+
+      moveRef.current.currentAngle += velocity * Math.sign(targetAngle)
     }
   })
 
