@@ -1,5 +1,5 @@
 .btns-container {
-  @apply w-full flex fixed justify-between px-3;
+  @apply w-full flex absolute justify-between px-3;
 }
 
 .btns-group {

@@ -1,9 +1,11 @@
 .button {
-  @apply font-bold text-lg;
-  @apply rounded-full h-10 w-10;
-  @apply border-solid border-4 border-black;
+  @apply font-bold text-base;
+  @apply px-6 h-8;
+  @apply border-solid border-4 border-black shadow-lg;
   @apply select-none;
+  @apply bg-black text-white;
 
+  border-radius: 1rem;
   transition: transform 350ms cubic-bezier(0.86, 0, 0.07, 1);
 }
 
