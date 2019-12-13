@@ -8,28 +8,28 @@ test('rotate cube R', t => {
 
   t.deepEqual(
     cube.faces.R.map(x => x.key),
-    [8, 5, 2, 16, 13, 11, 25, 22, 19]
+    [8, 5, 2, 17, 14, 11, 26, 23, 20]
   )
 
   t.deepEqual(
     cube.faces.F.map(x => x.key),
-    [0, 1, 8, 3, 4, 16, 6, 7, 25]
+    [0, 1, 8, 3, 4, 17, 6, 7, 26]
   )
 })
 
 test("rotate cube R'", t => {
   const cube = new Cube()
 
-  cube.rotate('R', Cube.angles.ANTICLOCKWISE)
+  cube.rotate('R', Cube.angles.COUNTERCLOCKWISE)
 
   t.deepEqual(
     cube.faces.R.map(x => x.key),
-    [19, 22, 25, 11, 13, 16, 2, 5, 8]
+    [20, 23, 26, 11, 14, 17, 2, 5, 8]
   )
 
   t.deepEqual(
     cube.faces.F.map(x => x.key),
-    [0, 1, 19, 3, 4, 11, 6, 7, 2]
+    [0, 1, 20, 3, 4, 11, 6, 7, 2]
   )
 })
 
@@ -40,27 +40,27 @@ test('rotate cube L', t => {
 
   t.deepEqual(
     cube.faces.L.map(x => x.key),
-    [23, 20, 17, 14, 12, 9, 6, 3, 0]
+    [24, 21, 18, 15, 12, 9, 6, 3, 0]
   )
 
   t.deepEqual(
     cube.faces.F.map(x => x.key),
-    [17, 1, 2, 9, 4, 5, 0, 7, 8]
+    [18, 1, 2, 9, 4, 5, 0, 7, 8]
   )
 })
 
 test("rotate cube L'", t => {
   const cube = new Cube()
 
-  cube.rotate('L', Cube.angles.ANTICLOCKWISE)
+  cube.rotate('L', Cube.angles.COUNTERCLOCKWISE)
 
   t.deepEqual(
     cube.faces.L.map(x => x.key),
-    [0, 3, 6, 9, 12, 14, 17, 20, 23]
+    [0, 3, 6, 9, 12, 15, 18, 21, 24]
   )
 
   t.deepEqual(
     cube.faces.F.map(x => x.key),
-    [6, 1, 2, 14, 4, 5, 23, 7, 8]
+    [6, 1, 2, 15, 4, 5, 24, 7, 8]
   )
 })

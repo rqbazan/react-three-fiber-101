@@ -1,6 +1,6 @@
 .button {
   @apply font-bold text-lg;
-  @apply rounded-full h-12 w-12;
+  @apply rounded-full h-10 w-10;
   @apply border-solid border-4 border-black;
   @apply select-none;
 

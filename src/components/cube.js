@@ -32,6 +32,18 @@ const facesMeta = {
   B: {
     axis: CubeEntity.axis.Z,
     inverse: false
+  },
+  M: {
+    axis: CubeEntity.axis.X,
+    inverse: false
+  },
+  E: {
+    axis: CubeEntity.axis.Y,
+    inverse: false
+  },
+  S: {
+    axis: CubeEntity.axis.Z,
+    inverse: true
   }
 }
 
@@ -48,7 +60,7 @@ function rotateAroundWorldAxis(mesh, axis, radians) {
 }
 
 const Cube = React.forwardRef((_, ref) => {
-  const boxRefs = useRefs(26)
+  const boxRefs = useRefs(27)
   const moveRef = React.useRef(null)
 
   function rotateMeshs(faceName, angle) {
@@ -78,7 +90,7 @@ const Cube = React.forwardRef((_, ref) => {
     }
 
     const targetAngle = shiftKeyPressed
-      ? CubeEntity.angles.ANTICLOCKWISE
+      ? CubeEntity.angles.COUNTERCLOCKWISE
       : CubeEntity.angles.CLOCKWISE
 
     moveRef.current = {
@@ -94,7 +106,10 @@ const Cube = React.forwardRef((_, ref) => {
     KeyR: onKeyPress,
     KeyL: onKeyPress,
     KeyF: onKeyPress,
-    KeyB: onKeyPress
+    KeyB: onKeyPress,
+    KeyM: onKeyPress,
+    KeyE: onKeyPress,
+    KeyS: onKeyPress
   })
 
   useRender(() => {
@@ -195,68 +210,69 @@ const Cube = React.forwardRef((_, ref) => {
         rightColor="orange"
       />
       <Box ref={boxRefs[12]} position={[-1, 0, 0]} leftColor="red" />
-      <Box ref={boxRefs[13]} position={[1, 0, 0]} rightColor="orange" />
+      <Box ref={boxRefs[13]} position={[0, 0, 0]} />
+      <Box ref={boxRefs[14]} position={[1, 0, 0]} rightColor="orange" />
       <Box
-        ref={boxRefs[14]}
+        ref={boxRefs[15]}
         position={[-1, -1, 0]}
         leftColor="red"
         downColor="white"
       />
-      <Box ref={boxRefs[15]} position={[0, -1, 0]} downColor="white" />
+      <Box ref={boxRefs[16]} position={[0, -1, 0]} downColor="white" />
       <Box
-        ref={boxRefs[16]}
+        ref={boxRefs[17]}
         position={[1, -1, 0]}
         rightColor="orange"
         downColor="white"
       />
       <Box
-        ref={boxRefs[17]}
+        ref={boxRefs[18]}
         position={[-1, 1, -1]}
         backColor="blue"
         upColor="yellow"
         leftColor="red"
       />
       <Box
-        ref={boxRefs[18]}
+        ref={boxRefs[19]}
         position={[0, 1, -1]}
         backColor="blue"
         upColor="yellow"
       />
       <Box
-        ref={boxRefs[19]}
+        ref={boxRefs[20]}
         position={[1, 1, -1]}
         backColor="blue"
         upColor="yellow"
         rightColor="orange"
       />
       <Box
-        ref={boxRefs[20]}
+        ref={boxRefs[21]}
         position={[-1, 0, -1]}
         backColor="blue"
         leftColor="red"
       />
-      <Box ref={boxRefs[21]} position={[0, 0, -1]} backColor="blue" />
+      <Box ref={boxRefs[22]} position={[0, 0, -1]} backColor="blue" />
       <Box
-        ref={boxRefs[22]}
+        ref={boxRefs[23]}
         position={[1, 0, -1]}
         backColor="blue"
         rightColor="orange"
       />
       <Box
-        ref={boxRefs[23]}
+        ref={boxRefs[24]}
         position={[-1, -1, -1]}
         leftColor="red"
         backColor="blue"
         downColor="white"
       />
       <Box
-        ref={boxRefs[24]}
+        ref={boxRefs[25]}
         position={[0, -1, -1]}
         backColor="blue"
         downColor="white"
       />
       <Box
-        ref={boxRefs[25]}
+        ref={boxRefs[26]}
         position={[1, -1, -1]}
         rightColor="orange"
         backColor="blue"
