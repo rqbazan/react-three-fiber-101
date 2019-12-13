@@ -20,3 +20,7 @@
 .button[data-loading='true'] span:first-child {
   opacity: 0;
 }
+
+.button span {
+  @apply pointer-events-none;
+}
