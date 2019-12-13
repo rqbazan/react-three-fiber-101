@@ -1,8 +1,8 @@
 .button {
-  @apply font-bold text-base;
+  @apply flex items-center justify-center font-bold text-base;
   @apply px-6 h-8;
   @apply shadow-lg;
-  @apply select-none;
+  @apply relative select-none;
   @apply bg-black text-white;
 
   border-radius: 1rem;
@@ -15,4 +15,8 @@
 
 .button:hover {
   transform: scale(1.13);
+}
+
+.button[data-loading='true'] span:first-child {
+  opacity: 0;
 }
