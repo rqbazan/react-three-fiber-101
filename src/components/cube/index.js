@@ -4,7 +4,7 @@ import { useRender } from 'react-three-fiber'
 import useHotKeys from 'hooks/use-hot-keys'
 import useRefs from 'hooks/use-refs'
 import CubeEntity from 'entities/cube'
-import Box from './box'
+import Box from '../box'
 
 const cube = new CubeEntity()
 

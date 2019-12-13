@@ -1,0 +1,22 @@
+.button {
+  @apply flex items-center justify-center font-bold text-base;
+  @apply px-6 h-8;
+  @apply shadow-lg;
+  @apply relative select-none;
+  @apply bg-black text-white;
+
+  border-radius: 1rem;
+  transition: transform 350ms cubic-bezier(0.86, 0, 0.07, 1);
+}
+
+.button:focus {
+  @apply outline-none;
+}
+
+.button:hover {
+  transform: scale(1.13);
+}
+
+.button[data-loading='true'] span:first-child {
+  opacity: 0;
+}

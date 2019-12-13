@@ -1,6 +1,6 @@
 import React from 'react'
 import RoundedButton from '../rounded-button'
-import './style.css'
+import styles from './styles.module.css'
 
 export default function CubeControls({ onControlClick }) {
   function onClick(e) {
@@ -10,8 +10,8 @@ export default function CubeControls({ onControlClick }) {
   }
 
   return (
-    <div className="btns-container center">
-      <div className="btns-group">
+    <div className={`${styles.btnsContainer} ${styles.center}`}>
+      <div className={styles.btnsGroup}>
         <RoundedButton
           data-face="F"
           className="bg-pegatine-green"
@@ -76,7 +76,7 @@ export default function CubeControls({ onControlClick }) {
           E
         </RoundedButton>
       </div>
-      <div className="btns-group">
+      <div className={styles.btnsGroup}>
         <RoundedButton
           data-face="F'"
           className="bg-pegatine-green"

@@ -1,3 +1,3 @@
 module.exports = {
-  plugins: ['gatsby-plugin-resolve-src', 'gatsby-plugin-postcss']
+  plugins: ['gatsby-plugin-postcss', 'gatsby-plugin-svgr-loader']
 }
