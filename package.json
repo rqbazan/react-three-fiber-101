@@ -55,6 +55,7 @@
     "gatsby": "^2.18.11",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-hook-form": "^3.29.0",
     "react-three-fiber": "^3.0.16",
     "tailwindcss": "^1.1.4",
     "three": "^0.111.0"
