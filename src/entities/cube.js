@@ -1,22 +1,36 @@
 import getNewPositions from 'utils/get-new-positions'
 import Piece from './piece'
 
+// prettier-ignore
+const pieceNames = [
+  'ULF', 'UF', 'URF',
+  'FL', 'F', 'FR',
+  'DLF', 'DF', 'DRF',
+
+  'UL', 'U', 'UR',
+  'L', 'C', 'R',
+  'DL', 'D', 'DR',
+
+  'ULB', 'UB', 'URB',
+  'BL', 'B', 'BR',
+  'DLB', 'DB', 'DRB'
+]
+
+const toObjectReduceParams = [(obj, current) => Object.assign(obj, current), {}]
+
 class Cube {
-  constructor() {
-    // prettier-ignore
-    this.pieces = {
-      ULF: new Piece(0), UF: new Piece(1), URF: new Piece(2),
-      FL:  new Piece(3), F:  new Piece(4), FR:  new Piece(5),
-      DLF: new Piece(6), DF: new Piece(7), DRF: new Piece(8),
+  constructor(cubeState = {}) {
+    const createPiece = (name, defaultKey) => {
+      if (!cubeState.pieceKeyByName) {
+        return new Piece(defaultKey)
+      }
 
-      UL: new Piece(9),  U: new Piece(10), UR: new Piece(11),
-      L:  new Piece(12), C: new Piece(13), R:  new Piece(14),
-      DL: new Piece(15), D: new Piece(16), DR: new Piece(17),
-
-      ULB: new Piece(18), UB: new Piece(19), URB: new Piece(20),
-      BL:  new Piece(21), B:  new Piece(22), BR:  new Piece(23),
-      DLB: new Piece(24), DB: new Piece(25), DRB: new Piece(26)
+      return new Piece(cubeState.pieceKeyByName[name])
     }
+
+    this.pieces = pieceNames
+      .map((name, key) => ({ [name]: createPiece(name, key) }))
+      .reduce(...toObjectReduceParams)
 
     // prettier-ignore
     this.faces = {
@@ -96,6 +110,14 @@ class Cube {
     moveKeysBetweenPieces(0)
     // move edges starting with the first one at facePieces[1]
     moveKeysBetweenPieces(1)
+  }
+
+  getState() {
+    const pieceKeyByName = pieceNames
+      .map(pieceName => ({ [pieceName]: this.pieces[pieceName] }))
+      .reduce(...toObjectReduceParams)
+
+    return { pieceKeyByName }
   }
 }
 
