@@ -10,12 +10,12 @@ class Cube {
       DLF: new Piece(6), DF: new Piece(7), DRF: new Piece(8),
 
       UL: new Piece(9),  U: new Piece(10), UR: new Piece(11),
-      L:  new Piece(12),   /* (0,0,0) */   R:  new Piece(13),
-      DL: new Piece(14), D: new Piece(15), DR: new Piece(16),
+      L:  new Piece(12), C: new Piece(13), R:  new Piece(14),
+      DL: new Piece(15), D: new Piece(16), DR: new Piece(17),
 
-      ULB: new Piece(17), UB: new Piece(18), URB: new Piece(19),
-      BL:  new Piece(20), B:  new Piece(21), BR:  new Piece(22),
-      DLB: new Piece(23), DB: new Piece(24), DRB: new Piece(25)
+      ULB: new Piece(18), UB: new Piece(19), URB: new Piece(20),
+      BL:  new Piece(21), B:  new Piece(22), BR:  new Piece(23),
+      DLB: new Piece(24), DB: new Piece(25), DRB: new Piece(26)
     }
 
     // prettier-ignore
@@ -49,6 +49,21 @@ class Cube {
         this.pieces.DLF, this.pieces.DF, this.pieces.DRF,
         this.pieces.DL, this.pieces.D, this.pieces.DR,
         this.pieces.DLB, this.pieces.DB, this.pieces.DRB,
+      ],
+      M: [
+        this.pieces.UB, this.pieces.U, this.pieces.UF,
+        this.pieces.B, this.pieces.C, this.pieces.F,
+        this.pieces.DB, this.pieces.D, this.pieces.DF
+      ],
+      E: [
+        this.pieces.FL, this.pieces.F, this.pieces.FR,
+        this.pieces.L, this.pieces.C, this.pieces.R,
+        this.pieces.BL, this.pieces.B, this.pieces.BR,
+      ],
+      S: [
+        this.pieces.UL, this.pieces.U, this.pieces.UR,
+        this.pieces.L, this.pieces.C, this.pieces.R,
+        this.pieces.DL, this.pieces.D, this.pieces.DR
       ]
     }
   }
@@ -59,7 +74,7 @@ class Cube {
     const newPositions =
       degrees === 90
         ? Cube.clockwiseNewPositions
-        : Cube.anticlockwiseNewPositions
+        : Cube.counterClockwiseNewPositions
 
     function moveKeysBetweenPieces(initialPosition) {
       function recursiveMove(position) {
@@ -94,7 +109,7 @@ Cube.size = 3
 
 Cube.angles = {
   CLOCKWISE: 90,
-  ANTICLOCKWISE: -90
+  COUNTERCLOCKWISE: -90
 }
 
 Cube.axis = {
@@ -105,9 +120,9 @@ Cube.axis = {
 
 Cube.clockwiseNewPositions = getNewPositions(Cube.size, Cube.angles.CLOCKWISE)
 
-Cube.anticlockwiseNewPositions = getNewPositions(
+Cube.counterClockwiseNewPositions = getNewPositions(
   Cube.size,
-  Cube.angles.ANTICLOCKWISE
+  Cube.angles.COUNTERCLOCKWISE
 )
 
 export default Cube

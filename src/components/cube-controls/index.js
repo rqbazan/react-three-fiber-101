@@ -54,6 +54,27 @@ export default function CubeControls({ onControlClick }) {
         >
           L
         </RoundedButton>
+        <RoundedButton
+          data-face="M"
+          className="bg-black text-white"
+          onClick={onClick}
+        >
+          M
+        </RoundedButton>
+        <RoundedButton
+          data-face="S"
+          className="bg-black text-white"
+          onClick={onClick}
+        >
+          S
+        </RoundedButton>
+        <RoundedButton
+          data-face="E"
+          className="bg-black text-white"
+          onClick={onClick}
+        >
+          E
+        </RoundedButton>
       </div>
       <div className="btns-group">
         <RoundedButton
@@ -97,6 +118,27 @@ export default function CubeControls({ onControlClick }) {
           onClick={onClick}
         >
           L&apos;
+        </RoundedButton>
+        <RoundedButton
+          data-face="M'"
+          className="bg-black text-white"
+          onClick={onClick}
+        >
+          M&apos;
+        </RoundedButton>
+        <RoundedButton
+          data-face="S'"
+          className="bg-black text-white"
+          onClick={onClick}
+        >
+          S&apos;
+        </RoundedButton>
+        <RoundedButton
+          data-face="E'"
+          className="bg-black text-white"
+          onClick={onClick}
+        >
+          E&apos;
         </RoundedButton>
       </div>
     </div>
