@@ -19,13 +19,33 @@ const pieceNames = [
 const toObjectReduceParams = [(obj, current) => Object.assign(obj, current), {}]
 
 class Cube {
-  constructor(cubeState = {}) {
-    const createPiece = (name, defaultKey) => {
-      if (!cubeState.pieceKeyByName) {
-        return new Piece(defaultKey)
-      }
+  static size = 3
 
-      return new Piece(cubeState.pieceKeyByName[name])
+  static angles = {
+    CLOCKWISE: 90,
+    COUNTERCLOCKWISE: -90
+  }
+
+  static axis = {
+    X: [1, 0, 0],
+    Y: [0, 1, 0],
+    Z: [0, 0, 1]
+  }
+
+  static clockwiseNewPositions = getNewPositions(
+    Cube.size,
+    Cube.angles.CLOCKWISE
+  )
+
+  static counterClockwiseNewPositions = getNewPositions(
+    Cube.size,
+    Cube.angles.COUNTERCLOCKWISE
+  )
+
+  constructor(cubeState) {
+    const createPiece = (name, defaultKey) => {
+      const key = cubeState?.pieceKeyByName?.[name] ?? defaultKey
+      return new Piece(key)
     }
 
     this.pieces = pieceNames
@@ -120,31 +140,5 @@ class Cube {
     return { pieceKeyByName }
   }
 }
-
-/**
- * these fields should be static fields, but there is a issue with esm
- * and avajs depends on it.
- *
- * https://github.com/standard-things/esm/issues/858
- */
-Cube.size = 3
-
-Cube.angles = {
-  CLOCKWISE: 90,
-  COUNTERCLOCKWISE: -90
-}
-
-Cube.axis = {
-  X: [1, 0, 0],
-  Y: [0, 1, 0],
-  Z: [0, 0, 1]
-}
-
-Cube.clockwiseNewPositions = getNewPositions(Cube.size, Cube.angles.CLOCKWISE)
-
-Cube.counterClockwiseNewPositions = getNewPositions(
-  Cube.size,
-  Cube.angles.COUNTERCLOCKWISE
-)
 
 export default Cube
