@@ -1,7 +1,7 @@
 .button {
   @apply font-bold text-base;
   @apply px-6 h-8;
-  @apply border-solid border-4 border-black shadow-lg;
+  @apply shadow-lg;
   @apply select-none;
   @apply bg-black text-white;
 

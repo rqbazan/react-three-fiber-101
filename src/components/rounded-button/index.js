@@ -5,7 +5,7 @@ export default function RoundedButton({ className = '', ...props }) {
   return (
     <Button
       type="button"
-      className={`rounded-full h-10 w-10 p-0 text-black ${className}`}
+      className={`rounded-full border-solid border-4 border-black h-10 w-10 p-0 text-black ${className}`}
       {...props}
     />
   )
