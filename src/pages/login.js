@@ -12,6 +12,7 @@ function LoginModal() {
     try {
       const { email, password } = formValues
       await firebase.logIn(email, password)
+      navigate('/')
     } catch (error) {
       console.error('[LoginModal]', error)
       if (error.code === 'auth/wrong-password') {
