@@ -1,33 +1,11 @@
 import React from 'react'
-import { Link } from 'gatsby'
 import { Canvas } from 'react-three-fiber'
 import FirebaseProvider from 'components/firebase-provider'
 import Cube from 'components/cube'
 import OrbitControls from 'components/orbit-controls'
 import CubeControls from 'components/cube-controls'
-import Button from 'components/button'
-import useAuth from 'hooks/use-auth'
+import AuthButton from 'components/auth-button'
 import './index.css'
-
-function AuthButton() {
-  const auth = useAuth()
-
-  if (!auth) {
-    return <Button isLoading />
-  }
-
-  const { isLogged, logOut } = auth
-
-  if (isLogged) {
-    return <Button onClick={logOut}>Log Out</Button>
-  }
-
-  return (
-    <Link to="/login">
-      <Button>Log In</Button>
-    </Link>
-  )
-}
 
 export default function IndexPage() {
   const cubeRef = React.useRef()
