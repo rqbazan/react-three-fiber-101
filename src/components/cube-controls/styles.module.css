@@ -1,12 +1,12 @@
-.btns-container {
+.btnsContainer {
   @apply w-full flex absolute justify-between px-3;
 }
 
-.btns-group {
+.btnsGroup {
   @apply flex flex-col;
 }
 
-.btns-group > button:not(:last-child) {
+.btnsGroup > button:not(:last-child) {
   @apply mb-3;
 }
 
@@ -17,19 +17,19 @@
 }
 
 @media (min-width: theme('screens.md')) {
-  .btns-container {
+  .btnsContainer {
     @apply w-full justify-center px-0 items-center flex-col py-4;
   }
 
-  .btns-group {
+  .btnsGroup {
     @apply flex-row;
   }
 
-  .btns-group:first-child {
+  .btnsGroup:first-child {
     @apply mb-3;
   }
 
-  .btns-group > button:not(:last-child) {
+  .btnsGroup > button:not(:last-child) {
     @apply mb-0 mr-3;
   }
 

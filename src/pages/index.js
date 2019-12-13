@@ -1,10 +1,11 @@
 import React from 'react'
+import { Link } from 'gatsby'
 import { Canvas } from 'react-three-fiber'
 import Cube from 'components/cube'
 import OrbitControls from 'components/orbit-controls'
 import CubeControls from 'components/cube-controls'
 import Button from 'components/button'
-import './style.css'
+import './index.css'
 
 export default function IndexPage() {
   const cubeRef = React.useRef()
@@ -19,7 +20,9 @@ export default function IndexPage() {
     <div className="flex justify-center">
       <div className="w-full md:max-w-5xl relative">
         <header className="flex absolute w-full p-3 items-center justify-end z-10">
-          <Button>Log In</Button>
+          <Link to="/login">
+            <Button>Log In</Button>
+          </Link>
         </header>
         <Canvas camera={{ position: [6, 6, 6] }}>
           <OrbitControls />

@@ -1,6 +1,12 @@
 import React from 'react'
-import './style.css'
+import styles from './styles.module.css'
 
 export default function Button({ className = '', ...props }) {
-  return <button type="button" className={`button ${className}`} {...props} />
+  return (
+    <button
+      type="button"
+      className={`${styles.button} ${className}`}
+      {...props}
+    />
+  )
 }

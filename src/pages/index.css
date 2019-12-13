@@ -19,4 +19,14 @@ body {
     theme('colors.gray.400') 100%
   );
 }
+
+::selection {
+  background-color: theme('colors.pegatine-yellow');
+  color: black;
+}
+
+*:focus {
+  outline: none;
+}
+
 /* purgecss end ignore */
