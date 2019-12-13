@@ -23,7 +23,7 @@ export default function IndexPage() {
           <header className="flex absolute w-full p-3 items-center justify-end z-10">
             <AuthButton />
           </header>
-          <Canvas camera={{ position: [6, 6, 6] }}>
+          <Canvas className="z-10" camera={{ position: [6, 6, 6] }}>
             <OrbitControls />
             <Cube ref={cubeRef} />
           </Canvas>
