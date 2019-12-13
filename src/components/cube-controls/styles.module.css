@@ -1,42 +1,45 @@
-.btnsContainer {
-  @apply w-full flex absolute justify-between px-3;
+.container {
+  @apply flex flex-col fixed;
 }
 
-.btnsGroup {
-  @apply flex flex-col;
+.left {
+  left: theme('spacing.4');
+  top: 50%;
+  transform: translate(0, -50%);
+}
+.right {
+  right: theme('spacing.4');
+  top: 50%;
+  transform: translate(0, -50%);
 }
 
-.btnsGroup > button:not(:last-child) {
+.container > button:not(:last-child) {
   @apply mb-3;
 }
 
-.center {
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
 @media (min-width: theme('screens.md')) {
-  .btnsContainer {
-    @apply w-full justify-center px-0 items-center flex-col py-4;
-  }
-
-  .btnsGroup {
+  .container {
     @apply flex-row;
   }
 
-  .btnsGroup:first-child {
-    @apply mb-3;
-  }
-
-  .btnsGroup > button:not(:last-child) {
+  .container > button:not(:last-child) {
     @apply mb-0 mr-3;
   }
 
-  .center {
+  .left {
     bottom: 0;
     left: 50%;
     top: unset;
+    bottom: calc(theme('height.10') + theme('spacing.4') * 2);
+    transform: translate(-50%, 0);
+  }
+
+  .right {
+    bottom: 0;
+    left: 50%;
+    right: unset;
+    top: unset;
+    bottom: theme('spacing.4');
     transform: translate(-50%, 0);
   }
 }
