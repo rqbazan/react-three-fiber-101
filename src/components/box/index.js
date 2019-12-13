@@ -1,5 +1,5 @@
 import React from 'react'
-import usePegatineTextures from '../hooks/use-pegatine-textures'
+import usePegatineTextures from 'hooks/use-pegatine-textures'
 
 /**
  * material faces: [RIGHT, LEFT, UP, DOWN, FRONT, BACK]
