@@ -4,8 +4,27 @@ import FieldError from '../field-error'
 import Input from '../input'
 import Button from '../button'
 
-export default function LoginForm({ onSubmit }) {
-  const { register, errors, handleSubmit, formState, setError } = useForm()
+export interface LoginFormValues {
+  email: string
+  password: string
+  form: boolean
+}
+
+// type SetError = Pick<ReturnType<typeof useForm>, 'setError'>['setError']
+export type SetError = (
+  name: keyof LoginFormValues,
+  type: string,
+  message?: string
+) => void
+
+interface LoginFormProps {
+  onSubmit(formValues: LoginFormValues, setError: SetError): void
+}
+
+export default function LoginForm({ onSubmit }: LoginFormProps) {
+  const { register, errors, handleSubmit, formState, setError } = useForm<
+    LoginFormValues
+  >()
 
   return (
     <form onSubmit={handleSubmit(formValues => onSubmit(formValues, setError))}>

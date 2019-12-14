@@ -1,10 +1,15 @@
 import React from 'react'
 import { FirebaseContext } from 'contexts'
+import { ApiClient } from 'types'
 
-let clientInstance
+let clientInstance: any
 
-export default function FirebaseProvider({ children }) {
-  const [client, setClient] = React.useState()
+interface FirebaseProvider {
+  children: React.ReactNode
+}
+
+export default function FirebaseProvider({ children }: FirebaseProvider) {
+  const [client, setClient] = React.useState<ApiClient>()
 
   React.useEffect(() => {
     import('firebase-client').then(({ default: FirebaseClient }) => {

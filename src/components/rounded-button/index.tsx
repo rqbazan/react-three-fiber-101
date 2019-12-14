@@ -1,7 +1,10 @@
 import React from 'react'
-import Button from '../button'
+import Button, { ButtonProps } from '../button'
 
-export default function RoundedButton({ className = '', ...props }) {
+export default function RoundedButton({
+  className = '',
+  ...props
+}: ButtonProps) {
   return (
     <Button
       type="button"

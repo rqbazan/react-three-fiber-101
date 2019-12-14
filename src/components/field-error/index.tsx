@@ -1,8 +1,13 @@
 import React from 'react'
-import MoodSad from 'icons/mood-sad.svg'
-import styles from './styles.module.css'
 
-export default function FieldError({ children }) {
+const MoodSad = require('icons/mood-sad.svg').default
+const styles = require('./styles.module.css')
+
+interface FieldError {
+  children: React.ReactNode
+}
+
+export default function FieldError({ children }: FieldError) {
   return (
     <div className="flex rounded bg-red-300 px-3 py-3 items-center text-sm text-red-800">
       <i className={styles.icon}>

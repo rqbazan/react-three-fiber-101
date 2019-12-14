@@ -1,7 +1,12 @@
 import React from 'react'
 import FieldError from '../field-error'
 
-export default React.forwardRef((props, ref) => {
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  label: string
+  error?: string
+}
+
+export default React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const { label, name, className = '', error, ...rest } = props
 
   return (

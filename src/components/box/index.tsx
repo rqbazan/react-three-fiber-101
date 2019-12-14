@@ -1,10 +1,22 @@
 import React from 'react'
-import usePegatineTextures from 'hooks/use-pegatine-textures'
+import usePegatineTextures, { PegatineColor } from 'hooks/use-pegatine-textures'
+
+interface BoxProps {
+  position: [number, number, number]
+  rightColor?: PegatineColor
+  leftColor?: PegatineColor
+  upColor?: PegatineColor
+  downColor?: PegatineColor
+  frontColor?: PegatineColor
+  backColor?: PegatineColor
+}
+
+type MaterialProps = { color: string } | { map: THREE.Texture }
 
 /**
  * material faces: [RIGHT, LEFT, UP, DOWN, FRONT, BACK]
  */
-const Box = React.forwardRef((props, ref) => {
+const Box = React.forwardRef<any, BoxProps>((props, ref) => {
   const {
     position,
     rightColor,
@@ -17,12 +29,12 @@ const Box = React.forwardRef((props, ref) => {
 
   const textures = usePegatineTextures()
 
-  function getMaterialProps(faceColor) {
+  function getMaterialProps(faceColor?: PegatineColor): MaterialProps {
     if (!faceColor) {
       return { color: 'black' }
     }
 
-    return { map: textures[faceColor] }
+    return { map: textures[faceColor] as THREE.Texture }
   }
 
   return (
@@ -55,7 +67,5 @@ const Box = React.forwardRef((props, ref) => {
     </mesh>
   )
 })
-
-Box.displayName = 'Box'
 
 export default Box

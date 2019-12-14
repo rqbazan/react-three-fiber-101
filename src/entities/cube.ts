@@ -1,3 +1,4 @@
+import * as THREE from 'three'
 import getNewPositions from 'utils/get-new-positions'
 import Piece from './piece'
 
@@ -29,9 +30,9 @@ class Cube {
   }
 
   static axis = {
-    X: [1, 0, 0],
-    Y: [0, 1, 0],
-    Z: [0, 0, 1]
+    X: new THREE.Vector3(1, 0, 0),
+    Y: new THREE.Vector3(0, 1, 0),
+    Z: new THREE.Vector3(0, 0, 1)
   }
 
   static clockwiseNewPositions = getNewPositions(

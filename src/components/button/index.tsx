@@ -1,15 +1,21 @@
 import React from 'react'
-import styles from './styles.module.css'
+
+const styles = require('./styles.module.css')
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  isLoading?: boolean
+}
 
 export default function Button({
   className = '',
   isLoading,
   children,
   ...props
-}) {
+}: ButtonProps) {
   return (
     <button
-      type="button"
+      type="submit"
       data-loading={isLoading}
       className={`${styles.button} ${className}`}
       {...props}
