@@ -26,7 +26,7 @@ function LoginModal() {
       } else if (error.code === 'auth/invalid-email') {
         setError('email', 'invalid', error.message)
       } else {
-        setError('form', 'unknow', error.message)
+        setError('form', 'unknown', error.message)
       }
     }
   }
