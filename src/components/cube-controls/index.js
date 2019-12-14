@@ -10,8 +10,8 @@ export default function CubeControls({ onControlClick }) {
   }
 
   return (
-    <div className={`${styles.btnsContainer} ${styles.center}`}>
-      <div className={styles.btnsGroup}>
+    <>
+      <div className={`${styles.container} ${styles.left}`}>
         <RoundedButton
           data-face="F"
           className="bg-pegatine-green"
@@ -76,7 +76,7 @@ export default function CubeControls({ onControlClick }) {
           E
         </RoundedButton>
       </div>
-      <div className={styles.btnsGroup}>
+      <div className={`${styles.container} ${styles.right}`}>
         <RoundedButton
           data-face="F'"
           className="bg-pegatine-green"
@@ -141,6 +141,6 @@ export default function CubeControls({ onControlClick }) {
           E&apos;
         </RoundedButton>
       </div>
-    </div>
+    </>
   )
 }
