@@ -1,9 +1,15 @@
 import React from 'react'
+import { FaceName } from 'types'
 import RoundedButton from '../rounded-button'
-import styles from './styles.module.css'
 
-export default function CubeControls({ onControlClick }) {
-  function onClick(e) {
+const styles = require('./styles.module.css')
+
+interface CubeControlsProps {
+  onControlClick(faceName: FaceName, inversed: boolean): void
+}
+
+export default function CubeControls({ onControlClick }: CubeControlsProps) {
+  function onClick(e: any) {
     const faceName = e.target.dataset.face[0]
     const inversed = e.target.dataset.face.endsWith("'")
     onControlClick(faceName, inversed)

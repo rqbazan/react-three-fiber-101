@@ -1,3 +1,4 @@
+import * as THREE from 'three'
 import getNewPositions from 'utils/get-new-positions'
 import Piece from './piece'
 
@@ -16,10 +17,9 @@ const pieceNames = [
   'DLB', 'DB', 'DRB'
 ]
 
-const toObjectReduceParams = () => [
-  (obj, current) => Object.assign(obj, current),
-  {}
-]
+interface CubeState {
+  pieceKeys: number[]
+}
 
 class Cube {
   static size = 3
@@ -30,9 +30,9 @@ class Cube {
   }
 
   static axis = {
-    X: [1, 0, 0],
-    Y: [0, 1, 0],
-    Z: [0, 0, 1]
+    X: new THREE.Vector3(1, 0, 0),
+    Y: new THREE.Vector3(0, 1, 0),
+    Z: new THREE.Vector3(0, 0, 1)
   }
 
   static clockwiseNewPositions = getNewPositions(
@@ -45,15 +45,23 @@ class Cube {
     Cube.angles.COUNTERCLOCKWISE
   )
 
-  constructor(cubeState) {
-    const createPiece = index => {
+  pieces: {
+    [key: string]: Piece
+  }
+
+  faces: {
+    [key: string]: Piece[]
+  }
+
+  constructor(cubeState?: CubeState) {
+    const createPiece = (index: number) => {
       const key = cubeState?.pieceKeys?.[index] ?? index
       return new Piece(key)
     }
 
     this.pieces = pieceNames
       .map((name, index) => ({ [name]: createPiece(index) }))
-      .reduce(...toObjectReduceParams())
+      .reduce((obj: any, current: any) => Object.assign(obj, current), {})
 
     // prettier-ignore
     this.faces = {
@@ -105,7 +113,7 @@ class Cube {
     }
   }
 
-  rotate(faceName, degrees = 90) {
+  rotate(faceName: string, degrees: number) {
     const facePieces = this.faces[faceName]
 
     const newPositions =
@@ -113,8 +121,8 @@ class Cube {
         ? Cube.clockwiseNewPositions
         : Cube.counterClockwiseNewPositions
 
-    function moveKeysBetweenPieces(initialPosition) {
-      function recursiveMove(position) {
+    function moveKeysBetweenPieces(initialPosition: number) {
+      function recursiveMove(position: number) {
         const newPosition = newPositions[position]
         if (newPosition === newPositions[initialPosition]) {
           return

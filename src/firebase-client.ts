@@ -1,8 +1,15 @@
+import { ApiClient } from 'types'
 import * as firebaseApp from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
 
-export default class Firebase {
+export default class Firebase implements ApiClient {
+  config: {
+    [key: string]: string
+  }
+
+  auth: firebaseApp.auth.Auth
+
   constructor() {
     this.config = {
       apiKey: 'AIzaSyCdfQnEU6VuxMR79El8MrCTlormNPRvQi4',
@@ -18,7 +25,7 @@ export default class Firebase {
     this.auth = firebaseApp.auth()
   }
 
-  async logIn(email, password) {
+  async logIn(email: string, password: string) {
     await this.auth.signInWithEmailAndPassword(email, password)
   }
 
@@ -26,7 +33,7 @@ export default class Firebase {
     await this.auth.signOut()
   }
 
-  onAuth(callback) {
+  onAuth(callback: (u: firebaseApp.User | null) => void) {
     this.auth.onAuthStateChanged(callback)
   }
 }
