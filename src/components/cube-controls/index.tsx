@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { FaceName, PegatineColor } from 'types'
 import RoundedButton from '../rounded-button'
 
