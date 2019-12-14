@@ -1,5 +1,7 @@
 export default class Piece {
-  constructor(key) {
+  key: number
+
+  constructor(key: number) {
     this.key = key
   }
 }

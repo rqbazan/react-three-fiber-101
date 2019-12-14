@@ -1,5 +1,6 @@
 export default {
-  // to compile also the source code https://bit.ly/2LNcw4L
-  require: ['@babel/register'],
+  require: ['ts-node/register', 'tsconfig-paths/register'],
+  compileEnhancements: false,
+  extensions: ['ts'],
   verbose: true
 }

@@ -16,10 +16,9 @@ const pieceNames = [
   'DLB', 'DB', 'DRB'
 ]
 
-const toObjectReduceParams = () => [
-  (obj, current) => Object.assign(obj, current),
-  {}
-]
+interface CubeState {
+  pieceKeys: number[]
+}
 
 class Cube {
   static size = 3
@@ -45,15 +44,23 @@ class Cube {
     Cube.angles.COUNTERCLOCKWISE
   )
 
-  constructor(cubeState) {
-    const createPiece = index => {
+  pieces: {
+    [key: string]: Piece
+  }
+
+  faces: {
+    [key: string]: Piece[]
+  }
+
+  constructor(cubeState?: CubeState) {
+    const createPiece = (index: number) => {
       const key = cubeState?.pieceKeys?.[index] ?? index
       return new Piece(key)
     }
 
     this.pieces = pieceNames
       .map((name, index) => ({ [name]: createPiece(index) }))
-      .reduce(...toObjectReduceParams())
+      .reduce((obj: any, current: any) => Object.assign(obj, current), {})
 
     // prettier-ignore
     this.faces = {
@@ -105,7 +112,7 @@ class Cube {
     }
   }
 
-  rotate(faceName, degrees = 90) {
+  rotate(faceName: string, degrees: number) {
     const facePieces = this.faces[faceName]
 
     const newPositions =
@@ -113,8 +120,8 @@ class Cube {
         ? Cube.clockwiseNewPositions
         : Cube.counterClockwiseNewPositions
 
-    function moveKeysBetweenPieces(initialPosition) {
-      function recursiveMove(position) {
+    function moveKeysBetweenPieces(initialPosition: number) {
+      function recursiveMove(position: number) {
         const newPosition = newPositions[position]
         if (newPosition === newPositions[initialPosition]) {
           return
