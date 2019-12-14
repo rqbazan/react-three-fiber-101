@@ -16,7 +16,10 @@ const pieceNames = [
   'DLB', 'DB', 'DRB'
 ]
 
-const toObjectReduceParams = [(obj, current) => Object.assign(obj, current), {}]
+const toObjectReduceParams = () => [
+  (obj, current) => Object.assign(obj, current),
+  {}
+]
 
 class Cube {
   static size = 3
@@ -43,14 +46,14 @@ class Cube {
   )
 
   constructor(cubeState) {
-    const createPiece = (name, defaultKey) => {
-      const key = cubeState?.pieceKeyByName?.[name] ?? defaultKey
+    const createPiece = index => {
+      const key = cubeState?.pieceKeys?.[index] ?? index
       return new Piece(key)
     }
 
     this.pieces = pieceNames
-      .map((name, key) => ({ [name]: createPiece(name, key) }))
-      .reduce(...toObjectReduceParams)
+      .map((name, index) => ({ [name]: createPiece(index) }))
+      .reduce(...toObjectReduceParams())
 
     // prettier-ignore
     this.faces = {
@@ -133,11 +136,9 @@ class Cube {
   }
 
   getState() {
-    const pieceKeyByName = pieceNames
-      .map(pieceName => ({ [pieceName]: this.pieces[pieceName] }))
-      .reduce(...toObjectReduceParams)
+    const pieceKeys = pieceNames.map(pieceName => this.pieces[pieceName].key)
 
-    return { pieceKeyByName }
+    return { pieceKeys }
   }
 }
 
