@@ -13,7 +13,7 @@ export default function LoginForm({ onSubmit }) {
         ref={register({
           required: { value: true, message: 'Enter your email' }
         })}
-        error={errors.email && errors.email.message}
+        error={errors.email?.message}
         name="email"
         label="Email"
       />
@@ -21,7 +21,7 @@ export default function LoginForm({ onSubmit }) {
         ref={register({
           required: { value: true, message: 'Enter your password' }
         })}
-        error={errors.password && errors.password.message}
+        error={errors.password?.message}
         name="password"
         label="Password"
         type="password"
@@ -34,7 +34,7 @@ export default function LoginForm({ onSubmit }) {
       </div>
       {errors.form && (
         <div className="mt-6">
-          <FieldError>{errors.form.message}</FieldError>
+          <FieldError>{errors.form?.message}</FieldError>
         </div>
       )}
     </form>
