@@ -9,7 +9,6 @@ body,
 #___gatsby,
 canvas {
   @apply w-full h-screen m-0 p-0 outline-none;
-  overflow: hidden;
 }
 
 body {

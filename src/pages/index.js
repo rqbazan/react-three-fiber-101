@@ -5,10 +5,13 @@ import Cube from 'components/cube'
 import OrbitControls from 'components/orbit-controls'
 import CubeControls from 'components/cube-controls'
 import AuthButton from 'components/auth-button'
+import useScrollBlocker from 'hooks/use-scroll-blocker'
 import './index.css'
 
 export default function IndexPage() {
   const cubeRef = React.useRef()
+
+  useScrollBlocker()
 
   function onControlClick(faceName, inversed) {
     if (cubeRef.current) {
