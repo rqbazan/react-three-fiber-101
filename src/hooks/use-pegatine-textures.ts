@@ -1,7 +1,10 @@
 import * as THREE from 'three'
+import { PegatineTextures } from 'types'
 import { useLoader } from 'react-three-fiber'
 
-export default function usePegatineTextures() {
+export default function usePegatineTextures(): PegatineTextures {
+  // eslint-disable-next-line
+  // @ts-ignore
   const [
     red,
     orange,

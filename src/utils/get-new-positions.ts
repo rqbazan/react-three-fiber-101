@@ -1,5 +1,5 @@
-export default function getNewPositions(rowLength, degrees) {
-  const newPositions = []
+export default function getNewPositions(rowLength: number, degrees: number) {
+  const newPositions: number[] = []
 
   for (let index = 0; index < rowLength * rowLength; index += 1) {
     const x = index % rowLength

@@ -4,8 +4,27 @@ import FieldError from '../field-error'
 import Input from '../input'
 import Button from '../button'
 
-export default function LoginForm({ onSubmit }) {
-  const { register, errors, handleSubmit, formState, setError } = useForm()
+export interface LoginFormValues {
+  email: string
+  password: string
+  form: boolean
+}
+
+// type SetError = Pick<ReturnType<typeof useForm>, 'setError'>['setError']
+export type SetError = (
+  name: keyof LoginFormValues,
+  type: string,
+  message?: string
+) => void
+
+interface LoginFormProps {
+  onSubmit(formValues: LoginFormValues, setError: SetError): void
+}
+
+export default function LoginForm({ onSubmit }: LoginFormProps) {
+  const { register, errors, handleSubmit, formState, setError } = useForm<
+    LoginFormValues
+  >()
 
   return (
     <form onSubmit={handleSubmit(formValues => onSubmit(formValues, setError))}>
@@ -13,7 +32,7 @@ export default function LoginForm({ onSubmit }) {
         ref={register({
           required: { value: true, message: 'Enter your email' }
         })}
-        error={errors.email && errors.email.message}
+        error={errors.email?.message}
         name="email"
         label="Email"
       />
@@ -21,7 +40,7 @@ export default function LoginForm({ onSubmit }) {
         ref={register({
           required: { value: true, message: 'Enter your password' }
         })}
-        error={errors.password && errors.password.message}
+        error={errors.password?.message}
         name="password"
         label="Password"
         type="password"
@@ -34,7 +53,7 @@ export default function LoginForm({ onSubmit }) {
       </div>
       {errors.form && (
         <div className="mt-6">
-          <FieldError>{errors.form.message}</FieldError>
+          <FieldError>{errors.form?.message}</FieldError>
         </div>
       )}
     </form>

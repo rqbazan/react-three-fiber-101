@@ -1,22 +1,67 @@
+import * as THREE from 'three'
 import getNewPositions from 'utils/get-new-positions'
 import Piece from './piece'
 
+// prettier-ignore
+const pieceNames = [
+  'ULF', 'UF', 'URF',
+  'FL', 'F', 'FR',
+  'DLF', 'DF', 'DRF',
+
+  'UL', 'U', 'UR',
+  'L', 'C', 'R',
+  'DL', 'D', 'DR',
+
+  'ULB', 'UB', 'URB',
+  'BL', 'B', 'BR',
+  'DLB', 'DB', 'DRB'
+]
+
+interface CubeState {
+  pieceKeys: number[]
+}
+
 class Cube {
-  constructor() {
-    // prettier-ignore
-    this.pieces = {
-      ULF: new Piece(0), UF: new Piece(1), URF: new Piece(2),
-      FL:  new Piece(3), F:  new Piece(4), FR:  new Piece(5),
-      DLF: new Piece(6), DF: new Piece(7), DRF: new Piece(8),
+  static size = 3
 
-      UL: new Piece(9),  U: new Piece(10), UR: new Piece(11),
-      L:  new Piece(12), C: new Piece(13), R:  new Piece(14),
-      DL: new Piece(15), D: new Piece(16), DR: new Piece(17),
+  static angles = {
+    CLOCKWISE: 90,
+    COUNTERCLOCKWISE: -90
+  }
 
-      ULB: new Piece(18), UB: new Piece(19), URB: new Piece(20),
-      BL:  new Piece(21), B:  new Piece(22), BR:  new Piece(23),
-      DLB: new Piece(24), DB: new Piece(25), DRB: new Piece(26)
+  static axis = {
+    X: new THREE.Vector3(1, 0, 0),
+    Y: new THREE.Vector3(0, 1, 0),
+    Z: new THREE.Vector3(0, 0, 1)
+  }
+
+  static clockwiseNewPositions = getNewPositions(
+    Cube.size,
+    Cube.angles.CLOCKWISE
+  )
+
+  static counterClockwiseNewPositions = getNewPositions(
+    Cube.size,
+    Cube.angles.COUNTERCLOCKWISE
+  )
+
+  pieces: {
+    [key: string]: Piece
+  }
+
+  faces: {
+    [key: string]: Piece[]
+  }
+
+  constructor(cubeState?: CubeState) {
+    const createPiece = (index: number) => {
+      const key = cubeState?.pieceKeys?.[index] ?? index
+      return new Piece(key)
     }
+
+    this.pieces = pieceNames
+      .map((name, index) => ({ [name]: createPiece(index) }))
+      .reduce((obj: any, current: any) => Object.assign(obj, current), {})
 
     // prettier-ignore
     this.faces = {
@@ -68,7 +113,7 @@ class Cube {
     }
   }
 
-  rotate(faceName, degrees = 90) {
+  rotate(faceName: string, degrees: number) {
     const facePieces = this.faces[faceName]
 
     const newPositions =
@@ -76,8 +121,8 @@ class Cube {
         ? Cube.clockwiseNewPositions
         : Cube.counterClockwiseNewPositions
 
-    function moveKeysBetweenPieces(initialPosition) {
-      function recursiveMove(position) {
+    function moveKeysBetweenPieces(initialPosition: number) {
+      function recursiveMove(position: number) {
         const newPosition = newPositions[position]
         if (newPosition === newPositions[initialPosition]) {
           return
@@ -97,32 +142,12 @@ class Cube {
     // move edges starting with the first one at facePieces[1]
     moveKeysBetweenPieces(1)
   }
+
+  getState() {
+    const pieceKeys = pieceNames.map(pieceName => this.pieces[pieceName].key)
+
+    return { pieceKeys }
+  }
 }
-
-/**
- * these fields should be static fields, but there is a issue with esm
- * and avajs depends on it.
- *
- * https://github.com/standard-things/esm/issues/858
- */
-Cube.size = 3
-
-Cube.angles = {
-  CLOCKWISE: 90,
-  COUNTERCLOCKWISE: -90
-}
-
-Cube.axis = {
-  X: [1, 0, 0],
-  Y: [0, 1, 0],
-  Z: [0, 0, 1]
-}
-
-Cube.clockwiseNewPositions = getNewPositions(Cube.size, Cube.angles.CLOCKWISE)
-
-Cube.counterClockwiseNewPositions = getNewPositions(
-  Cube.size,
-  Cube.angles.COUNTERCLOCKWISE
-)
 
 export default Cube

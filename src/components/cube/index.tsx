@@ -1,69 +1,31 @@
 import React from 'react'
 import * as THREE from 'three'
+import { FaceName } from 'types'
 import { useRender } from 'react-three-fiber'
 import useHotKeys from 'hooks/use-hot-keys'
 import useRefs from 'hooks/use-refs'
 import CubeEntity from 'entities/cube'
+import { rotateAroundWorldAxis } from './helpers'
+import { facesMeta } from './meta'
 import Box from '../box'
+
+interface Move {
+  targetAngle: number
+  faceName: FaceName
+  currentAngle: number
+}
+
+export interface CubeRef {
+  rotate(faceName: FaceName, inversed: boolean): void
+}
 
 const cube = new CubeEntity()
 
-const facesMeta = {
-  U: {
-    axis: CubeEntity.axis.Y,
-    inverse: true
-  },
-  D: {
-    axis: CubeEntity.axis.Y,
-    inverse: false
-  },
-  R: {
-    axis: CubeEntity.axis.X,
-    inverse: true
-  },
-  L: {
-    axis: CubeEntity.axis.X,
-    inverse: false
-  },
-  F: {
-    axis: CubeEntity.axis.Z,
-    inverse: true
-  },
-  B: {
-    axis: CubeEntity.axis.Z,
-    inverse: false
-  },
-  M: {
-    axis: CubeEntity.axis.X,
-    inverse: false
-  },
-  E: {
-    axis: CubeEntity.axis.Y,
-    inverse: false
-  },
-  S: {
-    axis: CubeEntity.axis.Z,
-    inverse: true
-  }
-}
+const Cube = React.forwardRef<CubeRef, {}>((_, ref) => {
+  const boxRefs = useRefs<THREE.Mesh>(27)
+  const moveRef = React.useRef<Move>()
 
-function rotateAroundWorldAxis(mesh, axis, radians) {
-  const axisVector = new THREE.Vector3(...axis)
-  const quaternion = new THREE.Quaternion()
-
-  quaternion.setFromAxisAngle(axisVector, radians)
-
-  mesh.quaternion.multiplyQuaternions(quaternion, mesh.quaternion)
-  mesh.position.sub(axisVector)
-  mesh.position.applyQuaternion(quaternion)
-  mesh.position.add(axisVector)
-}
-
-const Cube = React.forwardRef((_, ref) => {
-  const boxRefs = useRefs(27)
-  const moveRef = React.useRef(null)
-
-  function rotateMeshs(faceName, angle) {
+  function rotateMeshs(faceName: FaceName, angle: number) {
     const facePieces = cube.faces[faceName]
 
     // workaround for not available refs, for now
@@ -77,14 +39,14 @@ const Cube = React.forwardRef((_, ref) => {
     for (let i = 0; i < 9; i += 1) {
       const piece = facePieces[i]
       rotateAroundWorldAxis(
-        boxRefs[piece.key].current,
+        boxRefs[piece.key].current!,
         facesMeta[faceName].axis,
         THREE.Math.degToRad(angle)
       )
     }
   }
 
-  function onKeyPress(faceName, shiftKeyPressed) {
+  function onKeyPress(faceName: FaceName, shiftKeyPressed: boolean) {
     if (moveRef.current) {
       return
     }
@@ -114,15 +76,15 @@ const Cube = React.forwardRef((_, ref) => {
 
   useRender(() => {
     const velocity = 6
-    const move = moveRef.current
 
-    if (move) {
+    if (moveRef.current) {
+      const move = moveRef.current
       const { faceName, targetAngle } = move
       const faceMeta = facesMeta[faceName]
 
       if (move.currentAngle === move.targetAngle) {
         cube.rotate(faceName, targetAngle)
-        moveRef.current = null
+        moveRef.current = undefined
         return
       }
 
@@ -133,10 +95,10 @@ const Cube = React.forwardRef((_, ref) => {
 
       moveRef.current.currentAngle += velocity * targetSign
     }
-  })
+  }, false)
 
   React.useImperativeHandle(ref, () => ({
-    rotate(faceName, inversed) {
+    rotate(faceName: FaceName, inversed: boolean) {
       onKeyPress(faceName, inversed)
     }
   }))

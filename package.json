@@ -9,11 +9,12 @@
     "build": "gatsby build",
     "start": "gatsby develop",
     "lint": "eslint --ignore-path .gitignore .",
-    "prettier": "prettier --ignore-path .gitignore \"**/*.{js,json,md}\"",
+    "prettier": "prettier --ignore-path .gitignore \"**/*.{ts,tsx,json,md}\"",
     "format": "yarn prettier --write",
     "check-format": "yarn prettier --list-different",
-    "validate": "npm-run-all --parallel check-format lint build",
-    "test": "NODE_PATH=src ava"
+    "check-types": "tsc",
+    "validate": "npm-run-all --parallel check-format check-types lint build",
+    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' ava"
   },
   "husky": {
     "hooks": {
@@ -22,17 +23,17 @@
     }
   },
   "lint-staged": {
-    "*.{js,json,md}": [
+    "*.{ts,tsx,json,md}": [
       "prettier --ignore-path .gitignore --write",
       "git add"
     ],
-    "*.js": [
+    "*.ts": [
       "eslint --ignore-path .gitignore --fix",
       "git add"
     ]
   },
   "eslintConfig": {
-    "extends": "rqbazan-js/react",
+    "extends": "rqbazan-ts/react",
     "settings": {
       "import/resolver": {
         "node": {
@@ -43,6 +44,9 @@
           ]
         }
       }
+    },
+    "rules": {
+      "import/extensions": "off"
     }
   },
   "commitlint": {
@@ -62,19 +66,26 @@
     "three": "^0.111.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.7.5",
+    "@babel/preset-typescript": "^7.7.4",
     "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^8.2.0",
     "@fullhuman/postcss-purgecss": "^1.3.0",
+    "@types/node": "^12.12.17",
+    "@types/react": "^16.9.16",
+    "@types/react-dom": "^16.9.4",
     "autoprefixer": "^9.7.3",
     "ava": "^2.4.0",
     "eslint": "^6.7.2",
-    "eslint-config-rqbazan-js": "^0.3.0",
-    "esm": "^3.2.25",
+    "eslint-config-rqbazan-ts": "^0.3.0",
     "gatsby-plugin-postcss": "^2.1.18",
     "gatsby-plugin-svgr-loader": "^0.1.0",
     "husky": "^3.1.0",
     "lint-staged": "^9.5.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^1.19.1"
+    "prettier": "^1.19.1",
+    "ts-node": "^8.5.4",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^3.7.3"
   }
 }

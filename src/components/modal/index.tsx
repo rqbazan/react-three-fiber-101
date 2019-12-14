@@ -1,7 +1,13 @@
 import React from 'react'
-import Close from 'icons/close.svg'
 
-export default function Modal({ children, onClose }) {
+const Close = require('icons/close.svg').default
+
+interface ModalProps {
+  children: React.ReactNode
+  onClose(): void
+}
+
+export default function Modal({ children, onClose }: ModalProps) {
   return (
     <div className="md:flex md:justify-center md:items-center md:h-screen">
       <div className="p-8 bg-gray-100 h-screen md:w-full md:max-w-sm md:border md:border-gray-400 md:h-auto md:shadow-lg md:rounded">

@@ -1,10 +1,21 @@
-import React from 'react'
-import ClockwiseIcon from 'icons/clockwise.svg'
-import CounterClockwiseIcon from 'icons/counter-clockwise.svg'
+import React, { FC } from 'react'
+import { FaceName, PegatineColor } from 'types'
 import RoundedButton from '../rounded-button'
-import styles from './styles.module.css'
 
-const initControls = {
+const ClockwiseIcon = require('icons/clockwise.svg').default
+const CounterClockwiseIcon = require('icons/counter-clockwise.svg').default
+const styles = require('./styles.module.css')
+
+interface Control {
+  face: FaceName
+  color?: PegatineColor
+}
+
+type Controls = {
+  [key in FaceName]: Control
+}
+
+const initControls: Controls = {
   F: { face: 'F', color: 'green' },
   D: { face: 'D', color: 'white' },
   R: { face: 'R', color: 'orange' },
@@ -16,13 +27,7 @@ const initControls = {
   E: { face: 'E' }
 }
 
-const initSlices = {
-  M: ['F', 'U', 'B', 'D'],
-  S: ['L', 'U', 'B', 'D'],
-  E: ['R', 'F', 'L', 'B']
-}
-
-function getControlClassName(control) {
+function getControlClassName(control: Control): string {
   if (control.color) {
     return `bg-pegatine-${control.color}`
   }
@@ -30,41 +35,25 @@ function getControlClassName(control) {
   return 'bg-black text-white'
 }
 
-export default function CubeControls({ onControlClick }) {
-  const [slices, setSlices] = React.useState(initSlices)
-  const [controls, setControls] = React.useState(initControls)
+interface CubeControlsProps {
+  onControlClick(faceName: FaceName, inversed: boolean): void
+}
 
-  function onClick(e) {
+export default function CubeControls({ onControlClick }: CubeControlsProps) {
+  const controls = initControls
+
+  function onClick(e: any) {
     const faceName = e.target.dataset.face[0]
     const inversed = e.target.dataset.face.endsWith("'")
 
     onControlClick(faceName, inversed)
-
-    if ('MSE'.includes(faceName)) {
-      let newFaceNames
-      const faceNames = slices[faceName]
-
-      if (inversed) {
-        newFaceNames = [faceNames[3], ...faceNames.slice(1)]
-      } else {
-        newFaceNames = [...faceNames.slice(1), faceNames[0]]
-      }
-
-      for (let i = 0; i < 4; i += 1) {
-        controls[newFaceNames[i]].face = faceNames[i]
-      }
-      slices[faceName] = newFaceNames
-
-      setControls({ ...controls })
-      setSlices({ ...slices })
-    }
   }
 
   return (
     <>
       <div className={`${styles.container} ${styles.left}`}>
         {Object.keys(controls).map(key => {
-          const control = controls[key]
+          const control = controls[key as FaceName]
 
           return (
             <RoundedButton
@@ -80,7 +69,7 @@ export default function CubeControls({ onControlClick }) {
       </div>
       <div className={`${styles.container} ${styles.right}`}>
         {Object.keys(controls).map(key => {
-          const control = controls[key]
+          const control = controls[key as FaceName]
           const faceName = `${control.face}'`
 
           return (

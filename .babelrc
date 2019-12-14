@@ -1,0 +1,15 @@
+// it could be in gatsby-node.js but I need it also for avajs
+{
+  "plugins": ["@babel/plugin-proposal-optional-chaining"],
+  "presets": [
+    "@babel/preset-typescript",
+    [
+      "babel-preset-gatsby",
+      {
+        "targets": {
+          "browsers": [">0.25%", "not dead"]
+        }
+      }
+    ]
+  ]
+}

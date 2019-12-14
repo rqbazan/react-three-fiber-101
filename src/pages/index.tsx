@@ -1,19 +1,21 @@
 import React from 'react'
+import { FaceName } from 'types'
 import { Canvas } from 'react-three-fiber'
 import FirebaseProvider from 'components/firebase-provider'
-import Cube from 'components/cube'
+import Cube, { CubeRef } from 'components/cube'
 import OrbitControls from 'components/orbit-controls'
 import CubeControls from 'components/cube-controls'
 import AuthButton from 'components/auth-button'
 import useScrollBlocker from 'hooks/use-scroll-blocker'
+
 import './index.css'
 
 export default function IndexPage() {
-  const cubeRef = React.useRef()
+  const cubeRef = React.useRef<CubeRef>(null!)
 
   useScrollBlocker()
 
-  function onControlClick(faceName, inversed) {
+  function onControlClick(faceName: FaceName, inversed: boolean) {
     if (cubeRef.current) {
       cubeRef.current.rotate(faceName, inversed)
     }
