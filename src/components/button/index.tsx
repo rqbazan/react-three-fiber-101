@@ -15,7 +15,7 @@ export default function Button({
 }: ButtonProps) {
   return (
     <button
-      type="submit"
+      type="button"
       data-loading={isLoading}
       className={`${styles.button} ${className}`}
       {...props}

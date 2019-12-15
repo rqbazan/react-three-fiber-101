@@ -1,38 +1,43 @@
 import React from 'react'
-import { FaceName, PegatineColor } from 'types'
-import RoundedButton from '../rounded-button'
+import cloneDeep from 'lodash.clonedeep'
+import { FaceName, SliceName, ControlName } from 'types'
+import rotateArray from 'utils/rotate-array'
+import ControlButton from '../control'
 
-const ClockwiseIcon = require('icons/clockwise.svg').default
-const CounterClockwiseIcon = require('icons/counter-clockwise.svg').default
+// const ClockwiseIcon = require('icons/clockwise.svg').default
+// const CounterClockwiseIcon = require('icons/counter-clockwise.svg').default
 const styles = require('./styles.module.css')
 
 interface Control {
-  face: FaceName
-  color?: PegatineColor
+  faceName: FaceName
+  fixed: FaceName
+  color?: string
 }
 
 type Controls = {
-  [key in FaceName]: Control
+  [key in ControlName]: Control
+}
+
+function isSliceName(name: FaceName): name is SliceName {
+  return 'MSE'.includes(name)
 }
 
 const initControls: Controls = {
-  F: { face: 'F', color: 'green' },
-  D: { face: 'D', color: 'white' },
-  R: { face: 'R', color: 'orange' },
-  B: { face: 'B', color: 'blue' },
-  U: { face: 'U', color: 'yellow' },
-  L: { face: 'L', color: 'red' },
-  M: { face: 'M' },
-  S: { face: 'S' },
-  E: { face: 'E' }
+  front: { fixed: 'F', faceName: 'F', color: 'green' },
+  down: { fixed: 'D', faceName: 'D', color: 'white' },
+  right: { fixed: 'R', faceName: 'R', color: 'orange' },
+  back: { fixed: 'B', faceName: 'B', color: 'blue' },
+  up: { fixed: 'U', faceName: 'U', color: 'yellow' },
+  left: { fixed: 'L', faceName: 'L', color: 'red' },
+  middle: { fixed: 'M', faceName: 'M' },
+  standing: { fixed: 'S', faceName: 'S' },
+  equatorial: { fixed: 'E', faceName: 'E' }
 }
 
-function getControlClassName(control: Control): string {
-  if (control.color) {
-    return `bg-pegatine-${control.color}`
-  }
-
-  return 'bg-black text-white'
+const controlNamesBySlice: { [key in SliceName]: ControlName[] } = {
+  M: ['back', 'down', 'front', 'up'],
+  S: ['back', 'down', 'front', 'up'],
+  E: ['left', 'back', 'right', 'front']
 }
 
 interface CubeControlsProps {
@@ -40,47 +45,62 @@ interface CubeControlsProps {
 }
 
 export default function CubeControls({ onControlClick }: CubeControlsProps) {
-  const controls = initControls
+  const [controls, setControls] = React.useState<Controls>(initControls)
 
-  function onClick(e: any) {
-    const faceName = e.target.dataset.face[0]
-    const inversed = e.target.dataset.face.endsWith("'")
+  function reOrderControls(sliceName: SliceName, inversed: boolean) {
+    setControls(prevControls => {
+      const newControls = cloneDeep(prevControls)
+      const positions = controlNamesBySlice[sliceName]
+
+      const newPositions = rotateArray(positions, inversed)
+
+      newPositions.forEach((newPosition, index) => {
+        newControls[positions[index]].faceName = newControls[newPosition].fixed
+      })
+
+      return newControls
+    })
+  }
+
+  function onClick(faceName: FaceName, inversed: boolean) {
+    if (isSliceName(faceName)) {
+      reOrderControls(faceName, inversed)
+    }
 
     onControlClick(faceName, inversed)
   }
 
+  const controlNames = Object.keys(controls) as ControlName[]
+
   return (
     <>
       <div className={`${styles.container} ${styles.left}`}>
-        {Object.keys(controls).map(key => {
-          const control = controls[key as FaceName]
+        {controlNames.map(name => {
+          const { color, faceName } = controls[name]
 
           return (
-            <RoundedButton
-              key={`control-for-${key}`}
-              data-face={control.face}
-              className={getControlClassName(control)}
-              onClick={onClick}
+            <ControlButton
+              key={`for-${name}-clokwise`}
+              color={color}
+              onClick={() => onClick(faceName, false)}
             >
-              {control.color ? <ClockwiseIcon /> : control.face}
-            </RoundedButton>
+              {faceName}
+            </ControlButton>
           )
         })}
       </div>
       <div className={`${styles.container} ${styles.right}`}>
-        {Object.keys(controls).map(key => {
-          const control = controls[key as FaceName]
-          const faceName = `${control.face}'`
+        {controlNames.map(name => {
+          const { color, faceName } = controls[name]
 
           return (
-            <RoundedButton
-              key={`control-for-${key}-inversed`}
-              data-face={faceName}
-              className={getControlClassName(control)}
-              onClick={onClick}
+            <ControlButton
+              key={`for-${name}-counterclokwise`}
+              color={color}
+              onClick={() => onClick(faceName, true)}
             >
-              {control.color ? <CounterClockwiseIcon /> : faceName}
-            </RoundedButton>
+              {`${faceName}'`}
+            </ControlButton>
           )
         })}
       </div>

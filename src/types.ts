@@ -2,15 +2,18 @@ import * as THREE from 'three'
 
 export type FaceName = 'U' | 'D' | 'L' | 'R' | 'F' | 'B' | 'M' | 'E' | 'S'
 
-export type User = {
-  [key: string]: any
-}
+export type SliceName = 'M' | 'S' | 'E'
 
-export interface ApiClient {
-  logIn(email: string, password: string): Promise<void>
-  logOut(): Promise<void>
-  onAuth(callback: (u: User | null) => void): void
-}
+export type ControlName =
+  | 'front'
+  | 'down'
+  | 'right'
+  | 'back'
+  | 'up'
+  | 'left'
+  | 'middle'
+  | 'standing'
+  | 'equatorial'
 
 export interface PegatineTextures {
   red: THREE.Texture
@@ -22,3 +25,13 @@ export interface PegatineTextures {
 }
 
 export type PegatineColor = keyof PegatineTextures
+
+export type User = {
+  [key: string]: any
+}
+
+export interface ApiClient {
+  logIn(email: string, password: string): Promise<void>
+  logOut(): Promise<void>
+  onAuth(callback: (u: User | null) => void): void
+}
