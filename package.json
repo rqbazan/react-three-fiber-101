@@ -8,8 +8,8 @@
     "dev": "gatsby develop -H 0.0.0.0 -p 3000",
     "build": "gatsby build",
     "start": "gatsby develop",
-    "lint": "eslint --ignore-path .gitignore .",
-    "prettier": "prettier --ignore-path .gitignore \"**/*.{ts,tsx,json,md}\"",
+    "lint": "eslint --ignore-path .gitignore . --ext ts,tsx,js",
+    "prettier": "prettier --ignore-path .gitignore \"**/*.{ts,tsx,js,json,md}\"",
     "format": "yarn prettier --write",
     "check-format": "yarn prettier --list-different",
     "check-types": "tsc",
@@ -23,11 +23,11 @@
     }
   },
   "lint-staged": {
-    "*.{ts,tsx,json,md}": [
+    "*.{ts,tsx,js,json,md}": [
       "prettier --ignore-path .gitignore --write",
       "git add"
     ],
-    "*.ts": [
+    "*.{ts,tsx,js}": [
       "eslint --ignore-path .gitignore --fix",
       "git add"
     ]
