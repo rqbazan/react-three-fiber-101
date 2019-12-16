@@ -1,4 +1,6 @@
 /* eslint global-require: "off" */
+const PROD = process.env.NODE_ENV === 'production'
+
 const purgecss = require('@fullhuman/postcss-purgecss')({
   content: ['./src/**/*.tsx'],
   whitelistPatterns: [/pegatine/],
@@ -17,5 +19,5 @@ const tw = require('tailwindcss')('./tailwind.config.js')
 
 // preset-env config from https://bit.ly/2Pnlfg0
 module.exports = {
-  plugins: [tw, env, purgecss]
+  plugins: [tw, env, PROD && purgecss].filter(Boolean)
 }
