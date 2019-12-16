@@ -10,6 +10,8 @@ export default class Firebase implements ApiClient {
 
   auth: firebaseApp.auth.Auth
 
+  app: firebaseApp.app.App
+
   constructor() {
     this.config = {
       apiKey: 'AIzaSyCdfQnEU6VuxMR79El8MrCTlormNPRvQi4',
@@ -21,7 +23,12 @@ export default class Firebase implements ApiClient {
       appId: '1:521652328039:web:2e189d4d8c9fd8c05d26c2'
     }
 
-    firebaseApp.initializeApp(this.config)
+    if (!firebaseApp.apps.length) {
+      this.app = firebaseApp.initializeApp(this.config)
+    } else {
+      this.app = firebaseApp.app()
+    }
+
     this.auth = firebaseApp.auth()
   }
 
