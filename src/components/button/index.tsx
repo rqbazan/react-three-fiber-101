@@ -1,4 +1,5 @@
 import React from 'react'
+import cs from 'classnames'
 import Loader from '../loader'
 import styles from './styles.module.css'
 
@@ -17,7 +18,7 @@ export default function Button({
     <button
       type="button"
       data-loading={isLoading}
-      className={`${styles.button} ${className}`}
+      className={cs(styles.button, className)}
       {...props}
     >
       <span>{children}</span>

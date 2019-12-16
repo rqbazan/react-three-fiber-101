@@ -1,16 +1,19 @@
 import React from 'react'
+import cs from 'classnames'
 import Button, { ButtonProps } from '../button'
 
 interface ControlProps extends ButtonProps {
   color?: string
 }
 
-export default function Control({ color, ...props }: ControlProps) {
-  const className = color ? `bg-pegatine-${color}` : 'text-white'
-
+export default function Control({ color, className, ...props }: ControlProps) {
   return (
     <Button
-      className={`rounded-full border-solid border-3 border-black h-10 w-10 p-0 text-black ${className}`}
+      className={cs(
+        'rounded-full border-solid border-3 border-black h-10 w-10 p-0',
+        { [`bg-pegatine-${color}`]: !!color },
+        className
+      )}
       {...props}
     />
   )

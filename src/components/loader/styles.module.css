@@ -3,6 +3,8 @@
 }
 
 .circle {
+  @apply h-full w-full;
+
   animation: dashoffset 4s linear infinite;
 }
 
