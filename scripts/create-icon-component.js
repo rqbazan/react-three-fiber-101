@@ -25,30 +25,37 @@ if (!fs.existsSync(TARGET_DIR)) {
   fs.mkdirSync(TARGET_DIR)
 }
 
-const code = `
-  import React from 'react'
-  ${ICON_NAMES.map(
-    (name, i) => `import ${COMPONENT_NAMES[i]} from 'icons/${name}.svg'`
-  ).join('\n')}
+function getCode() {
+  const importFmt = (name, i) =>
+    `import ${COMPONENT_NAMES[i]} from 'icons/${name}.svg'`
 
-  type IconName = ${ICON_NAMES.map(name => `'${name}'`).join('|')}
+  const typeFmt = name => `'${name}'`
 
-  const iconsDict: { [key in IconName]: React.FC } = {
-    ${ICON_NAMES.map((name, i) => `'${name}': ${COMPONENT_NAMES[i]}`)}
-  }
+  const dictEntryFmt = (name, i) => `'${name}': ${COMPONENT_NAMES[i]}`
 
-  interface IconProps extends React.SVGProps<SVGSVGElement> {
-    name: IconName
-  }
+  return `
+    import React from 'react'
+    ${ICON_NAMES.map(importFmt).join('\n')}
 
-  export default function Icon({ name, ...props }: IconProps) {
-    return React.createElement(iconsDict[name], props)
-  }
-`
+    type IconName = ${ICON_NAMES.map(typeFmt).join('|')}
+
+    const iconsDict: { [key in IconName]: React.FC } = {
+      ${ICON_NAMES.map(dictEntryFmt)}
+    }
+
+    interface IconProps extends React.SVGProps<SVGSVGElement> {
+      name: IconName
+    }
+
+    export default function Icon({ name, ...props }: IconProps) {
+      return React.createElement(iconsDict[name], props)
+    }
+  `
+}
 
 prettier.resolveConfig(__filename).then(options => {
   fs.writeFileSync(
     path.resolve(TARGET_DIR, 'index.tsx'),
-    prettier.format(code, { ...options, parser: 'typescript' })
+    prettier.format(getCode(), { ...options, parser: 'typescript' })
   )
 })
