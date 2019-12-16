@@ -1,8 +1,8 @@
-@tailwind components;
 @tailwind utilities;
 
 /* purgecss start ignore */
 @tailwind base;
+@tailwind components;
 
 html,
 body,
@@ -27,5 +27,4 @@ body {
 *:focus {
   outline: none;
 }
-
 /* purgecss end ignore */

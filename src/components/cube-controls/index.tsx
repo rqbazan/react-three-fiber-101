@@ -1,150 +1,135 @@
 import React from 'react'
-import { FaceName } from 'types'
+import cloneDeep from 'lodash.clonedeep'
+import intersection from 'lodash.intersection'
+import { FaceName, SliceName, ControlName } from 'types'
+import ClockwiseIcon from 'icons/clockwise.svg'
+import CounterClockwiseIcon from 'icons/counterclockwise.svg'
+import rotateArray from 'utils/rotate-array'
+import Cube from 'entities/cube'
 import styles from './styles.module.css'
-import RoundedButton from '../rounded-button'
+import ControlButton from '../control'
+
+interface Control {
+  targetFaceName: FaceName
+  color?: string
+}
+
+type Controls = {
+  [key in ControlName]: Control
+}
+
+function isSliceName(name: FaceName): name is SliceName {
+  return 'MSE'.includes(name)
+}
+
+const initControls: Controls = {
+  front: { targetFaceName: 'F', color: 'green' },
+  down: { targetFaceName: 'D', color: 'white' },
+  right: { targetFaceName: 'R', color: 'orange' },
+  back: { targetFaceName: 'B', color: 'blue' },
+  up: { targetFaceName: 'U', color: 'yellow' },
+  left: { targetFaceName: 'L', color: 'red' },
+  middle: { targetFaceName: 'M' },
+  standing: { targetFaceName: 'S' },
+  equatorial: { targetFaceName: 'E' }
+}
+
+const controlNamesBySlice: { [key in SliceName]: ControlName[] } = {
+  M: ['back', 'down', 'front', 'up'],
+  S: ['left', 'down', 'right', 'up'],
+  E: ['left', 'back', 'right', 'front']
+}
 
 interface CubeControlsProps {
   onControlClick(faceName: FaceName, inversed: boolean): void
 }
 
 export default function CubeControls({ onControlClick }: CubeControlsProps) {
-  function onClick(e: any) {
-    const faceName = e.target.dataset.face[0]
-    const inversed = e.target.dataset.face.endsWith("'")
+  const [controls, setControls] = React.useState<Controls>(initControls)
+
+  function reOrderSlices(sliceName: SliceName, inversed: boolean) {
+    const newPositions = rotateArray(controlNamesBySlice[sliceName], !inversed)
+
+    Cube.sliceNames
+      .filter(name => name !== sliceName)
+      .forEach(affectedSliceName => {
+        const newNames = cloneDeep(controlNamesBySlice[affectedSliceName])
+
+        intersection(
+          controlNamesBySlice[sliceName],
+          controlNamesBySlice[affectedSliceName]
+        ).forEach(affectedControlName => {
+          const controlNameIndex = controlNamesBySlice[sliceName].findIndex(
+            v => v === affectedControlName
+          )
+
+          const index = newNames.findIndex(v => v === affectedControlName)
+          newNames[index] = newPositions[controlNameIndex]
+        })
+
+        controlNamesBySlice[affectedSliceName] = newNames
+      })
+  }
+
+  function reOrderControls(sliceName: SliceName, inversed: boolean) {
+    setControls(prevControls => {
+      const newControls = cloneDeep(prevControls)
+      const positions = controlNamesBySlice[sliceName]
+
+      const newPositions = rotateArray(positions, inversed)
+
+      newPositions.forEach((newPosition, index) => {
+        newControls[positions[index]].targetFaceName =
+          prevControls[newPosition].targetFaceName
+      })
+
+      reOrderSlices(sliceName, inversed)
+
+      return newControls
+    })
+  }
+
+  function onClick(faceName: FaceName, inversed: boolean) {
+    if (isSliceName(faceName)) {
+      reOrderControls(faceName, inversed)
+    }
+
     onControlClick(faceName, inversed)
   }
+
+  const controlNames = Object.keys(controls) as ControlName[]
 
   return (
     <>
       <div className={`${styles.container} ${styles.left}`}>
-        <RoundedButton
-          data-face="F"
-          className="bg-pegatine-green"
-          onClick={onClick}
-        >
-          F
-        </RoundedButton>
-        <RoundedButton
-          data-face="D"
-          className="bg-pegatine-white"
-          onClick={onClick}
-        >
-          D
-        </RoundedButton>
-        <RoundedButton
-          data-face="R"
-          className="bg-pegatine-orange"
-          onClick={onClick}
-        >
-          R
-        </RoundedButton>
-        <RoundedButton
-          data-face="B"
-          className="bg-pegatine-blue"
-          onClick={onClick}
-        >
-          B
-        </RoundedButton>
-        <RoundedButton
-          data-face="U"
-          className="bg-pegatine-yellow"
-          onClick={onClick}
-        >
-          U
-        </RoundedButton>
-        <RoundedButton
-          data-face="L"
-          className="bg-pegatine-red"
-          onClick={onClick}
-        >
-          L
-        </RoundedButton>
-        <RoundedButton
-          data-face="M"
-          className="bg-black text-white"
-          onClick={onClick}
-        >
-          M
-        </RoundedButton>
-        <RoundedButton
-          data-face="S"
-          className="bg-black text-white"
-          onClick={onClick}
-        >
-          S
-        </RoundedButton>
-        <RoundedButton
-          data-face="E"
-          className="bg-black text-white"
-          onClick={onClick}
-        >
-          E
-        </RoundedButton>
+        {controlNames.map(name => {
+          const { color, targetFaceName } = controls[name]
+
+          return (
+            <ControlButton
+              key={`for-${name}-clokwise`}
+              color={color}
+              onClick={() => onClick(targetFaceName, false)}
+            >
+              {color ? <ClockwiseIcon /> : targetFaceName}
+            </ControlButton>
+          )
+        })}
       </div>
       <div className={`${styles.container} ${styles.right}`}>
-        <RoundedButton
-          data-face="F'"
-          className="bg-pegatine-green"
-          onClick={onClick}
-        >
-          F&apos;
-        </RoundedButton>
-        <RoundedButton
-          data-face="D'"
-          className="bg-pegatine-white"
-          onClick={onClick}
-        >
-          D&apos;
-        </RoundedButton>
-        <RoundedButton
-          data-face="R'"
-          className="bg-pegatine-orange"
-          onClick={onClick}
-        >
-          R&apos;
-        </RoundedButton>
-        <RoundedButton
-          data-face="B'"
-          className="bg-pegatine-blue"
-          onClick={onClick}
-        >
-          B&apos;
-        </RoundedButton>
-        <RoundedButton
-          data-face="U'"
-          className="bg-pegatine-yellow"
-          onClick={onClick}
-        >
-          U&apos;
-        </RoundedButton>
-        <RoundedButton
-          data-face="L'"
-          className="bg-pegatine-red"
-          onClick={onClick}
-        >
-          L&apos;
-        </RoundedButton>
-        <RoundedButton
-          data-face="M'"
-          className="bg-black text-white"
-          onClick={onClick}
-        >
-          M&apos;
-        </RoundedButton>
-        <RoundedButton
-          data-face="S'"
-          className="bg-black text-white"
-          onClick={onClick}
-        >
-          S&apos;
-        </RoundedButton>
-        <RoundedButton
-          data-face="E'"
-          className="bg-black text-white"
-          onClick={onClick}
-        >
-          E&apos;
-        </RoundedButton>
+        {controlNames.map(name => {
+          const { color, targetFaceName } = controls[name]
+
+          return (
+            <ControlButton
+              key={`for-${name}-counterclokwise`}
+              color={color}
+              onClick={() => onClick(targetFaceName, true)}
+            >
+              {color ? <CounterClockwiseIcon /> : `${targetFaceName}'`}
+            </ControlButton>
+          )
+        })}
       </div>
     </>
   )

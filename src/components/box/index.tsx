@@ -1,5 +1,6 @@
 import React from 'react'
-import usePegatineTextures, { PegatineColor } from 'hooks/use-pegatine-textures'
+import usePegatineTextures from 'hooks/use-pegatine-textures'
+import { PegatineColor } from 'types'
 
 interface BoxProps {
   position: [number, number, number]

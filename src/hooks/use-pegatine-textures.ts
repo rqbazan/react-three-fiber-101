@@ -1,16 +1,6 @@
 import * as THREE from 'three'
+import { PegatineTextures } from 'types'
 import { useLoader } from 'react-three-fiber'
-
-export interface PegatineTextures {
-  red: THREE.Texture
-  orange: THREE.Texture
-  blue: THREE.Texture
-  green: THREE.Texture
-  white: THREE.Texture
-  yellow: THREE.Texture
-}
-
-export type PegatineColor = keyof PegatineTextures
 
 export default function usePegatineTextures(): PegatineTextures {
   // eslint-disable-next-line

@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import getNewPositions from 'utils/get-new-positions'
+import { SliceName } from 'types'
 import Piece from './piece'
 
 // prettier-ignore
@@ -44,6 +45,8 @@ class Cube {
     Cube.size,
     Cube.angles.COUNTERCLOCKWISE
   )
+
+  static sliceNames: SliceName[] = ['M', 'S', 'E']
 
   pieces: {
     [key: string]: Piece
