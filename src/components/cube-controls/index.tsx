@@ -1,12 +1,11 @@
 import React from 'react'
 import cloneDeep from 'lodash.clonedeep'
 import { FaceName, SliceName, ControlName } from 'types'
+import ClockwiseIcon from 'icons/clockwise.svg'
+import CounterClockwiseIcon from 'icons/counterclockwise.svg'
 import rotateArray from 'utils/rotate-array'
 import styles from './styles.module.css'
 import ControlButton from '../control'
-
-// const ClockwiseIcon = require('icons/clockwise.svg').default
-// const CounterClockwiseIcon = require('icons/counter-clockwise.svg').default
 
 interface Control {
   faceName: FaceName
@@ -84,7 +83,7 @@ export default function CubeControls({ onControlClick }: CubeControlsProps) {
               color={color}
               onClick={() => onClick(faceName, false)}
             >
-              {faceName}
+              {color ? <ClockwiseIcon /> : faceName}
             </ControlButton>
           )
         })}
@@ -99,7 +98,7 @@ export default function CubeControls({ onControlClick }: CubeControlsProps) {
               color={color}
               onClick={() => onClick(faceName, true)}
             >
-              {`${faceName}'`}
+              {color ? <CounterClockwiseIcon /> : `${faceName}'`}
             </ControlButton>
           )
         })}

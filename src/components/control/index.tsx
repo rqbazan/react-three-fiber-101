@@ -10,7 +10,7 @@ export default function Control({ color, ...props }: ControlProps) {
 
   return (
     <Button
-      className={`rounded-full border-solid border-2 border-black h-10 w-10 p-0 text-black ${className}`}
+      className={`rounded-full border-solid border-3 border-black h-10 w-10 p-0 text-black ${className}`}
       {...props}
     />
   )

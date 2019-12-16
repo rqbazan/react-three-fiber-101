@@ -8,6 +8,9 @@ module.exports = {
         'pegatine-orange': '#FF6C00',
         'pegatine-yellow': '#FDCC09',
         'pegatine-white': '#FFFFFF'
+      },
+      borderWidth: {
+        3: '3px'
       }
     }
   },
