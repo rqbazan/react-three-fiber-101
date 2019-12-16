@@ -1,6 +1,6 @@
 import React from 'react'
 import { ApiClient } from 'types'
 
-export const FirebaseContext = React.createContext<ApiClient | undefined>(
+export const ApiClientContext = React.createContext<ApiClient | undefined>(
   undefined
 )

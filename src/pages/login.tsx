@@ -2,22 +2,22 @@ import React from 'react'
 import { navigate } from 'gatsby'
 import Modal from 'components/modal'
 import LoginForm, { LoginFormValues, SetError } from 'components/login-form'
-import FirebaseProvider from 'components/firebase-provider'
-import useFirebase from 'hooks/use-firebase'
+import ApiClientProvider from 'components/api-client-provider'
+import useApiClient from 'hooks/use-api-client'
 
-// TODO: add loading state for firebase loading
+// TODO: add loading state for api client loading
 
 function LoginModal() {
-  const firebase = useFirebase()
+  const apliClient = useApiClient()
 
   async function onSubmit(formValues: LoginFormValues, setError: SetError) {
     try {
-      if (!firebase) {
+      if (!apliClient) {
         return
       }
 
       const { email, password } = formValues
-      await firebase.logIn(email, password)
+      await apliClient.logIn(email, password)
       navigate('/')
     } catch (error) {
       console.error('[LoginModal]', error)
@@ -40,8 +40,8 @@ function LoginModal() {
 
 export default function LoginPage() {
   return (
-    <FirebaseProvider>
+    <ApiClientProvider>
       <LoginModal />
-    </FirebaseProvider>
+    </ApiClientProvider>
   )
 }

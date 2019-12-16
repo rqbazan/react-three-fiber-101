@@ -1,14 +1,14 @@
 import React from 'react'
-import { FirebaseContext } from 'contexts'
+import { ApiClientContext } from 'contexts'
 import { ApiClient } from 'types'
 
 let clientInstance: any
 
-interface FirebaseProvider {
+interface ApiClientProvider {
   children: React.ReactNode
 }
 
-export default function FirebaseProvider({ children }: FirebaseProvider) {
+export default function ApiClientProvider({ children }: ApiClientProvider) {
   const [client, setClient] = React.useState<ApiClient>()
 
   React.useEffect(() => {
@@ -21,8 +21,8 @@ export default function FirebaseProvider({ children }: FirebaseProvider) {
   }, [])
 
   return (
-    <FirebaseContext.Provider value={client}>
+    <ApiClientContext.Provider value={client}>
       {children}
-    </FirebaseContext.Provider>
+    </ApiClientContext.Provider>
   )
 }

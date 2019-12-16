@@ -6,8 +6,8 @@ import ClockwiseIcon from 'icons/clockwise.svg'
 import CounterClockwiseIcon from 'icons/counterclockwise.svg'
 import rotateArray from 'utils/rotate-array'
 import Cube from 'entities/cube'
-import styles from './styles.module.css'
 import ControlButton from '../control'
+import styles from './styles.module.css'
 
 interface Control {
   targetFaceName: FaceName
