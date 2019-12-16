@@ -6,7 +6,7 @@ interface ControlProps extends ButtonProps {
 }
 
 export default function Control({ color, ...props }: ControlProps) {
-  const className = color ? `bg-pegatine-${color}` : 'bg-black text-white'
+  const className = color ? `bg-pegatine-${color}` : 'text-white'
 
   return (
     <Button
