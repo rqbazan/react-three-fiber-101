@@ -3,8 +3,7 @@ import cs from 'classnames'
 import cloneDeep from 'lodash.clonedeep'
 import intersection from 'lodash.intersection'
 import { FaceName, SliceName, ControlName } from 'types'
-import ClockwiseIcon from 'icons/clockwise.svg'
-import CounterClockwiseIcon from 'icons/counterclockwise.svg'
+import Icon from 'components/icon'
 import rotateArray from 'utils/rotate-array'
 import Cube from 'entities/cube'
 import ControlButton from '../control'
@@ -112,7 +111,7 @@ export default function CubeControls({ onControlClick }: CubeControlsProps) {
               color={color}
               onClick={() => onClick(targetFaceName, true)}
             >
-              {color ? <CounterClockwiseIcon /> : `${targetFaceName}'`}
+              {color ? <Icon name="counterclockwise" /> : `${targetFaceName}'`}
             </ControlButton>
           )
         })}
@@ -127,7 +126,7 @@ export default function CubeControls({ onControlClick }: CubeControlsProps) {
               color={color}
               onClick={() => onClick(targetFaceName, false)}
             >
-              {color ? <ClockwiseIcon /> : targetFaceName}
+              {color ? <Icon name="clockwise" /> : targetFaceName}
             </ControlButton>
           )
         })}

@@ -1,11 +1,10 @@
 .button {
   @apply flex items-center justify-center font-bold text-base;
-  @apply px-6 h-8;
+  @apply px-6 h-8 rounded-xl;
   @apply shadow-lg;
   @apply relative select-none;
   @apply bg-black text-white;
 
-  border-radius: 1rem;
   transition: transform 350ms cubic-bezier(0.86, 0, 0.07, 1);
 
   &:focus {
