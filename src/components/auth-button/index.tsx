@@ -1,11 +1,13 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import useAuth from 'hooks/use-auth'
+import { AuthState } from 'hooks/use-auth'
 import Button from '../button'
 
-export default function AuthButton() {
-  const auth = useAuth()
+interface AuthButtonProps {
+  auth?: AuthState
+}
 
+export default function AuthButton({ auth }: AuthButtonProps) {
   if (!auth) {
     return <Button isLoading />
   }

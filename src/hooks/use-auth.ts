@@ -2,7 +2,7 @@ import React from 'react'
 import { User } from 'types'
 import useApiClient from './use-api-client'
 
-interface AuthState {
+export interface AuthState {
   user: User | null
   isLogged: boolean
   logOut(): void

@@ -14,7 +14,8 @@
     "check-format": "yarn prettier --list-different",
     "check-types": "tsc",
     "validate": "npm-run-all --parallel check-format check-types lint build",
-    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' ava"
+    "test": "TS_NODE_COMPILER_OPTIONS='{\"module\":\"commonjs\"}' ava",
+    "cic": "node ./scripts/create-icon-component.js"
   },
   "husky": {
     "hooks": {
