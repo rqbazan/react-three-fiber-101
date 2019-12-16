@@ -1,6 +1,5 @@
 import React from 'react'
-
-const styles = require('./styles.module.css')
+import styles from './styles.module.css'
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {

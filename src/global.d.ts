@@ -4,3 +4,6 @@ declare namespace JSX {
     orbitControls: any
   }
 }
+
+declare module '*.module.css'
+declare module '*.svg'

@@ -1,7 +1,6 @@
 import React from 'react'
-
-const MoodSad = require('icons/mood-sad.svg').default
-const styles = require('./styles.module.css')
+import MoodSad from 'icons/mood-sad.svg'
+import styles from './styles.module.css'
 
 interface FieldError {
   children: React.ReactNode

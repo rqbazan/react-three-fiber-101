@@ -1,6 +1,5 @@
 import React from 'react'
-
-const Close = require('icons/close.svg').default
+import Close from 'icons/close.svg'
 
 interface ModalProps {
   children: React.ReactNode
