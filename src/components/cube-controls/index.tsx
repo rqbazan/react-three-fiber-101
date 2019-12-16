@@ -1,8 +1,7 @@
 import React from 'react'
 import { FaceName } from 'types'
+import styles from './styles.module.css'
 import RoundedButton from '../rounded-button'
-
-const styles = require('./styles.module.css')
 
 interface CubeControlsProps {
   onControlClick(faceName: FaceName, inversed: boolean): void

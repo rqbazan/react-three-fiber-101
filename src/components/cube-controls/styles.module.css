@@ -1,40 +1,39 @@
 .container {
   @apply flex flex-col fixed;
+
+  & > button:not(:last-child) {
+    @apply mb-3;
+  }
+
+  @screen md {
+    @apply flex-row;
+
+    & > button:not(:last-child) {
+      @apply mb-0 mr-3;
+    }
+  }
 }
 
 .left {
   left: theme('spacing.4');
   top: 50%;
   transform: translate(0, -50%);
-}
-.right {
-  right: theme('spacing.4');
-  top: 50%;
-  transform: translate(0, -50%);
-}
 
-.container > button:not(:last-child) {
-  @apply mb-3;
-}
-
-@media (min-width: theme('screens.md')) {
-  .container {
-    @apply flex-row;
-  }
-
-  .container > button:not(:last-child) {
-    @apply mb-0 mr-3;
-  }
-
-  .left {
+  @screen md {
     bottom: 0;
     left: 50%;
     top: unset;
     bottom: calc(theme('height.10') + theme('spacing.4') * 2);
     transform: translate(-50%, 0);
   }
+}
 
-  .right {
+.right {
+  right: theme('spacing.4');
+  top: 50%;
+  transform: translate(0, -50%);
+
+  @screen md {
     bottom: 0;
     left: 50%;
     right: unset;

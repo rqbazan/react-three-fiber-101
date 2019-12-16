@@ -1,9 +1,9 @@
+/* purgecss start ignore */
 .icon {
   @apply h-6 w-6 mr-1;
-}
 
-/* purgecss start ignore */
-.icon circle {
-  fill: theme('colors.pegatine-yellow');
+  & circle {
+    fill: theme('colors.pegatine-yellow');
+  }
 }
 /* purgecss end ignore */
