@@ -1,15 +1,16 @@
 import React from 'react'
 import cloneDeep from 'lodash.clonedeep'
+import intersection from 'lodash.intersection'
 import { FaceName, SliceName, ControlName } from 'types'
 import ClockwiseIcon from 'icons/clockwise.svg'
 import CounterClockwiseIcon from 'icons/counterclockwise.svg'
 import rotateArray from 'utils/rotate-array'
+import Cube from 'entities/cube'
 import styles from './styles.module.css'
 import ControlButton from '../control'
 
 interface Control {
-  faceName: FaceName
-  fixed: FaceName
+  targetFaceName: FaceName
   color?: string
 }
 
@@ -22,20 +23,20 @@ function isSliceName(name: FaceName): name is SliceName {
 }
 
 const initControls: Controls = {
-  front: { fixed: 'F', faceName: 'F', color: 'green' },
-  down: { fixed: 'D', faceName: 'D', color: 'white' },
-  right: { fixed: 'R', faceName: 'R', color: 'orange' },
-  back: { fixed: 'B', faceName: 'B', color: 'blue' },
-  up: { fixed: 'U', faceName: 'U', color: 'yellow' },
-  left: { fixed: 'L', faceName: 'L', color: 'red' },
-  middle: { fixed: 'M', faceName: 'M' },
-  standing: { fixed: 'S', faceName: 'S' },
-  equatorial: { fixed: 'E', faceName: 'E' }
+  front: { targetFaceName: 'F', color: 'green' },
+  down: { targetFaceName: 'D', color: 'white' },
+  right: { targetFaceName: 'R', color: 'orange' },
+  back: { targetFaceName: 'B', color: 'blue' },
+  up: { targetFaceName: 'U', color: 'yellow' },
+  left: { targetFaceName: 'L', color: 'red' },
+  middle: { targetFaceName: 'M' },
+  standing: { targetFaceName: 'S' },
+  equatorial: { targetFaceName: 'E' }
 }
 
 const controlNamesBySlice: { [key in SliceName]: ControlName[] } = {
   M: ['back', 'down', 'front', 'up'],
-  S: ['back', 'down', 'front', 'up'],
+  S: ['left', 'down', 'right', 'up'],
   E: ['left', 'back', 'right', 'front']
 }
 
@@ -46,6 +47,30 @@ interface CubeControlsProps {
 export default function CubeControls({ onControlClick }: CubeControlsProps) {
   const [controls, setControls] = React.useState<Controls>(initControls)
 
+  function reOrderSlices(sliceName: SliceName, inversed: boolean) {
+    const newPositions = rotateArray(controlNamesBySlice[sliceName], !inversed)
+
+    Cube.sliceNames
+      .filter(name => name !== sliceName)
+      .forEach(affectedSliceName => {
+        const newNames = cloneDeep(controlNamesBySlice[affectedSliceName])
+
+        intersection(
+          controlNamesBySlice[sliceName],
+          controlNamesBySlice[affectedSliceName]
+        ).forEach(affectedControlName => {
+          const controlNameIndex = controlNamesBySlice[sliceName].findIndex(
+            v => v === affectedControlName
+          )
+
+          const index = newNames.findIndex(v => v === affectedControlName)
+          newNames[index] = newPositions[controlNameIndex]
+        })
+
+        controlNamesBySlice[affectedSliceName] = newNames
+      })
+  }
+
   function reOrderControls(sliceName: SliceName, inversed: boolean) {
     setControls(prevControls => {
       const newControls = cloneDeep(prevControls)
@@ -54,8 +79,11 @@ export default function CubeControls({ onControlClick }: CubeControlsProps) {
       const newPositions = rotateArray(positions, inversed)
 
       newPositions.forEach((newPosition, index) => {
-        newControls[positions[index]].faceName = newControls[newPosition].fixed
+        newControls[positions[index]].targetFaceName =
+          prevControls[newPosition].targetFaceName
       })
+
+      reOrderSlices(sliceName, inversed)
 
       return newControls
     })
@@ -75,30 +103,30 @@ export default function CubeControls({ onControlClick }: CubeControlsProps) {
     <>
       <div className={`${styles.container} ${styles.left}`}>
         {controlNames.map(name => {
-          const { color, faceName } = controls[name]
+          const { color, targetFaceName } = controls[name]
 
           return (
             <ControlButton
               key={`for-${name}-clokwise`}
               color={color}
-              onClick={() => onClick(faceName, false)}
+              onClick={() => onClick(targetFaceName, false)}
             >
-              {color ? <ClockwiseIcon /> : faceName}
+              {color ? <ClockwiseIcon /> : targetFaceName}
             </ControlButton>
           )
         })}
       </div>
       <div className={`${styles.container} ${styles.right}`}>
         {controlNames.map(name => {
-          const { color, faceName } = controls[name]
+          const { color, targetFaceName } = controls[name]
 
           return (
             <ControlButton
               key={`for-${name}-counterclokwise`}
               color={color}
-              onClick={() => onClick(faceName, true)}
+              onClick={() => onClick(targetFaceName, true)}
             >
-              {color ? <CounterClockwiseIcon /> : `${faceName}'`}
+              {color ? <CounterClockwiseIcon /> : `${targetFaceName}'`}
             </ControlButton>
           )
         })}
