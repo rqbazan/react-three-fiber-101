@@ -1,4 +1,5 @@
 import React from 'react'
+import Loader from '../loader'
 import styles from './styles.module.css'
 
 export interface ButtonProps
@@ -21,7 +22,9 @@ export default function Button({
     >
       <span>{children}</span>
       {isLoading && (
-        <span className="absolute text-white h-full top-0">...</span>
+        <span className="absolute flex items-center">
+          <Loader />
+        </span>
       )}
     </button>
   )
