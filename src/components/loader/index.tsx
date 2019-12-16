@@ -22,7 +22,7 @@ export default function Loader({
     <svg height={size} width={size} className={styles.loader}>
       <style>{`circle { --offset: ${offset}px; }`}</style>
       <circle
-        className={`h-full w-full ${styles.circle}`}
+        className={styles.circle}
         cx={radius}
         cy={radius}
         r={radius}

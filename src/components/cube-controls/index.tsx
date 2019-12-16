@@ -1,4 +1,5 @@
 import React from 'react'
+import cs from 'classnames'
 import cloneDeep from 'lodash.clonedeep'
 import intersection from 'lodash.intersection'
 import { FaceName, SliceName, ControlName } from 'types'
@@ -101,7 +102,7 @@ export default function CubeControls({ onControlClick }: CubeControlsProps) {
 
   return (
     <>
-      <div className={`${styles.container} ${styles.left}`}>
+      <div className={cs(styles.container, styles.left)}>
         {controlNames.map(name => {
           const { color, targetFaceName } = controls[name]
 
@@ -116,7 +117,7 @@ export default function CubeControls({ onControlClick }: CubeControlsProps) {
           )
         })}
       </div>
-      <div className={`${styles.container} ${styles.right}`}>
+      <div className={cs(styles.container, styles.right)}>
         {controlNames.map(name => {
           const { color, targetFaceName } = controls[name]
 
