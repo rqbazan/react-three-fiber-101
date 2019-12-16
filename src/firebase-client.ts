@@ -40,7 +40,9 @@ export default class Firebase implements ApiClient {
     await this.auth.signOut()
   }
 
-  onAuth(callback: (u: firebaseApp.User | null) => void) {
-    this.auth.onAuthStateChanged(callback)
+  onAuth(
+    callback: (u: firebaseApp.User | null) => void
+  ): firebaseApp.Unsubscribe {
+    return this.auth.onAuthStateChanged(callback)
   }
 }

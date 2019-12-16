@@ -33,5 +33,5 @@ export type User = {
 export interface ApiClient {
   logIn(email: string, password: string): Promise<void>
   logOut(): Promise<void>
-  onAuth(callback: (u: User | null) => void): void
+  onAuth(callback: (u: User | null) => void): () => void
 }
