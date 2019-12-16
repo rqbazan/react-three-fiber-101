@@ -18,7 +18,7 @@ function LoginModal() {
 
       const { email, password } = formValues
       await apliClient.logIn(email, password)
-      navigate('/')
+      navigate('/', { replace: true })
     } catch (error) {
       console.error('[LoginModal]', error)
       if (error.code === 'auth/wrong-password') {
