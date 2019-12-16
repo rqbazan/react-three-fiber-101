@@ -7,20 +7,20 @@
 
   border-radius: 1rem;
   transition: transform 350ms cubic-bezier(0.86, 0, 0.07, 1);
-}
 
-.button:focus {
-  @apply outline-none;
-}
+  &:focus {
+    @apply outline-none;
+  }
 
-.button:hover {
-  transform: scale(1.13);
-}
+  &:hover {
+    transform: scale(1.13);
+  }
 
-.button[data-loading='true'] span:first-child {
-  opacity: 0;
-}
+  &[data-loading='true'] span:first-of-type {
+    opacity: 0;
+  }
 
-.button span {
-  @apply pointer-events-none;
+  & span {
+    @apply pointer-events-none;
+  }
 }

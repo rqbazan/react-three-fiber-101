@@ -1,3 +1,7 @@
 module.exports = {
-  plugins: ['gatsby-plugin-postcss', 'gatsby-plugin-svgr-loader']
+  plugins: [
+    'gatsby-plugin-postcss',
+    'gatsby-plugin-svgr-loader',
+    'gatsby-plugin-typescript'
+  ]
 }

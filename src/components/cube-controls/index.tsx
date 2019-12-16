@@ -2,11 +2,11 @@ import React from 'react'
 import cloneDeep from 'lodash.clonedeep'
 import { FaceName, SliceName, ControlName } from 'types'
 import rotateArray from 'utils/rotate-array'
+import styles from './styles.module.css'
 import ControlButton from '../control'
 
 // const ClockwiseIcon = require('icons/clockwise.svg').default
 // const CounterClockwiseIcon = require('icons/counter-clockwise.svg').default
-const styles = require('./styles.module.css')
 
 interface Control {
   faceName: FaceName
