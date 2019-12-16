@@ -1,5 +1,3 @@
-import './index.css'
-
 import React from 'react'
 import { FaceName } from 'types'
 import { Canvas } from 'react-three-fiber'
@@ -9,6 +7,7 @@ import OrbitControls from 'components/orbit-controls'
 import CubeControls from 'components/cube-controls'
 import AuthButton from 'components/auth-button'
 import useScrollBlocker from 'hooks/use-scroll-blocker'
+import './index.css' // important keep this line here at the bottom
 
 export default function IndexPage() {
   const cubeRef = React.useRef<CubeRef>(null!)
