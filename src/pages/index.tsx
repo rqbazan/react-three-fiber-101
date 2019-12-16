@@ -1,14 +1,14 @@
+import './index.css'
+
 import React from 'react'
 import { FaceName } from 'types'
 import { Canvas } from 'react-three-fiber'
-import FirebaseProvider from 'components/firebase-provider'
+import ApiClientProvider from 'components/api-client-provider'
 import Cube, { CubeRef } from 'components/cube'
 import OrbitControls from 'components/orbit-controls'
 import CubeControls from 'components/cube-controls'
 import AuthButton from 'components/auth-button'
 import useScrollBlocker from 'hooks/use-scroll-blocker'
-
-import './index.css'
 
 export default function IndexPage() {
   const cubeRef = React.useRef<CubeRef>(null!)
@@ -22,7 +22,7 @@ export default function IndexPage() {
   }
 
   return (
-    <FirebaseProvider>
+    <ApiClientProvider>
       <div className="flex justify-center">
         <div className="w-full md:max-w-5xl relative">
           <header className="flex absolute w-full p-3 items-center justify-end z-10">
@@ -35,6 +35,6 @@ export default function IndexPage() {
           <CubeControls onControlClick={onControlClick} />
         </div>
       </div>
-    </FirebaseProvider>
+    </ApiClientProvider>
   )
 }

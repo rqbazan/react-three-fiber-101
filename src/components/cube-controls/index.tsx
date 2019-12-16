@@ -6,8 +6,8 @@ import ClockwiseIcon from 'icons/clockwise.svg'
 import CounterClockwiseIcon from 'icons/counterclockwise.svg'
 import rotateArray from 'utils/rotate-array'
 import Cube from 'entities/cube'
-import styles from './styles.module.css'
 import ControlButton from '../control'
+import styles from './styles.module.css'
 
 interface Control {
   targetFaceName: FaceName
@@ -107,11 +107,11 @@ export default function CubeControls({ onControlClick }: CubeControlsProps) {
 
           return (
             <ControlButton
-              key={`for-${name}-clokwise`}
+              key={`for-${name}-counterclokwise`}
               color={color}
-              onClick={() => onClick(targetFaceName, false)}
+              onClick={() => onClick(targetFaceName, true)}
             >
-              {color ? <ClockwiseIcon /> : targetFaceName}
+              {color ? <CounterClockwiseIcon /> : `${targetFaceName}'`}
             </ControlButton>
           )
         })}
@@ -122,11 +122,11 @@ export default function CubeControls({ onControlClick }: CubeControlsProps) {
 
           return (
             <ControlButton
-              key={`for-${name}-counterclokwise`}
+              key={`for-${name}-clokwise`}
               color={color}
-              onClick={() => onClick(targetFaceName, true)}
+              onClick={() => onClick(targetFaceName, false)}
             >
-              {color ? <CounterClockwiseIcon /> : `${targetFaceName}'`}
+              {color ? <ClockwiseIcon /> : targetFaceName}
             </ControlButton>
           )
         })}

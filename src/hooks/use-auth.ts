@@ -1,6 +1,6 @@
 import React from 'react'
 import { User } from 'types'
-import useFirebase from './use-firebase'
+import useApiClient from './use-api-client'
 
 interface AuthState {
   user: User | null
@@ -10,15 +10,15 @@ interface AuthState {
 
 export default function useAuth() {
   const [auth, setAuth] = React.useState<AuthState>()
-  const firebase = useFirebase()
+  const apliClient = useApiClient()
 
   React.useEffect(() => {
-    if (firebase) {
-      firebase.onAuth(user => {
-        setAuth({ user, isLogged: !!user, logOut: () => firebase.logOut() })
+    if (apliClient) {
+      apliClient.onAuth(user => {
+        setAuth({ user, isLogged: !!user, logOut: () => apliClient.logOut() })
       })
     }
-  }, [firebase])
+  }, [apliClient])
 
   return auth
 }
