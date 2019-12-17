@@ -11,13 +11,17 @@ import Icon from 'components/icon'
 import useScrollBlocker from 'hooks/use-scroll-blocker'
 import './index.css' // important keep this line here at the bottom
 
-function Header() {
+interface HeaderProps {
+  onScrambleClick: () => void
+}
+
+function Header({ onScrambleClick }: HeaderProps) {
   const auth = useAuth()
 
   return (
     <header className="flex absolute w-full p-3 items-center justify-end z-10">
       <div className="text-gray-900 bg-white rounded-xl h-8 flex items-center px-6 shadow-lg mr-4">
-        <Icon name="duplicate" role="button" />
+        <Icon name="duplicate" role="button" onClick={onScrambleClick} />
         {auth?.isLogged && (
           <>
             <Icon name="cloud-upload" className="ml-4" role="button" />
@@ -37,7 +41,13 @@ export default function IndexPage() {
 
   function onControlClick(faceName: FaceName, inversed: boolean) {
     if (cubeRef.current) {
-      cubeRef.current.rotate(faceName, inversed)
+      cubeRef.current.rotateFace(faceName, inversed)
+    }
+  }
+
+  function onScrambleClick() {
+    if (cubeRef.current) {
+      cubeRef.current.scrambleFaces()
     }
   }
 
@@ -45,7 +55,7 @@ export default function IndexPage() {
     <ApiClientProvider>
       <div className="flex justify-center">
         <div className="w-full md:max-w-5xl relative">
-          <Header />
+          <Header onScrambleClick={onScrambleClick} />
           <Canvas camera={{ position: [6, 6, 6] }}>
             <OrbitControls />
             <Cube ref={cubeRef} />

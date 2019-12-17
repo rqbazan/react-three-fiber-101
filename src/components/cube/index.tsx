@@ -2,7 +2,7 @@ import React from 'react'
 import * as THREE from 'three'
 import { FaceName } from 'types'
 import { useRender } from 'react-three-fiber'
-import useHotKeys from 'hooks/use-hot-keys'
+import getRandomMoves from 'utils/get-random-moves'
 import useRefs from 'hooks/use-refs'
 import CubeEntity from 'entities/cube'
 import { rotateAroundWorldAxis } from './helpers'
@@ -13,11 +13,16 @@ interface Move {
   targetAngle: number
   faceName: FaceName
   currentAngle: number
+  velocity: number
+  complete(): void
 }
 
 export interface CubeRef {
-  rotate(faceName: FaceName, inversed: boolean): void
+  rotateFace(faceName: FaceName, inversed: boolean): void
+  scrambleFaces(): void
 }
+
+const defaultVelocity = 6
 
 const cube = new CubeEntity()
 
@@ -25,7 +30,7 @@ const Cube = React.forwardRef<CubeRef, {}>((_, ref) => {
   const boxRefs = useRefs<THREE.Mesh>(27)
   const moveRef = React.useRef<Move>()
 
-  function rotateMeshs(faceName: FaceName, angle: number) {
+  const rotateMeshs = (faceName: FaceName, angle: number) => {
     const facePieces = cube.faces[faceName]
 
     // workaround for not available refs, for now
@@ -46,61 +51,70 @@ const Cube = React.forwardRef<CubeRef, {}>((_, ref) => {
     }
   }
 
-  function onKeyPress(faceName: FaceName, shiftKeyPressed: boolean) {
+  const rotateFace = async (
+    faceName: FaceName,
+    inversed: boolean,
+    velocity?: number
+  ) => {
     if (moveRef.current) {
-      return
+      return Promise.resolve()
     }
 
-    const targetAngle = shiftKeyPressed
+    const targetAngle = inversed
       ? CubeEntity.angles.COUNTERCLOCKWISE
       : CubeEntity.angles.CLOCKWISE
 
-    moveRef.current = {
-      targetAngle,
-      faceName,
-      currentAngle: 0
+    return new Promise(resolve => {
+      moveRef.current = {
+        targetAngle,
+        faceName,
+        velocity: velocity ?? defaultVelocity,
+        complete: resolve,
+        currentAngle: 0
+      }
+    })
+  }
+
+  const scrambleFaces = async () => {
+    const moves = getRandomMoves(20)
+    for (let i = 0; i < moves.length; i++) {
+      const { faceName, inversed } = moves[i]
+      // eslint-disable-next-line
+      await rotateFace(faceName, inversed, defaultVelocity * 3)
     }
   }
 
-  useHotKeys({
-    KeyU: onKeyPress,
-    KeyD: onKeyPress,
-    KeyR: onKeyPress,
-    KeyL: onKeyPress,
-    KeyF: onKeyPress,
-    KeyB: onKeyPress,
-    KeyM: onKeyPress,
-    KeyE: onKeyPress,
-    KeyS: onKeyPress
-  })
-
   useRender(() => {
-    const velocity = 6
+    if (!moveRef.current) {
+      return
+    }
 
-    if (moveRef.current) {
-      const move = moveRef.current
-      const { faceName, targetAngle } = move
-      const faceMeta = facesMeta[faceName]
+    const move = moveRef.current
+    const { faceName, targetAngle, velocity } = move
+    const faceMeta = facesMeta[faceName]
 
-      if (move.currentAngle === move.targetAngle) {
-        cube.rotate(faceName, targetAngle)
-        moveRef.current = undefined
-        return
-      }
+    if (move.currentAngle === move.targetAngle) {
+      cube.rotate(faceName, targetAngle)
+      moveRef.current.complete()
+      moveRef.current = undefined
+      return
+    }
 
-      const targetSign = Math.sign(targetAngle)
-      const rotationFactor = faceMeta.inverse ? -targetSign : targetSign
+    const targetSign = Math.sign(targetAngle)
+    const rotationFactor = faceMeta.inverse ? -targetSign : targetSign
 
-      rotateMeshs(faceName, velocity * rotationFactor)
+    rotateMeshs(faceName, velocity * rotationFactor)
 
-      moveRef.current.currentAngle += velocity * targetSign
+    moveRef.current.currentAngle += velocity * targetSign
+
+    if (Math.abs(moveRef.current.currentAngle) > 90) {
+      moveRef.current.currentAngle = 90 * targetSign
     }
   }, false)
 
   React.useImperativeHandle(ref, () => ({
-    rotate(faceName: FaceName, inversed: boolean) {
-      onKeyPress(faceName, inversed)
-    }
+    rotateFace,
+    scrambleFaces
   }))
 
   return (

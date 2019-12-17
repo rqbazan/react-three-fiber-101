@@ -26,6 +26,11 @@ export interface PegatineTextures {
 
 export type PegatineColor = keyof PegatineTextures
 
+export interface Move {
+  faceName: FaceName
+  inversed: boolean
+}
+
 export type User = {
   [key: string]: any
 }
