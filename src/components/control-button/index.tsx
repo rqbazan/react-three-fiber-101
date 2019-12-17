@@ -2,11 +2,15 @@ import React from 'react'
 import cs from 'classnames'
 import Button, { ButtonProps } from '../button'
 
-interface ControlProps extends ButtonProps {
+interface ControlButtonProps extends ButtonProps {
   color?: string
 }
 
-export default function Control({ color, className, ...props }: ControlProps) {
+export default function ControlButton({
+  color,
+  className,
+  ...props
+}: ControlButtonProps) {
   return (
     <Button
       className={cs(

@@ -26,8 +26,8 @@ export interface PegatineTextures {
 
 export type PegatineColor = keyof PegatineTextures
 
-export interface Move {
-  faceName: FaceName
+export interface Move<T = FaceName> {
+  faceName: T
   inversed: boolean
 }
 
