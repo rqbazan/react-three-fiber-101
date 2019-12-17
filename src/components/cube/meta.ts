@@ -1,4 +1,4 @@
-import Cube from 'entities/cube'
+import Cube from '~/entities/cube'
 
 export const facesMeta = {
   U: {

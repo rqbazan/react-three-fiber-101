@@ -1,13 +1,12 @@
-import test from 'ava'
 import getRandomMoves from '../get-random-moves'
 
-test('random moves', t => {
+it('creates random moves', () => {
   const quantity = 20
   const moves = getRandomMoves(quantity)
 
-  t.is(moves.length, quantity)
+  expect(moves).toHaveLength(quantity)
 
   for (let i = 0; i < moves.length - 1; i++) {
-    t.notDeepEqual(moves[i], moves[i + 1])
+    expect(moves[i]).not.toEqual(moves[i + 1])
   }
 })

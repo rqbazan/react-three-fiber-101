@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'gatsby'
-import { AuthState } from 'hooks/use-auth'
+import { AuthState } from '~/hooks/use-auth'
 import Button from '../button'
 
 interface AuthButtonProps {

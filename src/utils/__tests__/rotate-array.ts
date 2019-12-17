@@ -1,10 +1,9 @@
-import test from 'ava'
 import rotateArray from '../rotate-array'
 
-test('forward movement', t => {
-  t.deepEqual(rotateArray([1, 2, 3, 4, 5]), [5, 1, 2, 3, 4])
+it('rotates with forward movement', () => {
+  expect(rotateArray([1, 2, 3, 4, 5])).toEqual([5, 1, 2, 3, 4])
 })
 
-test('backward movement', t => {
-  t.deepEqual(rotateArray([1, 2, 3, 4, 5], true), [2, 3, 4, 5, 1])
+it('rotates with backward movement', () => {
+  expect(rotateArray([1, 2, 3, 4, 5], true)).toEqual([2, 3, 4, 5, 1])
 })

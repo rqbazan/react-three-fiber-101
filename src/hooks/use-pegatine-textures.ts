@@ -1,6 +1,6 @@
 import * as THREE from 'three'
-import { PegatineTextures } from 'types'
 import { useLoader } from 'react-three-fiber'
+import { PegatineTextures } from '~/types'
 
 export default function usePegatineTextures(): PegatineTextures {
   // eslint-disable-next-line
