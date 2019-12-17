@@ -1,5 +1,5 @@
 import React from 'react'
-import { User } from 'types'
+import { User } from '~/types'
 import useApiClient from './use-api-client'
 
 export interface AuthState {

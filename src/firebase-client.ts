@@ -1,5 +1,5 @@
-import { ApiClient } from 'types'
 import * as firebaseApp from 'firebase/app'
+import { ApiClient } from '~/types'
 import 'firebase/auth'
 import 'firebase/firestore'
 

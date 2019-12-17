@@ -1,0 +1,16 @@
+{
+  "extends": "rqbazan-ts/react",
+  "env": {
+    "jest": true
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "moduleDirectory": ["node_modules", "static", "src"]
+      }
+    }
+  },
+  "rules": {
+    "import/extensions": "off"
+  }
+}

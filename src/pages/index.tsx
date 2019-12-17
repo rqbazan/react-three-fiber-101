@@ -1,14 +1,14 @@
 import React from 'react'
-import { FaceName } from 'types'
 import { Canvas } from 'react-three-fiber'
-import ApiClientProvider from 'components/api-client-provider'
-import Cube, { CubeRef } from 'components/cube'
-import OrbitControls from 'components/orbit-controls'
-import CubeControls from 'components/cube-controls'
-import AuthButton from 'components/auth-button'
-import useAuth from 'hooks/use-auth'
-import Icon from 'components/icon'
-import useScrollBlocker from 'hooks/use-scroll-blocker'
+import { FaceName } from '~/types'
+import useScrollBlocker from '~/hooks/use-scroll-blocker'
+import useAuth from '~/hooks/use-auth'
+import ApiClientProvider from '~/components/api-client-provider'
+import Cube, { CubeRef } from '~/components/cube'
+import OrbitControls from '~/components/orbit-controls'
+import CubeControls from '~/components/cube-controls'
+import AuthButton from '~/components/auth-button'
+import Icon from '~/components/icon'
 import './index.css' // important keep this line here at the bottom
 
 interface HeaderProps {

@@ -1,5 +1,5 @@
-import { Move, FaceName } from 'types'
 import shuffle from 'lodash.shuffle'
+import { Move, FaceName } from '~/types'
 
 export default function getRandomMoves(quantity: number): Move[] {
   const faceNames: FaceName[] = shuffle(['U', 'D', 'F', 'B', 'L', 'R'])

@@ -1,7 +1,12 @@
+const path = require('path')
+
 exports.onCreateWebpackConfig = ({ actions }) => {
   actions.setWebpackConfig({
     resolve: {
-      modules: ['src', 'static', 'node_modules']
+      modules: ['node_modules', 'static'],
+      alias: {
+        '~': path.resolve('src')
+      }
     }
   })
 }

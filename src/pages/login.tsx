@@ -1,9 +1,9 @@
 import React from 'react'
 import { navigate } from 'gatsby'
-import Modal from 'components/modal'
-import LoginForm, { LoginFormValues, SetError } from 'components/login-form'
-import ApiClientProvider from 'components/api-client-provider'
-import useApiClient from 'hooks/use-api-client'
+import useApiClient from '~/hooks/use-api-client'
+import Modal from '~/components/modal'
+import LoginForm, { LoginFormValues, SetError } from '~/components/login-form'
+import ApiClientProvider from '~/components/api-client-provider'
 
 // TODO: add loading state for api client loading
 

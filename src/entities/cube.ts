@@ -1,6 +1,6 @@
 import * as THREE from 'three'
-import getNewPositions from 'utils/get-new-positions'
-import { SliceName } from 'types'
+import getNewPositions from '~/utils/get-new-positions'
+import { SliceName } from '~/types'
 import Piece from './piece'
 
 // prettier-ignore

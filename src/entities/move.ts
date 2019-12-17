@@ -1,4 +1,4 @@
-import { FaceName } from 'types'
+import { FaceName } from '~/types'
 import Cube from './cube'
 
 // eslint-disable-next-line

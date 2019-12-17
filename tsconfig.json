@@ -16,7 +16,7 @@
     "jsx": "preserve",
     "baseUrl": "src",
     "paths": {
-      "*": ["*"]
+      "~/*": ["*"]
     }
   },
   "exclude": ["node_modules", "public", ".cache"]
