@@ -5,32 +5,25 @@ import { useRender } from 'react-three-fiber'
 import getRandomMoves from 'utils/get-random-moves'
 import useRefs from 'hooks/use-refs'
 import CubeEntity from 'entities/cube'
+import MoveEntity from 'entities/move'
 import { rotateAroundWorldAxis } from './helpers'
 import { facesMeta } from './meta'
 import Box from '../box'
-
-interface Move {
-  targetAngle: number
-  faceName: FaceName
-  currentAngle: number
-  velocity: number
-  complete(): void
-}
 
 export interface CubeRef {
   rotateFace(faceName: FaceName, inversed: boolean): void
   scrambleFaces(): void
 }
 
-const defaultVelocity = 6
+const defaultStepAngle = 6
 
 const cube = new CubeEntity()
 
 const Cube = React.forwardRef<CubeRef, {}>((_, ref) => {
   const boxRefs = useRefs<THREE.Mesh>(27)
-  const moveRef = React.useRef<Move>()
+  const moveRef = React.useRef<MoveEntity>()
 
-  const rotateMeshs = (faceName: FaceName, angle: number) => {
+  const rotateMeshs = (faceName: FaceName, degrees: number) => {
     const facePieces = cube.faces[faceName]
 
     // workaround for not available refs, for now
@@ -46,7 +39,7 @@ const Cube = React.forwardRef<CubeRef, {}>((_, ref) => {
       rotateAroundWorldAxis(
         boxRefs[piece.key].current!,
         facesMeta[faceName].axis,
-        THREE.Math.degToRad(angle)
+        THREE.Math.degToRad(degrees)
       )
     }
   }
@@ -54,24 +47,28 @@ const Cube = React.forwardRef<CubeRef, {}>((_, ref) => {
   const rotateFace = async (
     faceName: FaceName,
     inversed: boolean,
-    velocity?: number
+    stepAngle = defaultStepAngle
   ) => {
     if (moveRef.current) {
       return Promise.resolve()
     }
 
-    const targetAngle = inversed
-      ? CubeEntity.angles.COUNTERCLOCKWISE
-      : CubeEntity.angles.CLOCKWISE
-
     return new Promise(resolve => {
-      moveRef.current = {
-        targetAngle,
-        faceName,
-        velocity: velocity ?? defaultVelocity,
-        complete: resolve,
-        currentAngle: 0
-      }
+      moveRef.current = new MoveEntity(faceName, inversed, stepAngle)
+
+      moveRef.current.onComplete(() => {
+        cube.rotate(faceName, inversed)
+        moveRef.current = undefined
+        resolve()
+      })
+
+      moveRef.current.onProgress(move => {
+        const targetSign = Math.sign(move.targetAngle)
+        const rotationFactor = facesMeta[faceName].inverse
+          ? -targetSign
+          : targetSign
+        rotateMeshs(faceName, stepAngle * rotationFactor)
+      })
     })
   }
 
@@ -80,35 +77,13 @@ const Cube = React.forwardRef<CubeRef, {}>((_, ref) => {
     for (let i = 0; i < moves.length; i++) {
       const { faceName, inversed } = moves[i]
       // eslint-disable-next-line
-      await rotateFace(faceName, inversed, defaultVelocity * 3)
+      await rotateFace(faceName, inversed, defaultStepAngle * 3)
     }
   }
 
   useRender(() => {
-    if (!moveRef.current) {
-      return
-    }
-
-    const move = moveRef.current
-    const { faceName, targetAngle, velocity } = move
-    const faceMeta = facesMeta[faceName]
-
-    if (move.currentAngle === move.targetAngle) {
-      cube.rotate(faceName, targetAngle)
-      moveRef.current.complete()
-      moveRef.current = undefined
-      return
-    }
-
-    const targetSign = Math.sign(targetAngle)
-    const rotationFactor = faceMeta.inverse ? -targetSign : targetSign
-
-    rotateMeshs(faceName, velocity * rotationFactor)
-
-    moveRef.current.currentAngle += velocity * targetSign
-
-    if (Math.abs(moveRef.current.currentAngle) > 90) {
-      moveRef.current.currentAngle = 90 * targetSign
+    if (moveRef.current && !moveRef.current.isCompleted) {
+      moveRef.current.run()
     }
   }, false)
 

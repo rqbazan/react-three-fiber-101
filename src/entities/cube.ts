@@ -116,13 +116,12 @@ class Cube {
     }
   }
 
-  rotate(faceName: string, degrees: number) {
+  rotate(faceName: string, inversed: boolean) {
     const facePieces = this.faces[faceName]
 
-    const newPositions =
-      degrees === 90
-        ? Cube.clockwiseNewPositions
-        : Cube.counterClockwiseNewPositions
+    const newPositions = inversed
+      ? Cube.counterClockwiseNewPositions
+      : Cube.clockwiseNewPositions
 
     function moveKeysBetweenPieces(initialPosition: number) {
       function recursiveMove(position: number) {
