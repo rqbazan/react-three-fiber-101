@@ -116,7 +116,7 @@ class Cube {
     }
   }
 
-  rotate(faceName: string, inversed: boolean) {
+  rotate(faceName: string, inversed = false) {
     const facePieces = this.faces[faceName]
 
     const newPositions = inversed

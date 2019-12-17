@@ -4,7 +4,7 @@ import Cube from '../cube'
 test('rotate cube R', t => {
   const cube = new Cube()
 
-  cube.rotate('R', Cube.angles.CLOCKWISE)
+  cube.rotate('R')
 
   t.deepEqual(
     cube.faces.R.map(x => x.key),
@@ -20,7 +20,7 @@ test('rotate cube R', t => {
 test("rotate cube R'", t => {
   const cube = new Cube()
 
-  cube.rotate('R', Cube.angles.COUNTERCLOCKWISE)
+  cube.rotate('R', true)
 
   t.deepEqual(
     cube.faces.R.map(x => x.key),
@@ -36,7 +36,7 @@ test("rotate cube R'", t => {
 test('rotate cube L', t => {
   const cube = new Cube()
 
-  cube.rotate('L', Cube.angles.CLOCKWISE)
+  cube.rotate('L')
 
   t.deepEqual(
     cube.faces.L.map(x => x.key),
@@ -52,7 +52,7 @@ test('rotate cube L', t => {
 test("rotate cube L'", t => {
   const cube = new Cube()
 
-  cube.rotate('L', Cube.angles.COUNTERCLOCKWISE)
+  cube.rotate('L', true)
 
   t.deepEqual(
     cube.faces.L.map(x => x.key),
