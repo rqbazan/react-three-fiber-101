@@ -8,7 +8,7 @@ import Counterclockwise from 'icons/counterclockwise.svg'
 import Duplicate from 'icons/duplicate.svg'
 import MoodSad from 'icons/mood-sad.svg'
 
-type IconName =
+export type IconName =
   | 'clockwise'
   | 'close'
   | 'cloud-upload'

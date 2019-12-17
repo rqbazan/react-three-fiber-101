@@ -6,11 +6,12 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "moduleDirectory": ["node_modules", "static", "src"]
+        "moduleDirectory": ["node_modules", "static"]
       }
     }
   },
   "rules": {
-    "import/extensions": "off"
+    "import/extensions": "off",
+    "@typescript-eslint/no-empty-function": "off"
   }
 }

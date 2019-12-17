@@ -5,7 +5,7 @@ import intersection from 'lodash.intersection'
 import rotateArray from '~/utils/rotate-array'
 import Cube from '~/entities/cube'
 import { FaceName, SliceName, ControlName, Move } from '~/types'
-import Icon from '../icon'
+import Icon, { IconName } from '../icon'
 import ControlButton from '../control-button'
 import styles from './styles.module.css'
 
@@ -19,8 +19,9 @@ interface CubeControlsState {
   positions: { [key in SliceName]: ControlName[] }
 }
 
-interface CubeControlsProps {
+export interface CubeControlsProps {
   onControlClick(faceName: FaceName, inversed: boolean): void
+  preferLetters?: boolean
 }
 
 const initState: CubeControlsState = {
@@ -86,7 +87,10 @@ function reOrderTargetControls(
   return newState
 }
 
-export default function CubeControls({ onControlClick }: CubeControlsProps) {
+export default function CubeControls({
+  onControlClick,
+  preferLetters = false
+}: CubeControlsProps) {
   const [state, setState] = React.useState<CubeControlsState>(initState)
 
   function onClick(faceName: FaceName, inversed: boolean) {
@@ -99,39 +103,32 @@ export default function CubeControls({ onControlClick }: CubeControlsProps) {
     onControlClick(faceName, inversed)
   }
 
+  const renderControlButton = (name: ControlName, inversed: boolean) => {
+    const { color, targetFaceName } = state.controls[name]
+
+    const iconName: IconName = inversed ? 'counterclockwise' : 'clockwise'
+    const noIcon = preferLetters || !color
+
+    return (
+      <ControlButton
+        key={`for-${name}-counterclokwise`}
+        color={color}
+        onClick={() => onClick(targetFaceName, inversed)}
+      >
+        {noIcon ? `${targetFaceName}'` : <Icon name={iconName} />}
+      </ControlButton>
+    )
+  }
+
   const controlNames = Object.keys(state.controls) as ControlName[]
 
   return (
     <>
       <div className={cs(styles.container, styles.left)}>
-        {controlNames.map(name => {
-          const { color, targetFaceName } = state.controls[name]
-
-          return (
-            <ControlButton
-              key={`for-${name}-counterclokwise`}
-              color={color}
-              onClick={() => onClick(targetFaceName, true)}
-            >
-              {color ? <Icon name="counterclockwise" /> : `${targetFaceName}'`}
-            </ControlButton>
-          )
-        })}
+        {controlNames.map(name => renderControlButton(name, true))}
       </div>
       <div className={cs(styles.container, styles.right)}>
-        {controlNames.map(name => {
-          const { color, targetFaceName } = state.controls[name]
-
-          return (
-            <ControlButton
-              key={`for-${name}-clokwise`}
-              color={color}
-              onClick={() => onClick(targetFaceName, false)}
-            >
-              {color ? <Icon name="clockwise" /> : targetFaceName}
-            </ControlButton>
-          )
-        })}
+        {controlNames.map(name => renderControlButton(name, false))}
       </div>
     </>
   )

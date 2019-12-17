@@ -1,7 +1,6 @@
 import { FaceName } from '~/types'
 import Cube from './cube'
 
-// eslint-disable-next-line
 const noop = () => {}
 
 export default class Move {
