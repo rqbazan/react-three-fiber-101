@@ -17,8 +17,6 @@ export default class Move {
 
   progress: (self: Move) => void = noop
 
-  isCompleted = false
-
   constructor(faceName: FaceName, inversed: boolean, stepAngle: number) {
     this.faceName = faceName
     this.stepAngle = stepAngle
@@ -37,6 +35,11 @@ export default class Move {
   }
 
   run() {
+    if (this.currentAngle === this.targetAngle) {
+      this.complete()
+      return
+    }
+
     const targetSign = Math.sign(this.targetAngle)
     this.currentAngle += this.stepAngle * targetSign
 
@@ -45,10 +48,5 @@ export default class Move {
     }
 
     this.progress(this)
-
-    if (this.currentAngle === this.targetAngle) {
-      this.complete()
-      this.isCompleted = true
-    }
   }
 }

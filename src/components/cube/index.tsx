@@ -17,14 +17,13 @@ export interface CubeRef {
 
 const defaultStepAngle = 6
 
-const cube = new CubeEntity()
-
 const Cube = React.forwardRef<CubeRef, {}>((_, ref) => {
   const boxRefs = useRefs<THREE.Mesh>(27)
-  const moveRef = React.useRef<MoveEntity>()
+  const moveEntityRef = React.useRef<MoveEntity>()
+  const cubeEntityRef = React.useRef<CubeEntity>(new CubeEntity())
 
   const rotateMeshs = (faceName: FaceName, degrees: number) => {
-    const facePieces = cube.faces[faceName]
+    const facePieces = cubeEntityRef.current.faces[faceName]
 
     // workaround for not available refs, for now
     for (let i = 0; i < 9; i += 1) {
@@ -49,20 +48,20 @@ const Cube = React.forwardRef<CubeRef, {}>((_, ref) => {
     inversed: boolean,
     stepAngle = defaultStepAngle
   ) => {
-    if (moveRef.current) {
+    if (moveEntityRef.current) {
       return Promise.resolve()
     }
 
     return new Promise(resolve => {
-      moveRef.current = new MoveEntity(faceName, inversed, stepAngle)
+      moveEntityRef.current = new MoveEntity(faceName, inversed, stepAngle)
 
-      moveRef.current.onComplete(() => {
-        cube.rotate(faceName, inversed)
-        moveRef.current = undefined
+      moveEntityRef.current.onComplete(() => {
+        cubeEntityRef.current.rotate(faceName, inversed)
+        moveEntityRef.current = undefined
         resolve()
       })
 
-      moveRef.current.onProgress(move => {
+      moveEntityRef.current.onProgress(move => {
         const targetSign = Math.sign(move.targetAngle)
         const rotationFactor = facesMeta[faceName].inverse
           ? -targetSign
@@ -82,8 +81,8 @@ const Cube = React.forwardRef<CubeRef, {}>((_, ref) => {
   }
 
   useRender(() => {
-    if (moveRef.current && !moveRef.current.isCompleted) {
-      moveRef.current.run()
+    if (moveEntityRef.current) {
+      moveEntityRef.current.run()
     }
   }, false)
 
@@ -91,6 +90,15 @@ const Cube = React.forwardRef<CubeRef, {}>((_, ref) => {
     rotateFace,
     scrambleFaces
   }))
+
+  React.useEffect(() => {
+    return () => {
+      // clean up the promise
+      if (moveEntityRef.current) {
+        moveEntityRef.current.complete()
+      }
+    }
+  }, [])
 
   return (
     <React.Suspense fallback={null}>
