@@ -2,11 +2,11 @@ import React from 'react'
 import cs from 'classnames'
 import cloneDeep from 'lodash.clonedeep'
 import intersection from 'lodash.intersection'
-import { FaceName, SliceName, ControlName } from 'types'
-import Icon from 'components/icon'
+import { FaceName, SliceName, ControlName, Move } from 'types'
 import rotateArray from 'utils/rotate-array'
 import Cube from 'entities/cube'
-import ControlButton from '../control'
+import Icon from '../icon'
+import ControlButton from '../control-button'
 import styles from './styles.module.css'
 
 interface Control {
@@ -14,96 +14,98 @@ interface Control {
   color?: string
 }
 
-type Controls = {
-  [key in ControlName]: Control
-}
-
-function isSliceName(name: FaceName): name is SliceName {
-  return 'MSE'.includes(name)
-}
-
-const initControls: Controls = {
-  front: { targetFaceName: 'F', color: 'green' },
-  down: { targetFaceName: 'D', color: 'white' },
-  right: { targetFaceName: 'R', color: 'orange' },
-  back: { targetFaceName: 'B', color: 'blue' },
-  up: { targetFaceName: 'U', color: 'yellow' },
-  left: { targetFaceName: 'L', color: 'red' },
-  middle: { targetFaceName: 'M' },
-  standing: { targetFaceName: 'S' },
-  equatorial: { targetFaceName: 'E' }
-}
-
-const controlNamesBySlice: { [key in SliceName]: ControlName[] } = {
-  M: ['back', 'down', 'front', 'up'],
-  S: ['left', 'down', 'right', 'up'],
-  E: ['left', 'back', 'right', 'front']
+interface CubeControlsState {
+  controls: { [key in ControlName]: Control }
+  positions: { [key in SliceName]: ControlName[] }
 }
 
 interface CubeControlsProps {
   onControlClick(faceName: FaceName, inversed: boolean): void
 }
 
-export default function CubeControls({ onControlClick }: CubeControlsProps) {
-  const [controls, setControls] = React.useState<Controls>(initControls)
-
-  function reOrderSlices(sliceName: SliceName, inversed: boolean) {
-    const newPositions = rotateArray(controlNamesBySlice[sliceName], !inversed)
-
-    Cube.sliceNames
-      .filter(name => name !== sliceName)
-      .forEach(affectedSliceName => {
-        const newNames = cloneDeep(controlNamesBySlice[affectedSliceName])
-
-        intersection(
-          controlNamesBySlice[sliceName],
-          controlNamesBySlice[affectedSliceName]
-        ).forEach(affectedControlName => {
-          const controlNameIndex = controlNamesBySlice[sliceName].findIndex(
-            v => v === affectedControlName
-          )
-
-          const index = newNames.findIndex(v => v === affectedControlName)
-          newNames[index] = newPositions[controlNameIndex]
-        })
-
-        controlNamesBySlice[affectedSliceName] = newNames
-      })
+const initState: CubeControlsState = {
+  controls: {
+    front: { targetFaceName: 'F', color: 'green' },
+    down: { targetFaceName: 'D', color: 'white' },
+    right: { targetFaceName: 'R', color: 'orange' },
+    back: { targetFaceName: 'B', color: 'blue' },
+    up: { targetFaceName: 'U', color: 'yellow' },
+    left: { targetFaceName: 'L', color: 'red' },
+    middle: { targetFaceName: 'M' },
+    standing: { targetFaceName: 'S' },
+    equatorial: { targetFaceName: 'E' }
+  },
+  positions: {
+    M: ['back', 'down', 'front', 'up'],
+    S: ['left', 'down', 'right', 'up'],
+    E: ['left', 'back', 'right', 'front']
   }
+}
 
-  function reOrderControls(sliceName: SliceName, inversed: boolean) {
-    setControls(prevControls => {
-      const newControls = cloneDeep(prevControls)
-      const positions = controlNamesBySlice[sliceName]
+function isSliceName(name: FaceName): name is SliceName {
+  return 'MSE'.includes(name)
+}
 
-      const newPositions = rotateArray(positions, inversed)
+function reOrderTargetControls(
+  state: CubeControlsState,
+  move: Move<SliceName>
+) {
+  const { faceName: sliceName, inversed } = move
 
-      newPositions.forEach((newPosition, index) => {
-        newControls[positions[index]].targetFaceName =
-          prevControls[newPosition].targetFaceName
+  const newState = cloneDeep(state)
+  const positions = state.positions[sliceName]
+
+  rotateArray(positions, inversed).forEach((newPosition, index) => {
+    newState.controls[positions[index]].targetFaceName =
+      state.controls[newPosition].targetFaceName
+  })
+
+  const newControlsNames = rotateArray(state.positions[sliceName], !inversed)
+
+  Cube.sliceNames
+    .filter(name => name !== sliceName)
+    .forEach(affectedSliceName => {
+      const newPositions = newState.positions
+      const newNames = cloneDeep(newPositions[affectedSliceName])
+
+      intersection(
+        newPositions[sliceName],
+        newPositions[affectedSliceName]
+      ).forEach(affectedControlName => {
+        const controlNameIndex = newPositions[sliceName].findIndex(
+          v => v === affectedControlName
+        )
+
+        const index = newNames.findIndex(v => v === affectedControlName)
+        newNames[index] = newControlsNames[controlNameIndex]
       })
 
-      reOrderSlices(sliceName, inversed)
-
-      return newControls
+      newPositions[affectedSliceName] = newNames
     })
-  }
+
+  return newState
+}
+
+export default function CubeControls({ onControlClick }: CubeControlsProps) {
+  const [state, setState] = React.useState<CubeControlsState>(initState)
 
   function onClick(faceName: FaceName, inversed: boolean) {
     if (isSliceName(faceName)) {
-      reOrderControls(faceName, inversed)
+      setState(prevState =>
+        reOrderTargetControls(prevState, { faceName, inversed })
+      )
     }
 
     onControlClick(faceName, inversed)
   }
 
-  const controlNames = Object.keys(controls) as ControlName[]
+  const controlNames = Object.keys(state.controls) as ControlName[]
 
   return (
     <>
       <div className={cs(styles.container, styles.left)}>
         {controlNames.map(name => {
-          const { color, targetFaceName } = controls[name]
+          const { color, targetFaceName } = state.controls[name]
 
           return (
             <ControlButton
@@ -118,7 +120,7 @@ export default function CubeControls({ onControlClick }: CubeControlsProps) {
       </div>
       <div className={cs(styles.container, styles.right)}>
         {controlNames.map(name => {
-          const { color, targetFaceName } = controls[name]
+          const { color, targetFaceName } = state.controls[name]
 
           return (
             <ControlButton
