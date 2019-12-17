@@ -2,31 +2,28 @@ import React from 'react'
 import * as THREE from 'three'
 import { FaceName } from 'types'
 import { useRender } from 'react-three-fiber'
-import useHotKeys from 'hooks/use-hot-keys'
+import getRandomMoves from 'utils/get-random-moves'
 import useRefs from 'hooks/use-refs'
 import CubeEntity from 'entities/cube'
+import MoveEntity from 'entities/move'
 import { rotateAroundWorldAxis } from './helpers'
 import { facesMeta } from './meta'
 import Box from '../box'
 
-interface Move {
-  targetAngle: number
-  faceName: FaceName
-  currentAngle: number
-}
-
 export interface CubeRef {
-  rotate(faceName: FaceName, inversed: boolean): void
+  rotateFace(faceName: FaceName, inversed: boolean): void
+  scrambleFaces(): void
 }
 
-const cube = new CubeEntity()
+const defaultStepAngle = 6
 
 const Cube = React.forwardRef<CubeRef, {}>((_, ref) => {
   const boxRefs = useRefs<THREE.Mesh>(27)
-  const moveRef = React.useRef<Move>()
+  const moveEntityRef = React.useRef<MoveEntity>()
+  const cubeEntityRef = React.useRef<CubeEntity>(new CubeEntity())
 
-  function rotateMeshs(faceName: FaceName, angle: number) {
-    const facePieces = cube.faces[faceName]
+  const rotateMeshs = (faceName: FaceName, degrees: number) => {
+    const facePieces = cubeEntityRef.current.faces[faceName]
 
     // workaround for not available refs, for now
     for (let i = 0; i < 9; i += 1) {
@@ -41,67 +38,67 @@ const Cube = React.forwardRef<CubeRef, {}>((_, ref) => {
       rotateAroundWorldAxis(
         boxRefs[piece.key].current!,
         facesMeta[faceName].axis,
-        THREE.Math.degToRad(angle)
+        THREE.Math.degToRad(degrees)
       )
     }
   }
 
-  function onKeyPress(faceName: FaceName, shiftKeyPressed: boolean) {
-    if (moveRef.current) {
-      return
+  const rotateFace = async (
+    faceName: FaceName,
+    inversed: boolean,
+    stepAngle = defaultStepAngle
+  ) => {
+    if (moveEntityRef.current) {
+      return Promise.resolve()
     }
 
-    const targetAngle = shiftKeyPressed
-      ? CubeEntity.angles.COUNTERCLOCKWISE
-      : CubeEntity.angles.CLOCKWISE
+    return new Promise(resolve => {
+      moveEntityRef.current = new MoveEntity(faceName, inversed, stepAngle)
 
-    moveRef.current = {
-      targetAngle,
-      faceName,
-      currentAngle: 0
+      moveEntityRef.current.onComplete(() => {
+        cubeEntityRef.current.rotate(faceName, inversed)
+        moveEntityRef.current = undefined
+        resolve()
+      })
+
+      moveEntityRef.current.onProgress(move => {
+        const targetSign = Math.sign(move.targetAngle)
+        const rotationFactor = facesMeta[faceName].inverse
+          ? -targetSign
+          : targetSign
+        rotateMeshs(faceName, stepAngle * rotationFactor)
+      })
+    })
+  }
+
+  const scrambleFaces = async () => {
+    const moves = getRandomMoves(20)
+    for (let i = 0; i < moves.length; i++) {
+      const { faceName, inversed } = moves[i]
+      // eslint-disable-next-line
+      await rotateFace(faceName, inversed, defaultStepAngle * 3)
     }
   }
 
-  useHotKeys({
-    KeyU: onKeyPress,
-    KeyD: onKeyPress,
-    KeyR: onKeyPress,
-    KeyL: onKeyPress,
-    KeyF: onKeyPress,
-    KeyB: onKeyPress,
-    KeyM: onKeyPress,
-    KeyE: onKeyPress,
-    KeyS: onKeyPress
-  })
-
   useRender(() => {
-    const velocity = 6
-
-    if (moveRef.current) {
-      const move = moveRef.current
-      const { faceName, targetAngle } = move
-      const faceMeta = facesMeta[faceName]
-
-      if (move.currentAngle === move.targetAngle) {
-        cube.rotate(faceName, targetAngle)
-        moveRef.current = undefined
-        return
-      }
-
-      const targetSign = Math.sign(targetAngle)
-      const rotationFactor = faceMeta.inverse ? -targetSign : targetSign
-
-      rotateMeshs(faceName, velocity * rotationFactor)
-
-      moveRef.current.currentAngle += velocity * targetSign
+    if (moveEntityRef.current) {
+      moveEntityRef.current.run()
     }
   }, false)
 
   React.useImperativeHandle(ref, () => ({
-    rotate(faceName: FaceName, inversed: boolean) {
-      onKeyPress(faceName, inversed)
-    }
+    rotateFace,
+    scrambleFaces
   }))
+
+  React.useEffect(() => {
+    return () => {
+      // clean up the promise
+      if (moveEntityRef.current) {
+        moveEntityRef.current.complete()
+      }
+    }
+  }, [])
 
   return (
     <React.Suspense fallback={null}>
