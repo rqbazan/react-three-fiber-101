@@ -15,10 +15,6 @@
     transform: scale(1.13);
   }
 
-  &[data-loading='true'] span:first-of-type {
-    opacity: 0;
-  }
-
   & span {
     @apply pointer-events-none;
   }

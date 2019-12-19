@@ -11,7 +11,9 @@ module.exports = {
   testPathIgnorePatterns: ['/node_modules/', '/\\.cache/', '/public/'],
   moduleNameMapper: {
     '^~/(.*)$': '<rootDir>/src/$1',
-    '\\.svg$': '<rootDir>/src/__mocks__/svg.ts',
-    '\\.css$': '<rootDir>/src/__mocks__/css.ts'
+    '^test/(.*)$': '<rootDir>/test/$1',
+    '\\.module.css$': 'identity-obj-proxy',
+    '\\.svg$': '<rootDir>/test/__mocks__/svg.ts',
+    '\\.css$': '<rootDir>/test/__mocks__/css.ts'
   }
 }

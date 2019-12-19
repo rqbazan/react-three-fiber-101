@@ -105,17 +105,19 @@ export default function CubeControls({
 
   const renderControlButton = (name: ControlName, inversed: boolean) => {
     const { color, targetFaceName } = state.controls[name]
+    const displayName = inversed ? `${targetFaceName}'` : targetFaceName
 
     const iconName: IconName = inversed ? 'counterclockwise' : 'clockwise'
     const noIcon = preferLetters || !color
 
     return (
       <ControlButton
+        data-testid={name}
         key={`for-${name}-counterclokwise`}
         color={color}
         onClick={() => onClick(targetFaceName, inversed)}
       >
-        {noIcon ? `${targetFaceName}'` : <Icon name={iconName} />}
+        {noIcon ? displayName : <Icon name={iconName} />}
       </ControlButton>
     )
   }

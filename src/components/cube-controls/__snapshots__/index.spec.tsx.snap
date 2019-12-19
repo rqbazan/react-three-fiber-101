@@ -1,0 +1,140 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`updates controls when a slice controls in clicked 1`] = `
+<div>
+  <div
+    class="container left"
+  >
+    <button
+      class="button rounded-full border-solid border-3 border-black h-10 w-10 p-0 bg-pegatine-green"
+      data-testid="front"
+      type="button"
+    >
+      F'
+    </button>
+    <button
+      class="button rounded-full border-solid border-3 border-black h-10 w-10 p-0 bg-pegatine-white"
+      data-testid="down"
+      type="button"
+    >
+      L'
+    </button>
+    <button
+      class="button rounded-full border-solid border-3 border-black h-10 w-10 p-0 bg-pegatine-orange"
+      data-testid="right"
+      type="button"
+    >
+      D'
+    </button>
+    <button
+      class="button rounded-full border-solid border-3 border-black h-10 w-10 p-0 bg-pegatine-blue"
+      data-testid="back"
+      type="button"
+    >
+      B'
+    </button>
+    <button
+      class="button rounded-full border-solid border-3 border-black h-10 w-10 p-0 bg-pegatine-yellow"
+      data-testid="up"
+      type="button"
+    >
+      R'
+    </button>
+    <button
+      class="button rounded-full border-solid border-3 border-black h-10 w-10 p-0 bg-pegatine-red"
+      data-testid="left"
+      type="button"
+    >
+      U'
+    </button>
+    <button
+      class="button rounded-full border-solid border-3 border-black h-10 w-10 p-0"
+      data-testid="middle"
+      type="button"
+    >
+      M'
+    </button>
+    <button
+      class="button rounded-full border-solid border-3 border-black h-10 w-10 p-0"
+      data-testid="standing"
+      type="button"
+    >
+      S'
+    </button>
+    <button
+      class="button rounded-full border-solid border-3 border-black h-10 w-10 p-0"
+      data-testid="equatorial"
+      type="button"
+    >
+      E'
+    </button>
+  </div>
+  <div
+    class="container right"
+  >
+    <button
+      class="button rounded-full border-solid border-3 border-black h-10 w-10 p-0 bg-pegatine-green"
+      data-testid="front"
+      type="button"
+    >
+      F
+    </button>
+    <button
+      class="button rounded-full border-solid border-3 border-black h-10 w-10 p-0 bg-pegatine-white"
+      data-testid="down"
+      type="button"
+    >
+      L
+    </button>
+    <button
+      class="button rounded-full border-solid border-3 border-black h-10 w-10 p-0 bg-pegatine-orange"
+      data-testid="right"
+      type="button"
+    >
+      D
+    </button>
+    <button
+      class="button rounded-full border-solid border-3 border-black h-10 w-10 p-0 bg-pegatine-blue"
+      data-testid="back"
+      type="button"
+    >
+      B
+    </button>
+    <button
+      class="button rounded-full border-solid border-3 border-black h-10 w-10 p-0 bg-pegatine-yellow"
+      data-testid="up"
+      type="button"
+    >
+      R
+    </button>
+    <button
+      class="button rounded-full border-solid border-3 border-black h-10 w-10 p-0 bg-pegatine-red"
+      data-testid="left"
+      type="button"
+    >
+      U
+    </button>
+    <button
+      class="button rounded-full border-solid border-3 border-black h-10 w-10 p-0"
+      data-testid="middle"
+      type="button"
+    >
+      M
+    </button>
+    <button
+      class="button rounded-full border-solid border-3 border-black h-10 w-10 p-0"
+      data-testid="standing"
+      type="button"
+    >
+      S
+    </button>
+    <button
+      class="button rounded-full border-solid border-3 border-black h-10 w-10 p-0"
+      data-testid="equatorial"
+      type="button"
+    >
+      E
+    </button>
+  </div>
+</div>
+`;

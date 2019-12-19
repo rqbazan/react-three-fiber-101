@@ -1,7 +1,6 @@
+import noop from 'lodash.noop'
 import { FaceName } from '~/types'
 import Cube from './cube'
-
-const noop = () => {}
 
 export default class Move {
   faceName: FaceName

@@ -4,9 +4,10 @@
     "jest": true
   },
   "settings": {
+    "import/ignore": "off",
     "import/resolver": {
       "node": {
-        "moduleDirectory": ["node_modules", "static"]
+        "moduleDirectory": ["node_modules", "static", "test"]
       }
     }
   },

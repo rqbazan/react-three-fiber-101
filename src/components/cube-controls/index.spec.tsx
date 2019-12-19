@@ -1,15 +1,16 @@
 import React from 'react'
-import { render } from '@testing-library/react'
-import CubeControls, { CubeControlsProps } from './index'
+import noop from 'lodash.noop'
+import { render, fireEvent } from '@testing-library/react'
+import CubeControls from './index'
 
-function renderCubeControls(props?: Partial<CubeControlsProps>) {
-  const defaultProps: CubeControlsProps = {
-    onControlClick: () => {},
-    preferLetters: true
-  }
-  return render(<CubeControls {...defaultProps} {...props} />)
-}
+it('updates controls when a slice controls in clicked', async () => {
+  const { container, findByText } = render(
+    <CubeControls preferLetters onControlClick={noop} />
+  )
 
-it.skip('updates controls when a slice controls in clicked', async () => {
-  expect(1).toBe(1)
+  fireEvent.click(await findByText('M'))
+  fireEvent.click(await findByText('S'))
+  fireEvent.click(await findByText('E'))
+
+  expect(container).toMatchSnapshot()
 })
