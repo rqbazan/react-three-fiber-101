@@ -38,7 +38,7 @@ function getCode() {
     import React from 'react'
     ${ICON_NAMES.map(importFmt).join('\n')}
 
-    type IconName = ${ICON_NAMES.map(typeFmt).join('|')}
+    export type IconName = ${ICON_NAMES.map(typeFmt).join('|')}
 
     const iconsDict: { [key in IconName]: React.FC } = {
       ${ICON_NAMES.map(dictEntryFmt)}
