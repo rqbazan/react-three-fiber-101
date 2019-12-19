@@ -17,7 +17,7 @@ type MaterialProps = { color: string } | { map: THREE.Texture }
 /**
  * material faces: [RIGHT, LEFT, UP, DOWN, FRONT, BACK]
  */
-const Box = React.forwardRef<any, BoxProps>((props, ref) => {
+const Box = React.forwardRef<THREE.Mesh, BoxProps>((props, ref) => {
   const {
     position,
     rightColor,
