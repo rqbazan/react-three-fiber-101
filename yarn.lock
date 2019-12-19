@@ -1971,7 +1971,7 @@
 
 "@typescript-eslint/eslint-plugin@^2.12.0":
   version "2.12.0"
-  resolved "http://localhost:4873/@typescript-eslint%2feslint-plugin/-/eslint-plugin-2.12.0.tgz#0da7cbca7b24f4c6919e9eb31c704bfb126f90ad"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint%2feslint-plugin/-/eslint-plugin-2.12.0.tgz#0da7cbca7b24f4c6919e9eb31c704bfb126f90ad"
   integrity sha512-1t4r9rpLuEwl3hgt90jY18wJHSyb0E3orVL3DaqwmpiSDHmHiSspVsvsFF78BJ/3NNG3qmeso836jpuBWYziAA==
   dependencies:
     "@typescript-eslint/experimental-utils" "2.12.0"
@@ -1991,7 +1991,7 @@
 
 "@typescript-eslint/experimental-utils@2.12.0":
   version "2.12.0"
-  resolved "http://localhost:4873/@typescript-eslint%2fexperimental-utils/-/experimental-utils-2.12.0.tgz#e0a76ffb6293e058748408a191921e453c31d40d"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint%2fexperimental-utils/-/experimental-utils-2.12.0.tgz#e0a76ffb6293e058748408a191921e453c31d40d"
   integrity sha512-jv4gYpw5N5BrWF3ntROvCuLe1IjRenLy5+U57J24NbPGwZFAjhnM45qpq0nDH1y/AZMb3Br25YiNVwyPbz6RkA==
   dependencies:
     "@types/json-schema" "^7.0.3"
@@ -2010,7 +2010,7 @@
 
 "@typescript-eslint/parser@^2.12.0":
   version "2.12.0"
-  resolved "http://localhost:4873/@typescript-eslint%2fparser/-/parser-2.12.0.tgz#393f1604943a4ca570bb1a45bc8834e9b9158884"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint%2fparser/-/parser-2.12.0.tgz#393f1604943a4ca570bb1a45bc8834e9b9158884"
   integrity sha512-lPdkwpdzxEfjI8TyTzZqPatkrswLSVu4bqUgnB03fHSOwpC7KSerPgJRgIAf11UGNf7HKjJV6oaPZI4AghLU6g==
   dependencies:
     "@types/eslint-visitor-keys" "^1.0.0"
@@ -2033,7 +2033,7 @@
 
 "@typescript-eslint/typescript-estree@2.12.0":
   version "2.12.0"
-  resolved "http://localhost:4873/@typescript-eslint%2ftypescript-estree/-/typescript-estree-2.12.0.tgz#bd9e547ccffd17dfab0c3ab0947c80c8e2eb914c"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint%2ftypescript-estree/-/typescript-estree-2.12.0.tgz#bd9e547ccffd17dfab0c3ab0947c80c8e2eb914c"
   integrity sha512-rGehVfjHEn8Frh9UW02ZZIfJs6SIIxIu/K1bbci8rFfDE/1lQ8krIJy5OXOV3DVnNdDPtoiPOdEANkLMrwXbiQ==
   dependencies:
     debug "^4.1.1"
@@ -5027,7 +5027,7 @@ eslint-config-airbnb@^18.0.1:
 
 eslint-config-prettier@^6.7.0:
   version "6.7.0"
-  resolved "http://localhost:4873/eslint-config-prettier/-/eslint-config-prettier-6.7.0.tgz#9a876952e12df2b284adbd3440994bf1f39dfbb9"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.7.0.tgz#9a876952e12df2b284adbd3440994bf1f39dfbb9"
   integrity sha512-FamQVKM3jjUVwhG4hEMnbtsq7xOIDm+SY5iBPfR8gKsJoAB2IQnNF+bk1+8Fy44Nq7PPJaLvkRxILYdJWoguKQ==
   dependencies:
     get-stdin "^6.0.0"
@@ -5041,7 +5041,7 @@ eslint-config-react-app@^5.1.0:
 
 eslint-config-rqbazan-js@^0.3.1:
   version "0.3.1"
-  resolved "http://localhost:4873/eslint-config-rqbazan-js/-/eslint-config-rqbazan-js-0.3.1.tgz#f0d7b2d5fcfa041de35993c2db6bcf160f438403"
+  resolved "https://registry.yarnpkg.com/eslint-config-rqbazan-js/-/eslint-config-rqbazan-js-0.3.1.tgz#f0d7b2d5fcfa041de35993c2db6bcf160f438403"
   integrity sha512-VMKa5Tw5jbwnV/N982jObzfKIEgxBwW6h5Hba9ll+BOnIWQRxmVNjB6aMLpcZ8ShS3cXBa8IMmNUmB3PMJ5yiQ==
   dependencies:
     babel-eslint "^10.0.3"
@@ -5057,7 +5057,7 @@ eslint-config-rqbazan-js@^0.3.1:
 
 eslint-config-rqbazan-ts@^0.3.1:
   version "0.3.1"
-  resolved "http://localhost:4873/eslint-config-rqbazan-ts/-/eslint-config-rqbazan-ts-0.3.1.tgz#3c7db60072f7014dd16a0f4e6bfcdcfc55e9018c"
+  resolved "https://registry.yarnpkg.com/eslint-config-rqbazan-ts/-/eslint-config-rqbazan-ts-0.3.1.tgz#3c7db60072f7014dd16a0f4e6bfcdcfc55e9018c"
   integrity sha512-IURoAcByZM48pP5fyuTlC47cQjeLhCrdROoGWP8S5ypisxQ0aFTh/IyHWLjs6E5bRDb51LzXvk4vIaP6GwB1AQ==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^2.12.0"
@@ -5083,7 +5083,7 @@ eslint-import-resolver-node@^0.3.2:
 
 eslint-import-resolver-typescript@^2.0.0:
   version "2.0.0"
-  resolved "http://localhost:4873/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-2.0.0.tgz#e95f126cc12d3018b9cc11692b4dbfd3e17d3ea6"
+  resolved "https://registry.yarnpkg.com/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-2.0.0.tgz#e95f126cc12d3018b9cc11692b4dbfd3e17d3ea6"
   integrity sha512-bT5Frpl8UWoHBtY25vKUOMoVIMlJQOMefHLyQ4Tz3MQpIZ2N6yYKEEIHMo38bszBNUuMBW6M3+5JNYxeiGFH4w==
   dependencies:
     debug "^4.1.1"
@@ -5166,7 +5166,7 @@ eslint-plugin-jsx-a11y@^6.2.3:
 
 eslint-plugin-prettier@^3.1.2:
   version "3.1.2"
-  resolved "http://localhost:4873/eslint-plugin-prettier/-/eslint-plugin-prettier-3.1.2.tgz#432e5a667666ab84ce72f945c72f77d996a5c9ba"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-3.1.2.tgz#432e5a667666ab84ce72f945c72f77d996a5c9ba"
   integrity sha512-GlolCC9y3XZfv3RQfwGew7NnuFDKsfI4lbvRK+PIIo23SFH+LemGs4cKwzAaRa+Mdb+lQO/STaIayno8T5sJJA==
   dependencies:
     prettier-linter-helpers "^1.0.0"
@@ -5178,7 +5178,7 @@ eslint-plugin-react-hooks@^1.7.0:
 
 eslint-plugin-react-hooks@^2.3.0:
   version "2.3.0"
-  resolved "http://localhost:4873/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-2.3.0.tgz#53e073961f1f5ccf8dd19558036c1fac8c29d99a"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-2.3.0.tgz#53e073961f1f5ccf8dd19558036c1fac8c29d99a"
   integrity sha512-gLKCa52G4ee7uXzdLiorca7JIQZPPXRAQDXV83J4bUEeUuc5pIEyZYAZ45Xnxe5IuupxEqHS+hUhSLIimK1EMw==
 
 eslint-plugin-react@^7.17.0:
@@ -6414,7 +6414,7 @@ globals@^12.1.0:
 
 globalyzer@^0.1.0:
   version "0.1.4"
-  resolved "http://localhost:4873/globalyzer/-/globalyzer-0.1.4.tgz#bc8e273afe1ac7c24eea8def5b802340c5cc534f"
+  resolved "https://registry.yarnpkg.com/globalyzer/-/globalyzer-0.1.4.tgz#bc8e273afe1ac7c24eea8def5b802340c5cc534f"
   integrity sha512-LeguVWaxgHN0MNbWC6YljNMzHkrCny9fzjmEUdnF1kQ7wATFD1RHFRqA1qxaX2tgxGENlcxjOflopBwj3YZiXA==
 
 globby@^10.0.1:
@@ -6444,7 +6444,7 @@ globby@^6.1.0:
 
 globrex@^0.1.1:
   version "0.1.2"
-  resolved "http://localhost:4873/globrex/-/globrex-0.1.2.tgz#dd5d9ec826232730cd6793a5e33a9302985e6098"
+  resolved "https://registry.yarnpkg.com/globrex/-/globrex-0.1.2.tgz#dd5d9ec826232730cd6793a5e33a9302985e6098"
   integrity sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==
 
 got@8.3.2:
@@ -12991,7 +12991,7 @@ tiny-emitter@^2.1.0:
 
 tiny-glob@^0.2.6:
   version "0.2.6"
-  resolved "http://localhost:4873/tiny-glob/-/tiny-glob-0.2.6.tgz#9e056e169d9788fe8a734dfa1ff02e9b92ed7eda"
+  resolved "https://registry.yarnpkg.com/tiny-glob/-/tiny-glob-0.2.6.tgz#9e056e169d9788fe8a734dfa1ff02e9b92ed7eda"
   integrity sha512-A7ewMqPu1B5PWwC3m7KVgAu96Ch5LA0w4SnEN/LbDREj/gAD0nPWboRbn8YoP9ISZXqeNAlMvKSKoEuhcfK3Pw==
   dependencies:
     globalyzer "^0.1.0"
@@ -13134,7 +13134,7 @@ ts-pnp@^1.1.2:
 
 tsconfig-paths@^3.9.0:
   version "3.9.0"
-  resolved "http://localhost:4873/tsconfig-paths/-/tsconfig-paths-3.9.0.tgz#098547a6c4448807e8fcb8eae081064ee9a3c90b"
+  resolved "https://registry.yarnpkg.com/tsconfig-paths/-/tsconfig-paths-3.9.0.tgz#098547a6c4448807e8fcb8eae081064ee9a3c90b"
   integrity sha512-dRcuzokWhajtZWkQsDVKbWyY+jgcLC5sqJhg2PSgf4ZkH2aHPvaOY8YWGhmjb68b5qqTfasSsDO9k7RUiEmZAw==
   dependencies:
     "@types/json5" "^0.0.29"
