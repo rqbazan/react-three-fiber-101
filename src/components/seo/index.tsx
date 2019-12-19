@@ -23,7 +23,7 @@ const query = gql`
 export default function SEO(props: SEOProps) {
   const data = useStaticQuery(query)
 
-  const defaults = { ...data.site.siteMetadata }
+  const defaults = data.site.siteMetadata
 
   const title = props.title || defaults.title
   const description = props.description || defaults.description
