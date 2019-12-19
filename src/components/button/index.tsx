@@ -21,15 +21,15 @@ export default function Button({
       className={cs(styles.button, className)}
       {...props}
     >
-      {isLoading ? (
+      {!isLoading ? (
+        children
+      ) : (
         <>
           <span style={{ opacity: 0 }}>{children}</span>
           <span className="absolute flex items-center">
             <Loader />
           </span>
         </>
-      ) : (
-        children
       )}
     </button>
   )
