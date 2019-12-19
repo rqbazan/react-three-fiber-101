@@ -2,6 +2,7 @@ import React from 'react'
 import { navigate } from 'gatsby'
 import useApiClient from '~/hooks/use-api-client'
 import Modal from '~/components/modal'
+import SEO from '~/components/seo'
 import LoginForm, { LoginFormValues, SetError } from '~/components/login-form'
 import ApiClientProvider from '~/components/api-client-provider'
 
@@ -40,8 +41,11 @@ function LoginModal() {
 
 export default function LoginPage() {
   return (
-    <ApiClientProvider>
-      <LoginModal />
-    </ApiClientProvider>
+    <>
+      <SEO />
+      <ApiClientProvider>
+        <LoginModal />
+      </ApiClientProvider>
+    </>
   )
 }

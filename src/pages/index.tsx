@@ -3,6 +3,7 @@ import { Canvas } from 'react-three-fiber'
 import { FaceName } from '~/types'
 import useScrollBlocker from '~/hooks/use-scroll-blocker'
 import useAuth from '~/hooks/use-auth'
+import SEO from '~/components/seo'
 import ApiClientProvider from '~/components/api-client-provider'
 import Cube, { CubeRef } from '~/components/cube'
 import OrbitControls from '~/components/orbit-controls'
@@ -52,17 +53,20 @@ export default function IndexPage() {
   }
 
   return (
-    <ApiClientProvider>
-      <div className="flex justify-center">
-        <div className="w-full md:max-w-5xl relative">
-          <Header onScrambleClick={onScrambleClick} />
-          <Canvas camera={{ position: [6, 6, 6] }}>
-            <OrbitControls />
-            <Cube ref={cubeRef} />
-          </Canvas>
-          <CubeControls onControlClick={onControlClick} />
+    <>
+      <SEO />
+      <ApiClientProvider>
+        <div className="flex justify-center">
+          <div className="w-full md:max-w-5xl relative">
+            <Header onScrambleClick={onScrambleClick} />
+            <Canvas camera={{ position: [6, 6, 6] }}>
+              <OrbitControls />
+              <Cube ref={cubeRef} />
+            </Canvas>
+            <CubeControls onControlClick={onControlClick} />
+          </div>
         </div>
-      </div>
-    </ApiClientProvider>
+      </ApiClientProvider>
+    </>
   )
 }
