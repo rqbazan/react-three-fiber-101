@@ -17,3 +17,9 @@ I decided to try create this project just for fun.
 ### Inspiration 👀
 
 [The Rubik's cube Doodle](https://www.google.com/doodles/rubiks-cube)
+
+### Design 👨‍🎨
+
+> My first steps with Figma 😍
+
+https://www.figma.com/file/7lGU5TbDcFUtiU5IatkNsI/react-three-fiber-101?node-id=11%3A14
