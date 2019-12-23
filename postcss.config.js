@@ -3,7 +3,7 @@ const PROD = process.env.NODE_ENV === 'production'
 
 const purgecss = require('@fullhuman/postcss-purgecss')({
   content: ['./src/**/*.tsx'],
-  whitelistPatterns: [/pegatine/],
+  whitelistPatterns: [/pegatine/, /ztc/],
   defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
 })
 
