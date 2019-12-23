@@ -1,6 +1,7 @@
 import React from 'react'
 import * as THREE from 'three'
 import { useRender } from 'react-three-fiber'
+import notifier from 'zeit-toast-clone'
 import getRandomMoves from '~/utils/get-random-moves'
 import CubeEntity from '~/entities/cube'
 import MoveEntity from '~/entities/move'
@@ -72,12 +73,20 @@ const Cube = React.forwardRef<CubeRef, {}>((_, ref) => {
   }
 
   const scrambleFaces = async () => {
+    if (moveEntityRef.current) {
+      notifier.warning("You can't scramble right now 😑")
+      return
+    }
+
     const moves = getRandomMoves(20)
+
     for (let i = 0; i < moves.length; i++) {
       const { faceName, inversed } = moves[i]
       // eslint-disable-next-line
       await rotateFace(faceName, inversed, defaultStepAngle * 3)
     }
+
+    notifier.success('The cube is ready for you 🥳')
   }
 
   useRender(() => {
